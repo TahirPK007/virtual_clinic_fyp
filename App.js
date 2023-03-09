@@ -10,6 +10,7 @@ import Addpatient from './screens/Addpatient';
 import Addvitals from './screens/Addvitals';
 import Jrdoc from './screens/Jrdoc';
 import Splash from './screens/Splash';
+import Patientdetails from './screens/Patientdetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +35,7 @@ const App = () => {
             <Stack.Screen name="Addpatient" component={Addpatient} />
             <Stack.Screen name="Addvitals" component={Addvitals} />
             <Stack.Screen name="Jrdoc" component={Jrdoc} />
+            <Stack.Screen name="Patientdetails" component={Patientdetails} />
           </Stack.Navigator>
         </NavigationContainer>
       )}

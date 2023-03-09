@@ -22,7 +22,6 @@ const Addpatient = ({navigation}) => {
   const [updatecnicfiled, setupdatecnicfiled] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
-  console.log(dob);
   const updatepatientdetails = async () => {
     fetch(
       `http://10.0.2.2/fyp/api/Patient/Updatepatdetails?patient_id=${patid}&newcnic=${newcnic}`,

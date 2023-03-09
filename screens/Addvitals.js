@@ -22,6 +22,7 @@ const Addvitals = ({route, navigation}) => {
   const [symptoms, setsymptoms] = useState('');
   const [imageData, setImageData] = useState();
   const [filePath, setFilePath] = useState({});
+  const [status, setstatus] = useState(0);
 
   const vits = patient_id => {
     addvits();
@@ -29,27 +30,39 @@ const Addvitals = ({route, navigation}) => {
   };
 
   const visit = async () => {
-    fetch(`http://10.0.2.2/fyp/api/Patient/Visits?patient_id=${patient_id}`, {
-      method: 'POST',
-      body: JSON.stringify({
-        patient_id: `${patient_id}`,
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
+    fetch(
+      `http://10.0.2.2/fyp/api/Patient/Visits?patient_id=${patient_id}&status=${status}`,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          patient_id: `${patient_id}`,
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
       },
-    })
+    )
       .then(response => response.json())
       .then(json => console.log(json));
   };
 
   const addvits = async () => {
     let data = new FormData();
-    data.append('blood_pressure', bp);
-    data.append('sugar', sugar);
-    data.append('temperature', temperature);
-    data.append('symptoms', symptoms);
-    data.append('image', imageData);
-    data.append('patient_id', patient_id);
+    if (filePath === '') {
+      data.append('blood_pressure', bp);
+      data.append('sugar', sugar);
+      data.append('temperature', temperature);
+      data.append('symptoms', symptoms);
+      data.append('image', null);
+      data.append('patient_id', patient_id);
+    } else {
+      data.append('blood_pressure', bp);
+      data.append('sugar', sugar);
+      data.append('temperature', temperature);
+      data.append('symptoms', symptoms);
+      data.append('image', imageData);
+      data.append('patient_id', patient_id);
+    }
 
     let response = await fetch('http://10.0.2.2/fyp/api/Nursel/Addvitals', {
       method: 'POST',
