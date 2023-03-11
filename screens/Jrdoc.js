@@ -1,7 +1,7 @@
 import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import React, {useState, useEffect} from 'react';
 
-const Jrdoc = ({navigation}) => {
+const Jrdoc = ({route, navigation}) => {
   const [data, setdata] = useState([]);
 
   useEffect(() => {
@@ -39,6 +39,9 @@ const Jrdoc = ({navigation}) => {
           </View>
         )}
       /> */}
+      <View style={{justifyContent:"center",alignItems:"center"}}>
+        <Text style={{fontSize:20,color:"red",fontWeight:'bold'}}>Junior Doctor Name : {route.params.paramkey.full_name}</Text>
+      </View>
       <View
         style={{
           widht: '100%',

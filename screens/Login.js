@@ -50,7 +50,9 @@ const Login = ({navigation}) => {
     )
       .then(response => response.json())
       .then(json => {
-        if (json === 'true') navigation.navigate('Bottomnavigator');
+        console.log(json);
+        if (json.role === 'nurse')
+          navigation.navigate('Bottomnavigator', {nursename: json.full_name});
         else {
           fetch(
             `http://10.0.2.2/fyp/api/Jrdoc/Jrlogin?email=${email}&password=${password}`,
@@ -67,8 +69,9 @@ const Login = ({navigation}) => {
           )
             .then(response => response.json())
             .then(json => {
-              if (json === 'jrdoc') navigation.navigate('Jrdoc');
-              else alert('wrong email or password');
+              if (json.role === 'jrdoc') {
+                navigation.navigate('Jrdoc', {paramkey: json});
+              } else alert('wrong email or password');
             });
         }
       });

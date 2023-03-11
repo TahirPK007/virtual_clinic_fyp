@@ -10,7 +10,7 @@ import Reports from './Reports';
 
 const Tab = createBottomTabNavigator();
 
-const Bottomnavigator = () => {
+const Bottomnavigator = ({route, navigation}) => {
   return (
     <Tab.Navigator>
       <Tab.Screen
@@ -26,9 +26,7 @@ const Bottomnavigator = () => {
         name="Ongoing Cases"
         component={Ongoingcases}
         options={{
-          tabBarIcon: ({}) => (
-            <Icon3 name="walking" size={30} color="black" />
-          ),
+          tabBarIcon: ({}) => <Icon3 name="walking" size={30} color="black" />,
           // headerShown:false
         }}
       />
@@ -36,9 +34,7 @@ const Bottomnavigator = () => {
         name="Reports"
         component={Reports}
         options={{
-          tabBarIcon: ({}) => (
-            <Icon2 name="report" size={30} color="black" />
-          ),
+          tabBarIcon: ({}) => <Icon2 name="report" size={30} color="black" />,
         }}
       />
     </Tab.Navigator>
