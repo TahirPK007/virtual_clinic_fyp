@@ -11,7 +11,7 @@ const Signup = () => {
   const [gender, setgender] = useState('');
   const [contact, setcontact] = useState('');
   const [role, setrole] = useState('jrdoc');
-  const [status, setstatus] = useState(0)
+  const [status, setstatus] = useState(0);
 
   const newuser = () => {
     fetch('http://10.0.2.2/fyp/api/Jrdoc/Jrsignup', {
@@ -25,7 +25,7 @@ const Signup = () => {
         contact: `${contact}`,
         gender: `${gender}`,
         role: `${role}`,
-        status:`${status}`
+        status: `${status}`,
       }),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',

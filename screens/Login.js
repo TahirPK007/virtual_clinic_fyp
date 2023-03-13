@@ -50,9 +50,7 @@ const Login = ({navigation}) => {
     )
       .then(response => response.json())
       .then(json => {
-        console.log(json);
-        if (json.role === 'nurse')
-          navigation.navigate('Bottomnavigator', {nursename: json.full_name});
+        if (json.role === 'nurse') navigation.navigate('Bottomnavigator');
         else {
           fetch(
             `http://10.0.2.2/fyp/api/Jrdoc/Jrlogin?email=${email}&password=${password}`,

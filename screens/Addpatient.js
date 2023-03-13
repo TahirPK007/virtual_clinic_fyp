@@ -11,7 +11,6 @@ import {TextInput, RadioButton, Button, Modal} from 'react-native-paper';
 import {Picker} from '@react-native-picker/picker';
 
 const Addpatient = ({route, navigation}) => {
-  const {nursename} = route.params;
   const [cnic, setcnic] = useState();
   const [newcnic, setnewcnic] = useState();
   const [fullname, setfullname] = useState('');
@@ -94,11 +93,6 @@ const Addpatient = ({route, navigation}) => {
     <>
       <ScrollView>
         <View style={{felx: 1}}>
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{fontSize: 20, color: 'red', fontWeight: 'bold'}}>
-              Nurse Name : {nursename}
-            </Text>
-          </View>
           <View
             style={{
               width: '100%',
