@@ -4,17 +4,21 @@ import React, {useState, useEffect} from 'react';
 const Jrdoc = ({route, navigation}) => {
   //getting logged in jr doc id here
   const jrdocid = route.params.paramkey.jrdoc_id;
+  console.log(jrdocid);
 
   const [data, setdata] = useState([]);
 
   useEffect(() => {
-    // showingpat();
+    setTimeout(() => {
+      showingpat();
+    }, 3000);
   }, []);
 
+  //this function will fetch the patient details
   const showingpat = async () => {
     try {
       const response = await fetch(
-        'http://10.0.2.2/fyp/api/Jobs/FetchPatentWithVitals',
+        `http://10.0.2.2/fyp/api/Jrdoc/MyNewCases?id=${jrdocid}`,
       );
       const mydata = await response.json();
       setdata(mydata);
@@ -56,7 +60,12 @@ const Jrdoc = ({route, navigation}) => {
           <Text style={{color: 'white', textAlign: 'center'}}>Logout</Text>
         </TouchableOpacity>
       </View>
-      {/* <FlatList
+      <View style={{justifyContent: 'center', alignItems: 'center'}}>
+        <Text style={{fontSize: 20, color: 'red', fontWeight: 'bold'}}>
+          Junior Doctor Name : {route.params.paramkey.full_name}
+        </Text>
+      </View>
+      <FlatList
         data={data}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({item}) => (
@@ -68,41 +77,25 @@ const Jrdoc = ({route, navigation}) => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Text style={{color: 'white'}}>Patient Name : {item.full_name}</Text>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('Patientdetails', {paramkey: item})
+              }>
+              <Text style={{color: 'white'}}>
+                Patient Name : {item.p.full_name}
+              </Text>
+            </TouchableOpacity>
           </View>
         )}
-      /> */}
-      <View style={{justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={{fontSize: 20, color: 'red', fontWeight: 'bold'}}>
-          Junior Doctor Name : {route.params.paramkey.full_name}
-        </Text>
-      </View>
+      />
+
       <View
         style={{
           widht: '100%',
           backgroundColor: 'white',
           justifyContent: 'center',
           alignItems: 'center',
-        }}>
-        {/* {data.map(item => {
-          return (
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('Patientdetails', {paramkey: item})
-              }>
-              <Text
-                style={{
-                  color: 'black',
-                  fontSize: 20,
-                  backgroundColor: 'yellow',
-                  marginTop: 10,
-                }}>
-                Patient Name:{item.p.full_name}
-              </Text>
-            </TouchableOpacity>
-          );
-        })} */}
-      </View>
+        }}></View>
     </View>
   );
 };
