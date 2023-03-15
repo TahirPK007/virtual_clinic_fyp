@@ -18,7 +18,7 @@ const Jrdoc = ({route, navigation}) => {
   const showingpat = async () => {
     try {
       const response = await fetch(
-        `http://10.0.2.2/fyp/api/Jrdoc/MyNewCases?id=${jrdocid}`,
+        `http://${global.MyVar}/fyp/api/Jrdoc/MyNewCases?id=${jrdocid}`,
       );
       const mydata = await response.json();
       setdata(mydata);
@@ -30,7 +30,7 @@ const Jrdoc = ({route, navigation}) => {
 
   //logout function it will also set the status to 0
   const logout = async () => {
-    await fetch(`http://10.0.2.2/fyp/api/Jrdoc/Jrlogout?jrdocid=${jrdocid}`, {
+    await fetch(`http://${global.MyVar}/fyp/api/Jrdoc/Jrlogout?jrdocid=${jrdocid}`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json; charset=UTF-8',

@@ -7,6 +7,7 @@ import {
   Image,
   Platform,
   PermissionsAndroid,
+  ScrollView,
 } from 'react-native';
 import React, {useState} from 'react';
 import {TextInput, RadioButton, Button} from 'react-native-paper';
@@ -30,8 +31,8 @@ const Addvitals = ({route, navigation}) => {
   };
 
   const visit = async () => {
-    fetch(
-      `http://10.0.2.2/fyp/api/Patient/Visits?patient_id=${patient_id}&status=${status}`,
+    fetch(global.ip
+      `http://${global.MyVar}/fyp/api/Patient/Visits?patient_id=${patient_id}&status=${status}`,
       {
         method: 'POST',
         body: JSON.stringify({
@@ -64,7 +65,7 @@ const Addvitals = ({route, navigation}) => {
       data.append('patient_id', patient_id);
     }
 
-    let response = await fetch('http://10.0.2.2/fyp/api/Nursel/Addvitals', {
+    let response = await fetch(`http://${global.MyVar}/fyp/api/Nursel/Addvitals`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -188,6 +189,7 @@ const Addvitals = ({route, navigation}) => {
   };
 
   return (
+    <ScrollView>
     <View style={{flex: 1}}>
       <View
         style={{width: '100%', justifyContent: 'center', alignItems: 'center'}}>
@@ -258,6 +260,7 @@ const Addvitals = ({route, navigation}) => {
         </Button>
       </View>
     </View>
+    </ScrollView>
   );
 };
 

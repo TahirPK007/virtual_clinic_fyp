@@ -24,7 +24,7 @@ const Addpatient = ({route, navigation}) => {
 
   const updatepatientdetails = async () => {
     fetch(
-      `http://10.0.2.2/fyp/api/Patient/Updatepatdetails?patient_id=${patid}&newcnic=${newcnic}`,
+      `http://${global.MyVar}/fyp/api/Patient/Updatepatdetails?patient_id=${patid}&newcnic=${newcnic}`,
       {
         method: 'POST',
         body: JSON.stringify({
@@ -46,7 +46,7 @@ const Addpatient = ({route, navigation}) => {
 
   const checkcnic = cnic => {
     setcnic(cnic);
-    fetch(`http://10.0.2.2/fyp/api/Patient/Checkcnic?cnic=${cnic}`, {
+    fetch(`http://${global.MyVar}/fyp/api/Patient/Checkcnic?cnic=${cnic}`, {
       method: 'POST',
       body: JSON.stringify({
         cnic: `${cnic}`,
@@ -67,7 +67,7 @@ const Addpatient = ({route, navigation}) => {
   };
 
   const addpat = async () => {
-    fetch('http://10.0.2.2/fyp/api/Patient/Addpat', {
+    fetch(`http://${global.MyVar}/fyp/api/Patient/Addpat`, {
       method: 'POST',
       body: JSON.stringify({
         cnic: `${cnic}`,

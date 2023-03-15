@@ -1,5 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -36,7 +43,7 @@ const Login = ({navigation}) => {
 
   const signin = async () => {
     await fetch(
-      `http://10.0.2.2/fyp/api/Nursel/Nurselogin?email=${email}&password=${password}`,
+      `http://${global.MyVar}/fyp/api/Nursel/Nurselogin?email=${email}&password=${password}`,
       {
         method: 'POST',
         body: JSON.stringify({
@@ -53,7 +60,7 @@ const Login = ({navigation}) => {
         if (json.role === 'nurse') navigation.navigate('Bottomnavigator');
         else {
           fetch(
-            `http://10.0.2.2/fyp/api/Jrdoc/Jrlogin?email=${email}&password=${password}`,
+            `http://${global.MyVar}/fyp/api/Jrdoc/Jrlogin?email=${email}&password=${password}`,
             {
               method: 'POST',
               body: JSON.stringify({
@@ -76,72 +83,74 @@ const Login = ({navigation}) => {
   };
 
   return (
-    <View style={{flex: 1}}>
-      <View
-        style={{
-          marginTop: 100,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <Image
-          style={{
-            height: 180,
-            width: 180,
-            resizeMode: 'center',
-            borderWidth: 2,
-            borderColor: 'green',
-            borderRadius: 100,
-          }}
-          source={require('../images/icon.png')}
-        />
-        <Text style={styles.virtualclinic}>Virtual Clinic</Text>
-      </View>
-      <View
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: '100%',
-          marginTop: 20,
-        }}>
-        <TextInput
-          style={styles.txtinput}
-          mode="outlined"
-          label="Email"
-          value={email}
-          onChangeText={value => setemail(value)}
-        />
-
-        <TextInput
-          style={styles.txtinput}
-          mode="outlined"
-          label="Password"
-          value={password}
-          onChangeText={value => setpassword(value)}
-        />
+    <ScrollView>
+      <View style={{flex: 1,justifyContent:"center",alignItems:"center"}}>
         <View
           style={{
-            flexDirection: 'row',
-            marginTop: 30,
+            marginTop: 100,
             justifyContent: 'center',
+            alignItems: 'center',
           }}>
-          <Button
-            style={{marginRight: 20}}
-            icon="camera"
+          <Image
+            style={{
+              height: 100,
+              width: 100,
+              resizeMode: 'center',
+              borderWidth: 2,
+              borderColor: 'green',
+              borderRadius: 100,
+            }}
+            source={require('../images/icon.png')}
+          />
+          <Text style={styles.virtualclinic}>Virtual Clinic</Text>
+        </View>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+            marginTop: 0,
+          }}>
+          <TextInput
+            style={styles.txtinput}
             mode="outlined"
-            onPress={loginandstoring}>
-            Log In
-          </Button>
-          <Button
-            icon="camera"
+            label="Email"
+            value={email}
+            onChangeText={value => setemail(value)}
+          />
+
+          <TextInput
+            style={styles.txtinput}
             mode="outlined"
-            onPress={() => {
-              navigation.navigate('Signup');
+            label="Password"
+            value={password}
+            onChangeText={value => setpassword(value)}
+          />
+          <View
+            style={{
+              flexDirection: 'row',
+              marginTop: 20,
+              justifyContent: 'center',
             }}>
-            Sign Up
-          </Button>
+            <Button
+              style={{marginRight: 20}}
+              icon="camera"
+              mode="outlined"
+              onPress={loginandstoring}>
+              Log In
+            </Button>
+            <Button
+              icon="camera"
+              mode="outlined"
+              onPress={() => {
+                navigation.navigate('Signup');
+              }}>
+              Sign Up
+            </Button>
+          </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

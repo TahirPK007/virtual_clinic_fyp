@@ -14,7 +14,7 @@ const Signup = () => {
   const [status, setstatus] = useState(0);
 
   const newuser = () => {
-    fetch('http://10.0.2.2/fyp/api/Jrdoc/Jrsignup', {
+    fetch(`http://${global.MyVar}/fyp/api/Jrdoc/Jrsignup`, {
       method: 'POST',
       body: JSON.stringify({
         full_name: `${fullname}`,
