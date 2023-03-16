@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Login = ({navigation}) => {
   const [email, setemail] = useState();
@@ -84,10 +86,10 @@ const Login = ({navigation}) => {
 
   return (
     <ScrollView>
-      <View style={{flex: 1,justifyContent:"center",alignItems:"center"}}>
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <View
           style={{
-            marginTop: 100,
+            marginTop: 60,
             justifyContent: 'center',
             alignItems: 'center',
           }}>
@@ -126,27 +128,40 @@ const Login = ({navigation}) => {
             value={password}
             onChangeText={value => setpassword(value)}
           />
-          <View
-            style={{
-              flexDirection: 'row',
-              marginTop: 20,
-              justifyContent: 'center',
-            }}>
-            <Button
-              style={{marginRight: 20}}
-              icon="camera"
-              mode="outlined"
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            wdith: '90%',
+            marginTop: 10,
+          }}>
+          <View style={{marginRight: 20}}>
+            <Icon.Button
+              style={{
+                width: 120,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              name="login"
+              backgroundColor="green"
               onPress={loginandstoring}>
-              Log In
-            </Button>
-            <Button
-              icon="camera"
-              mode="outlined"
+              Login
+            </Icon.Button>
+          </View>
+          <View style={{marginLeft: 20}}>
+            <Icon2.Button
+              style={{
+                width: 120,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              name="account-arrow-left-outline"
+              backgroundColor="green"
               onPress={() => {
                 navigation.navigate('Signup');
               }}>
-              Sign Up
-            </Button>
+              Signup
+            </Icon2.Button>
           </View>
         </View>
       </View>
@@ -164,11 +179,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 20,
   },
-  pass: {
-    marginTop: 10,
-  },
   txtinput: {
-    width: '70%',
-    marginBottom: 15,
+    width: '90%',
+    marginBottom: 25,
   },
 });

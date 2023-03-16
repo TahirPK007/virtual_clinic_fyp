@@ -20,6 +20,7 @@ const Bottomnavigator = ({route, navigation}) => {
           tabBarIcon: ({}) => (
             <Icon name="bed-patient" size={30} color="black" />
           ),
+          headerShown: false,
         }}
       />
       <Tab.Screen
@@ -27,7 +28,7 @@ const Bottomnavigator = ({route, navigation}) => {
         component={Ongoingcases}
         options={{
           tabBarIcon: ({}) => <Icon3 name="walking" size={30} color="black" />,
-          // headerShown:false
+          headerShown: false,
         }}
       />
       <Tab.Screen

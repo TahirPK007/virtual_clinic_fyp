@@ -29,13 +29,41 @@ const App = () => {
       ) : (
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Login">
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Bottomnavigator" component={Bottomnavigator} />
-            <Stack.Screen name="Signup" component={Signup} />
-            <Stack.Screen name="Addpatient" component={Addpatient} />
-            <Stack.Screen name="Addvitals" component={Addvitals} />
-            <Stack.Screen name="Jrdoc" component={Jrdoc} />
-            <Stack.Screen name="Patientdetails" component={Patientdetails} />
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Bottomnavigator"
+              component={Bottomnavigator}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Signup"
+              component={Signup}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Addpatient"
+              component={Addpatient}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Addvitals"
+              component={Addvitals}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Jrdoc"
+              component={Jrdoc}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Patientdetails"
+              component={Patientdetails}
+              options={{headerShown: false}}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       )}

@@ -44,6 +44,7 @@ const Addpatient = ({route, navigation}) => {
       .then(json => console.log(json));
   };
 
+  //this method will check the cnic of the patient in database if its exist or not if cnic exist it will populate the fields
   const checkcnic = cnic => {
     setcnic(cnic);
     fetch(`http://${global.MyVar}/fyp/api/Patient/Checkcnic?cnic=${cnic}`, {
@@ -66,6 +67,7 @@ const Addpatient = ({route, navigation}) => {
       });
   };
 
+  //it will add the patient personal details to db after saving it will return the id and store it to patid state
   const addpat = async () => {
     fetch(`http://${global.MyVar}/fyp/api/Patient/Addpat`, {
       method: 'POST',
@@ -87,7 +89,7 @@ const Addpatient = ({route, navigation}) => {
       });
   };
 
-  console.log(patid, 'gotten id');
+  console.log(patid, 'Patient Id');
 
   return (
     <>
@@ -99,7 +101,9 @@ const Addpatient = ({route, navigation}) => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Text style={styles.txt}>Add New Patient</Text>
+            <Text style={{fontWeight: 'bold', fontSize: 25, marginTop: 20,color:"black"}}>
+              Add New Patient
+            </Text>
           </View>
           <View>
             <Text style={{color: 'red', fontSize: 20}}>Cnic</Text>
@@ -164,39 +168,54 @@ const Addpatient = ({route, navigation}) => {
             />
           </View>
 
-          <View>
-            <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                width: '100%',
-                flexDirection: 'column',
-              }}>
-              <Text style={{color: 'red', fontSize: 20}}>Gender</Text>
-              <RadioButton.Group
-                onValueChange={value => setgender(value)}
-                value={gender}>
-                <RadioButton.Item label="Male" value="male" />
-                <RadioButton.Item label="Female" value="female" />
-              </RadioButton.Group>
-            </View>
+          <View
+            style={{
+              // justifyContent: 'center',
+              // alignItems: 'center',
+              width: '100%',
+              flexDirection: 'column',
+            }}>
+            <RadioButton.Group
+              onValueChange={value => setgender(value)}
+              value={gender}>
+              <Text style={{fontSize: 20, marginLeft: 40, color: 'red'}}>
+                Gender :
+              </Text>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                }}>
+                <RadioButton.Item
+                  label="Male"
+                  value="male"
+                  style={{width: 110}}
+                />
+                <RadioButton.Item
+                  label="Female"
+                  value="female"
+                  style={{width: 120}}
+                />
+              </View>
+            </RadioButton.Group>
           </View>
           <View
             style={{
+              width: '80%',
               flexDirection: 'row',
-              marginTop: 30,
+              marginTop: 5,
               justifyContent: 'center',
+              alignItems: 'center',
             }}>
             <Button
-              style={{marginRight: 20}}
-              icon="camera"
+              // icon="camera"
               mode="outlined"
               onPress={addpat}>
               Save Patient
             </Button>
             <Button
-              style={{marginRight: 20}}
-              icon="camera"
+              // icon="camera"
               mode="outlined"
               onPress={() => {
                 navigation.navigate('Addvitals', {
@@ -206,8 +225,7 @@ const Addpatient = ({route, navigation}) => {
               Continue To Vitals
             </Button>
             <Button
-              style={{marginRight: 20}}
-              icon="camera"
+              // icon="camera"
               mode="outlined"
               onPress={updatepatientdetails}>
               Update
@@ -220,11 +238,3 @@ const Addpatient = ({route, navigation}) => {
 };
 
 export default Addpatient;
-
-const styles = StyleSheet.create({
-  txt: {
-    fontWeight: 'bold',
-    fontSize: 25,
-    marginTop: 20,
-  },
-});

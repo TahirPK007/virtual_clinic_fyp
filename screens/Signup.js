@@ -1,6 +1,7 @@
 import {View, Text, StyleSheet, Image, ScrollView} from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {TextInput, RadioButton, Button} from 'react-native-paper';
+import {TextInput, RadioButton} from 'react-native-paper';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const Signup = () => {
   const [fullname, setfullname] = useState('');
@@ -33,20 +34,22 @@ const Signup = () => {
     })
       .then(response => response.json())
       .then(json => {
-        if (json === 'true') console.log('successfully signed up');
-        else alert('error occured while signing up');
+        if (json === 'true') alert('Successfully Signed Up');
+        else alert('Error Occured While Signing Up');
       });
   };
   return (
     <ScrollView>
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, justifyContent: 'center'}}>
         <View
-          style={{
-            marginTop: 20,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Image
+          style={
+            {
+              // marginTop: 20,
+              // justifyContent: 'center',
+              // alignItems: 'center',
+            }
+          }>
+          {/* <Image
             style={{
               height: 100,
               width: 100,
@@ -56,12 +59,12 @@ const Signup = () => {
               borderRadius: 100,
             }}
             source={require('../images/icon.png')}
-          />
+          /> */}
           <Text style={styles.virtualclinic}>Sign Up</Text>
         </View>
         <View
           style={{
-            justifyContent: 'center',
+            // justifyContent: 'center',
             alignItems: 'center',
             width: '100%',
           }}>
@@ -82,7 +85,7 @@ const Signup = () => {
           <TextInput
             style={styles.txtinput}
             mode="outlined"
-            label="email"
+            label="Email"
             value={email}
             onChangeText={value => setemail(value)}
           />
@@ -109,34 +112,54 @@ const Signup = () => {
           />
           <View
             style={{
-              justifyContent: 'center',
-              alignItems: 'center',
+              // justifyContent: 'center',
+              // alignItems: 'center',
               width: '100%',
               flexDirection: 'column',
             }}>
-            <Text style={{color: 'black', fontSize: 20}}>Gender</Text>
             <RadioButton.Group
               onValueChange={value => setgender(value)}
               value={gender}>
-              <RadioButton.Item label="Male" value="male" />
-              <RadioButton.Item label="Female" value="female" />
+              <Text style={{fontSize: 20, marginLeft: 40, color: 'black'}}>
+                Gender :
+              </Text>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                }}>
+                <RadioButton.Item
+                  label="Male"
+                  value="male"
+                  style={{width: 120}}
+                />
+                <RadioButton.Item
+                  label="Female"
+                  value="female"
+                  style={{width: 120}}
+                />
+              </View>
             </RadioButton.Group>
           </View>
-
-          <View
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            marginTop: 10,
+            justifyContent: 'center',
+          }}>
+          <Icon.Button
             style={{
-              flexDirection: 'row',
-              marginTop: 30,
+              width: 200,
               justifyContent: 'center',
-            }}>
-            <Button
-              style={{marginRight: 20}}
-              icon="camera"
-              mode="outlined"
-              onPress={newuser}>
-              Signup
-            </Button>
-          </View>
+              alignItems: 'center',
+            }}
+            name="person-add-sharp"
+            backgroundColor="green"
+            onPress={newuser}>
+            Continue
+          </Icon.Button>
         </View>
       </View>
     </ScrollView>
@@ -149,15 +172,14 @@ const styles = StyleSheet.create({
   virtualclinic: {
     fontSize: 30,
     fontWeight: 'bold',
-    letterSpacing: 5,
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  pass: {
-    marginTop: 10,
+    letterSpacing: 2,
+    marginTop: 5,
+    marginBottom: 15,
+    color: 'black',
+    marginLeft: 15,
   },
   txtinput: {
-    width: '70%',
-    marginBottom: 15,
+    width: '80%',
+    marginBottom: 5,
   },
 });
