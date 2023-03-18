@@ -37,10 +37,10 @@ const Jrdoc = ({route, navigation}) => {
   console.log(patid, 'patid to send');
   console.log(visitid, 'visit id to send');
 
-  //logout function it will also set the status to 0
+  //logout function it will also set the logged in jrdoc status to 0
   const logout = async () => {
     await fetch(
-      `http://${global.MyVar}/fyp/api/Jrdoc/logout?jrdocid=${jrdocid}`,
+      `http://${global.MyVar}/fyp/api/Jrdoc/Jrlogout?jrdocid=${jrdocid}`,
       {
         method: 'POST',
         headers: {

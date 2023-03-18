@@ -7,6 +7,11 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
+import {
+  responsiveHeight,
+  responsiveWidth,
+  responsiveFontSize,
+} from 'react-native-responsive-dimensions';
 import {TextInput, Button} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -15,6 +20,8 @@ import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
 const Login = ({navigation}) => {
   const [email, setemail] = useState();
   const [password, setpassword] = useState();
+  console.log(email, 'email');
+  console.log(password, 'password');
 
   useEffect(() => {
     getUser();
@@ -89,18 +96,18 @@ const Login = ({navigation}) => {
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <View
           style={{
-            marginTop: 60,
+            marginTop: responsiveHeight(8),
             justifyContent: 'center',
             alignItems: 'center',
           }}>
           <Image
             style={{
-              height: 100,
-              width: 100,
-              resizeMode: 'center',
-              borderWidth: 2,
+              height: responsiveWidth(35),
+              width: responsiveWidth(35),
+              resizeMode: 'contain',
+              borderWidth: responsiveWidth(0.6),
               borderColor: 'green',
-              borderRadius: 100,
+              borderRadius: responsiveWidth(100),
             }}
             source={require('../images/icon.png')}
           />
@@ -110,8 +117,7 @@ const Login = ({navigation}) => {
           style={{
             justifyContent: 'center',
             alignItems: 'center',
-            width: '100%',
-            marginTop: 0,
+            width: responsiveWidth(100),
           }}>
           <TextInput
             style={styles.txtinput}
@@ -133,12 +139,12 @@ const Login = ({navigation}) => {
           style={{
             flexDirection: 'row',
             wdith: '90%',
-            marginTop: 10,
+            marginTop: responsiveHeight(3),
           }}>
-          <View style={{marginRight: 20}}>
+          <View style={{marginRight: responsiveWidth(4)}}>
             <Icon.Button
               style={{
-                width: 120,
+                width: responsiveWidth(35),
                 justifyContent: 'center',
                 alignItems: 'center',
               }}
@@ -148,10 +154,10 @@ const Login = ({navigation}) => {
               Login
             </Icon.Button>
           </View>
-          <View style={{marginLeft: 20}}>
+          <View style={{marginLeft: responsiveWidth(5)}}>
             <Icon2.Button
               style={{
-                width: 120,
+                width: responsiveWidth(35),
                 justifyContent: 'center',
                 alignItems: 'center',
               }}
@@ -173,14 +179,14 @@ export default Login;
 
 const styles = StyleSheet.create({
   virtualclinic: {
-    fontSize: 30,
+    fontSize: responsiveFontSize(5),
     fontWeight: 'bold',
     letterSpacing: 5,
-    marginTop: 10,
-    marginBottom: 20,
+    marginTop: responsiveHeight(1),
+    marginBottom: responsiveHeight(5),
   },
   txtinput: {
-    width: '90%',
-    marginBottom: 25,
+    width: responsiveWidth(90),
+    marginBottom: responsiveHeight(5),
   },
 });
