@@ -3,10 +3,12 @@ import React, {useState, useEffect} from 'react';
 
 const Jrdoc = ({route, navigation}) => {
   //getting logged in jr doc id here
-  const jrdocid = route.params.paramkey.jrdoc_id;
-  console.log(jrdocid);
+  var jrdocid = route.params.paramkey.jrdoc_id;
+  console.log(jrdocid, 'jrdoc id to send');
 
   const [data, setdata] = useState([]);
+  const [patid, setpatid] = useState();
+  const [visitid, setvisitid] = useState();
 
   useEffect(() => {
     setTimeout(() => {
@@ -22,25 +24,50 @@ const Jrdoc = ({route, navigation}) => {
       );
       const mydata = await response.json();
       setdata(mydata);
-      console.log(mydata, 'fetched patient');
+      console.log(mydata, 'this is api response');
+      //gettting patid to send it to api function that will be using in acceptedcase
+      setpatid(mydata[0].p.patient_id);
+      //gettting visitid to send it to api function that will be using in acceptedcase
+      setvisitid(mydata[0].x.visit_id);
     } catch (error) {
       console.log(error);
     }
   };
 
+  console.log(patid, 'patid to send');
+  console.log(visitid, 'visit id to send');
+
   //logout function it will also set the status to 0
   const logout = async () => {
-    await fetch(`http://${global.MyVar}/fyp/api/Jrdoc/Jrlogout?jrdocid=${jrdocid}`, {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
+    await fetch(
+      `http://${global.MyVar}/fyp/api/Jrdoc/logout?jrdocid=${jrdocid}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
       },
-    })
+    )
       .then(response => response.json())
       .then(json => {
         if (json === 'logged_out') navigation.navigate('Login');
         else alert('something went wrong');
       });
+  };
+
+  //this function will populate the acceptcase table when the junior doctor will accept the case.
+  const acceptcase = () => {
+    fetch(
+      `http://${global.MyVar}/fyp/api/Jrdoc/AcceptedCase?jrdocid=${jrdocid}&patid=${patid}&visitid=${visitid}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      },
+    )
+      .then(response => response.json())
+      .then(json => console.log(json));
   };
 
   return (
@@ -78,9 +105,10 @@ const Jrdoc = ({route, navigation}) => {
               alignItems: 'center',
             }}>
             <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('Patientdetails', {paramkey: item})
-              }>
+              onPress={() => {
+                acceptcase();
+                navigation.navigate('Patientdetails', {paramkey: item});
+              }}>
               <Text style={{color: 'white'}}>
                 Patient Name : {item.p.full_name}
               </Text>

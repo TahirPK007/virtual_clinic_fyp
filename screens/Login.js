@@ -48,10 +48,10 @@ const Login = ({navigation}) => {
       `http://${global.MyVar}/fyp/api/Nursel/Nurselogin?email=${email}&password=${password}`,
       {
         method: 'POST',
-        body: JSON.stringify({
-          email: `${email}`,
-          password: `${password}`,
-        }),
+        // body: JSON.stringify({
+        //   email: `${email}`,
+        //   password: `${password}`,
+        // }),
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
         },
@@ -59,16 +59,16 @@ const Login = ({navigation}) => {
     )
       .then(response => response.json())
       .then(json => {
-        if (json.role === 'nurse') navigation.navigate('Bottomnavigator');
+        if (json.role == 'nurse') navigation.navigate('Bottomnavigator');
         else {
           fetch(
             `http://${global.MyVar}/fyp/api/Jrdoc/Jrlogin?email=${email}&password=${password}`,
             {
               method: 'POST',
-              body: JSON.stringify({
-                email: `${email}`,
-                password: `${password}`,
-              }),
+              // body: JSON.stringify({
+              //   email: `${email}`,
+              //   password: `${password}`,
+              // }),
               headers: {
                 'Content-type': 'application/json; charset=UTF-8',
               },
@@ -76,7 +76,7 @@ const Login = ({navigation}) => {
           )
             .then(response => response.json())
             .then(json => {
-              if (json.role === 'jrdoc') {
+              if (json.role == 'jrdoc') {
                 navigation.navigate('Jrdoc', {paramkey: json});
               } else alert('wrong email or password');
             });
