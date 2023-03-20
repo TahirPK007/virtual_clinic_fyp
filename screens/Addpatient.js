@@ -5,9 +5,15 @@ import {
   ScrollView,
   Alert,
   TouchableOpacity,
+  TextInput,
 } from 'react-native';
+import {
+  responsiveHeight,
+  responsiveWidth,
+  responsiveFontSize,
+} from 'react-native-responsive-dimensions';
 import Reac, {useState, useEffect} from 'react';
-import {TextInput, RadioButton, Button, Modal} from 'react-native-paper';
+import {RadioButton, Button, Modal} from 'react-native-paper';
 import {Picker} from '@react-native-picker/picker';
 
 const Addpatient = ({route, navigation}) => {
@@ -94,77 +100,165 @@ const Addpatient = ({route, navigation}) => {
   return (
     <>
       <ScrollView>
-        <View style={{felx: 1}}>
+        <View style={{felx: 1, justifyContent: 'center', alignItems: 'center'}}>
           <View
             style={{
-              width: '100%',
               justifyContent: 'center',
               alignItems: 'center',
+              marginTop: responsiveHeight(1.5),
+              backgroundColor: 'white',
+              elevation: 1,
+              borderRadius: 10,
+              height: 40,
+              width: '70%',
             }}>
-            <Text style={{fontWeight: 'bold', fontSize: 25, marginTop: 20,color:"black"}}>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                fontSize: responsiveFontSize(2.5),
+                color: 'black',
+              }}>
               Add New Patient
             </Text>
           </View>
-          <View>
-            <Text style={{color: 'red', fontSize: 20}}>Cnic</Text>
+          <View style={{width: responsiveWidth(85)}}>
+            <Text style={{color: 'red', fontSize: responsiveFontSize(2)}}>
+              Cnic
+            </Text>
             <TextInput
+              style={{height: 40, backgroundColor: 'white'}}
               // label="Cnic"
+              mode="outlined"
               value={cnic}
               onChangeText={checkcnic}
             />
           </View>
-          <View style={{alignItems: 'flex-end'}}>
-            <TouchableOpacity onPress={() => setupdatecnicfiled(true)}>
-              <Text style={{color: 'red'}}>Update Cnic</Text>
+          {/* <View style={{width: responsiveWidth(85)}}>
+            <Text style={{color: 'red', fontSize: responsiveFontSize(2.5),fontWeight:"700"}}>
+              New Cnic
+            </Text>
+            <TextInput
+              style={{
+                height: 50,
+                backgroundColor: 'white',
+                // borderRadius: 30,
+                padding: 15,
+                // borderBottomColor: 'black',
+                // borderWidth:1,
+                borderBottomWidth: 2,
+                borderBottomColor: 'black',
+                marginTop:5
+              }}
+              // placeholder="Enter Cnic"
+            />
+          </View> */}
+          <View
+            style={{
+              alignItems: 'flex-end',
+              marginTop: responsiveHeight(1),
+              width: responsiveWidth(85),
+            }}>
+            <TouchableOpacity
+              style={{
+                backgroundColor: 'green',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 20,
+                height: 35,
+                width: 100,
+              }}
+              onPress={() => setupdatecnicfiled(true)}>
+              <Text style={{color: 'white'}}>Update Cnic</Text>
             </TouchableOpacity>
           </View>
           {updatecnicfiled !== false ? (
-            <View>
-              <Text style={{color: 'red', fontSize: 20}}>Update Cnic here</Text>
+            <View
+              style={{
+                width: responsiveWidth(85),
+                marginBottom: responsiveHeight(2),
+              }}>
+              <Text style={{color: 'red', fontSize: responsiveFontSize(2)}}>
+                Update Cnic
+              </Text>
               <TextInput
+                style={{height: 40, backgroundColor: 'white'}}
+                mode="outlined"
                 // label="Full Name"
                 value={newcnic}
                 onChangeText={text => setnewcnic(text)}
               />
             </View>
           ) : null}
-          <View>
-            <Text style={{color: 'red', fontSize: 20}}>Full Name</Text>
+          <View style={{width: responsiveWidth(85)}}>
+            <Text style={{color: 'red', fontSize: responsiveFontSize(2)}}>
+              Full Name
+            </Text>
             <TextInput
-              // label="Full Name"
+              style={{height: 40, backgroundColor: 'white'}}
+              // label="Cnic"
+              mode="outlined"
               value={fullname}
-              onChangeText={text => setfullname(text)}
+              onChangeText={value => {
+                setfullname(value);
+              }}
             />
           </View>
-          <View>
-            <Text style={{color: 'red', fontSize: 20}}>Relation</Text>
+          <View
+            style={{
+              width: responsiveWidth(85),
+              marginTop: responsiveHeight(3),
+            }}>
+            <Text style={{color: 'red', fontSize: responsiveFontSize(2)}}>
+              Relation
+            </Text>
             <Picker
-              style={{backgroundColor: 'white'}}
+              style={{backgroundColor: 'white', height: 40}}
               selectedValue={relation}
               onValueChange={value => {
                 setrelation(value);
               }}>
-              <Picker.Item label="self" value="self" />
-              <Picker.Item label="wife" value="wife" />
-              <Picker.Item label="child" value="child" />
+              <Picker.Item label="Self" value="self" />
+              <Picker.Item label="Wife/Spouse" value="wife" />
+              <Picker.Item label="Child" value="child" />
+              <Picker.Item label="Other Relatives" value="other_relatives" />
             </Picker>
           </View>
           {relation !== 'self' ? (
-            <View>
-              <Text style={{color: 'red', fontSize: 20}}>Relative Name</Text>
+            <View
+              style={{
+                width: responsiveWidth(85),
+                marginTop: responsiveHeight(2),
+              }}>
+              <Text style={{color: 'red', fontSize: responsiveFontSize(2)}}>
+                Relative Name
+              </Text>
               <TextInput
-                // label="Enter relative name"
+                style={{height: 40, backgroundColor: 'white'}}
+                // label="Cnic"
+                mode="outlined"
                 value={relativename}
-                onChangeText={text => setrelativename(text)}
+                onChangeText={value => {
+                  setrelativename(value);
+                }}
               />
             </View>
           ) : null}
-          <View>
-            <Text style={{color: 'red', fontSize: 20}}>D.O.B</Text>
+          <View
+            style={{
+              width: responsiveWidth(85),
+              marginTop: responsiveHeight(2),
+            }}>
+            <Text style={{color: 'red', fontSize: responsiveFontSize(2)}}>
+              Date Of Birth
+            </Text>
             <TextInput
-              // label="Full Name"
+              style={{height: 40, backgroundColor: 'white'}}
+              // label="Cnic"
+              mode="outlined"
               value={dob}
-              onChangeText={text => setdob(text)}
+              onChangeText={value => {
+                setdob(value);
+              }}
             />
           </View>
 
@@ -172,13 +266,14 @@ const Addpatient = ({route, navigation}) => {
             style={{
               // justifyContent: 'center',
               // alignItems: 'center',
-              width: '100%',
+              width: responsiveWidth(85),
               flexDirection: 'column',
+              marginTop: responsiveHeight(2),
             }}>
             <RadioButton.Group
               onValueChange={value => setgender(value)}
               value={gender}>
-              <Text style={{fontSize: 20, marginLeft: 40, color: 'red'}}>
+              <Text style={{fontSize: responsiveFontSize(2), color: 'red'}}>
                 Gender :
               </Text>
               <View
@@ -190,46 +285,66 @@ const Addpatient = ({route, navigation}) => {
                 <RadioButton.Item
                   label="Male"
                   value="male"
-                  style={{width: 110}}
+                  style={{width: responsiveWidth(30)}}
                 />
                 <RadioButton.Item
                   label="Female"
                   value="female"
-                  style={{width: 120}}
+                  style={{width: responsiveWidth(34)}}
                 />
               </View>
             </RadioButton.Group>
           </View>
           <View
             style={{
-              width: '80%',
+              width: responsiveWidth(85),
+              marginTop: responsiveHeight(2),
               flexDirection: 'row',
-              marginTop: 5,
-              justifyContent: 'center',
+              justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-            <Button
-              // icon="camera"
-              mode="outlined"
+            <TouchableOpacity
+              style={{
+                backgroundColor: 'green',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 20,
+                height: 35,
+                width: 100,
+              }}
               onPress={addpat}>
-              Save Patient
-            </Button>
-            <Button
-              // icon="camera"
-              mode="outlined"
+              <Text style={{color: 'white'}}>Save Patient</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={{
+                backgroundColor: 'green',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 20,
+                height: 35,
+                width: 100,
+              }}
               onPress={() => {
                 navigation.navigate('Addvitals', {
                   patient_id: patid,
                 });
               }}>
-              Continue To Vitals
-            </Button>
-            <Button
-              // icon="camera"
-              mode="outlined"
+              <Text style={{color: 'white'}}>Add Vitals</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={{
+                backgroundColor: 'green',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 20,
+                height: 35,
+                width: 100,
+              }}
               onPress={updatepatientdetails}>
-              Update
-            </Button>
+              <Text style={{color: 'white'}}>Update</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>

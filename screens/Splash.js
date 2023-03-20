@@ -3,8 +3,11 @@ import React from 'react';
 
 const Splash = () => {
   return (
-    <View style={{flex: 1,backgroundColor:"light-green"}}>
-      <Image style={{height:"100%",width:"100%",resizeMode:'center'}} source={require('../images/splash.jpg')} />
+    <View style={{flex: 1, backgroundColor: 'light-green'}}>
+      <Image
+        style={{height: '59%', width: '59%'}}
+        source={require('../images/splash.jpg')}
+      />
     </View>
   );
 };
