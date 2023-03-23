@@ -12,10 +12,15 @@ import {
 import React, {useState} from 'react';
 import {TextInput, RadioButton, Button} from 'react-native-paper';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {
+  responsiveHeight,
+  responsiveWidth,
+  responsiveFontSize,
+} from 'react-native-responsive-dimensions';
 
 const Addvitals = ({route, navigation}) => {
-  const {patient_id} = route.params;
-  console.log(patient_id, 'on the addvitals page');
+  // const {patient_id} = route.params;
+  // console.log(patient_id, 'on the addvitals page');
 
   const [bp, setbp] = useState('');
   const [sugar, setsugar] = useState('');
@@ -31,8 +36,8 @@ const Addvitals = ({route, navigation}) => {
   };
 
   const visit = async () => {
-    fetch(global.ip
-      `http://${global.MyVar}/fyp/api/Patient/Visits?patient_id=${patient_id}&status=${status}`,
+    fetch(
+      global.ip`http://${global.MyVar}/fyp/api/Patient/Visits?patient_id=${patient_id}&status=${status}`,
       {
         method: 'POST',
         body: JSON.stringify({
@@ -65,14 +70,17 @@ const Addvitals = ({route, navigation}) => {
       data.append('patient_id', patient_id);
     }
 
-    let response = await fetch(`http://${global.MyVar}/fyp/api/Nursel/Addvitals`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'multipart/form-data',
+    let response = await fetch(
+      `http://${global.MyVar}/fyp/api/Nursel/Addvitals`,
+      {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data',
+        },
+        body: data,
       },
-      body: data,
-    });
+    );
     let json = await response.json();
     console.log(json);
   };
@@ -190,115 +198,132 @@ const Addvitals = ({route, navigation}) => {
 
   return (
     <ScrollView>
-    <View style={{flex: 1}}>
-      <View
-        style={{width: '100%', justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={styles.txt}>Add Vitals</Text>
-      </View>
-      <View>
-        <Text style={{color: 'red', fontSize: 20}}>Blood Pressure</Text>
-        <TextInput
-          // label="Cnic"
-          value={bp}
-          onChangeText={text => setbp(text)}
-        />
-      </View>
-      <View>
-        <Text style={{color: 'red', fontSize: 20}}>Sugar</Text>
-        <TextInput
-          // label="Cnic"
-          value={sugar}
-          onChangeText={text => setsugar(text)}
-        />
-      </View>
-      <View>
-        <Text style={{color: 'red', fontSize: 20}}>Temperature</Text>
-        <TextInput
-          // label="Cnic"
-          value={temperature}
-          onChangeText={text => settemperature(text)}
-        />
-      </View>
-      <View
-        style={{width: '100%', justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={styles.txt}>Add Symptoms</Text>
-      </View>
-      <View>
-        <Text style={{color: 'red', fontSize: 20}}>Enter Symptoms</Text>
-        <TextInput
-          // label="Cnic"
-          value={symptoms}
-          onChangeText={text => setsymptoms(text)}
-        />
-      </View>
-      <Image source={{uri: filePath.uri}} style={styles.imageStyle} />
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: responsiveHeight(1.5),
+            backgroundColor: 'white',
+            elevation: 1,
+            borderRadius: 10,
+            height: 40,
+            width: '70%',
+          }}>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: responsiveFontSize(2.5),
+              color: 'black',
+            }}>
+            Add Vitals
+          </Text>
+        </View>
+        <View style={{width: responsiveWidth(85)}}>
+          <Text style={{color: 'red', fontSize: responsiveFontSize(2)}}>
+            Blood Pressure
+          </Text>
+          <TextInput
+            style={{height: 40, backgroundColor: 'white'}}
+            // label="Cnic"
+            mode="outlined"
+            value={bp}
+            onChangeText={text => setbp(text)}
+          />
+        </View>
+        <View style={{width: responsiveWidth(85)}}>
+          <Text style={{color: 'red', fontSize: responsiveFontSize(2)}}>
+            Sugar
+          </Text>
+          <TextInput
+            style={{height: 40, backgroundColor: 'white'}}
+            // label="Cnic"
+            mode="outlined"
+            value={sugar}
+            onChangeText={text => setsugar(text)}
+          />
+        </View>
+        <View style={{width: responsiveWidth(85)}}>
+          <Text style={{color: 'red', fontSize: responsiveFontSize(2)}}>
+            Temperature
+          </Text>
+          <TextInput
+            style={{height: 40, backgroundColor: 'white'}}
+            // label="Cnic"
+            mode="outlined"
+            value={temperature}
+            onChangeText={text => settemperature(text)}
+          />
+        </View>
+        <View style={{width: responsiveWidth(85)}}>
+          <Text style={{color: 'red', fontSize: responsiveFontSize(2)}}>
+            Choose Symptoms
+          </Text>
+        </View>
+        {filePath.uri === null ? (
+          null()
+        ) : (
+          <View
+            style={{
+              width: responsiveWidth(85),
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 5,
+            }}>
+            <Image
+              style={{height: 200, width: 200, resizeMode: 'contain'}}
+              source={{uri: filePath.uri}}
+            />
+          </View>
+        )}
 
-      <View
-        style={{
-          flexDirection: 'row',
-          marginTop: 30,
-          justifyContent: 'center',
-        }}>
-        <Button
-          style={{marginRight: 20}}
-          icon="camera"
-          mode="outlined"
-          onPress={vits}>
-          Submit
-        </Button>
-        <Button
-          icon="camera"
-          mode="outlined"
-          onPress={() => chooseFile('photo')}>
-          Choose Image
-        </Button>
-        <Button
-          icon="camera"
-          mode="outlined"
-          onPress={() => captureImage('photo')}>
-          Capture Image
-        </Button>
+        <View
+          style={{
+            width: responsiveWidth(85),
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginTop: 20,
+          }}>
+          <TouchableOpacity
+            style={{
+              backgroundColor: 'green',
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 20,
+              height: 35,
+              width: 100,
+            }}
+            onPress={vits}>
+            <Text style={{color: 'white'}}>Submit</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              backgroundColor: 'green',
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 20,
+              height: 35,
+              width: 100,
+            }}
+            onPress={() => chooseFile('photo')}>
+            <Text style={{color: 'white'}}>Choose Image</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              backgroundColor: 'green',
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 20,
+              height: 35,
+              width: 100,
+            }}
+            onPress={() => captureImage('photo')}>
+            <Text style={{color: 'white'}}>Capture Image</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
     </ScrollView>
   );
 };
 
 export default Addvitals;
-
-const styles = StyleSheet.create({
-  txt: {
-    fontWeight: 'bold',
-    fontSize: 25,
-    marginTop: 20,
-  },
-  container: {
-    flex: 1,
-    padding: 10,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-  },
-  titleText: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    paddingVertical: 20,
-  },
-  textStyle: {
-    padding: 10,
-    color: 'black',
-    textAlign: 'center',
-  },
-  buttonStyle: {
-    alignItems: 'center',
-    backgroundColor: '#DDDDDD',
-    padding: 5,
-    marginVertical: 10,
-    width: 250,
-  },
-  imageStyle: {
-    width: 200,
-    height: 200,
-    margin: 5,
-  },
-});

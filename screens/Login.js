@@ -27,11 +27,14 @@ const Login = ({navigation}) => {
     getUser();
   }, []);
 
+
+  //created this funciton to call other 2 functions
   const loginandstoring = () => {
     saveuser();
     signin();
   };
 
+  //its saving email pass to localstorage
   const saveuser = async () => {
     try {
       await AsyncStorage.setItem('emaill', email);
@@ -41,6 +44,7 @@ const Login = ({navigation}) => {
     }
   };
 
+  //fetching email pass from local storage
   const getUser = async () => {
     try {
       setemail(await AsyncStorage.getItem('emaill'));
@@ -50,6 +54,7 @@ const Login = ({navigation}) => {
     }
   };
 
+  //login function for nurse and jr doc
   const signin = async () => {
     await fetch(
       `http://${global.MyVar}/fyp/api/Nursel/Nurselogin?email=${email}&password=${password}`,

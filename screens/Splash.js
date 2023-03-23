@@ -1,12 +1,14 @@
-import {View, Text, Image, ImageBackground} from 'react-native';
+import {View, Text, Image, ImageBackground, Dimensions} from 'react-native';
 import React from 'react';
 
 const Splash = () => {
+  const {height, width} = Dimensions.get('screen');
+
   return (
     <View style={{flex: 1, backgroundColor: 'light-green'}}>
       <Image
-        style={{height: '59%', width: '59%'}}
-        source={require('../images/splash.jpg')}
+        style={{height: height, width: width,resizeMode:"contain"}}
+        source={require('../images/splash2.png')}
       />
     </View>
   );
