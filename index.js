@@ -16,4 +16,4 @@ global.MyVar = '192.168.0.105'; //home ip
 // global.MyVar = '192.168.85.120';
 // global.MyVar = '192.168.43.122'; //infinix note 3 hotspot's ip
 
-AppRegistry.registerComponent(appName, () => Addvitals);
+AppRegistry.registerComponent(appName, () => App);

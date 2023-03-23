@@ -9,7 +9,7 @@ import {
   PermissionsAndroid,
   ScrollView,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {TextInput, RadioButton, Button} from 'react-native-paper';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {
@@ -17,6 +17,7 @@ import {
   responsiveWidth,
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
+import CheckBox from '@react-native-community/checkbox';
 
 const Addvitals = ({route, navigation}) => {
   // const {patient_id} = route.params;
@@ -25,24 +26,42 @@ const Addvitals = ({route, navigation}) => {
   const [bp, setbp] = useState('');
   const [sugar, setsugar] = useState('');
   const [temperature, settemperature] = useState('');
-  const [symptoms, setsymptoms] = useState('');
+  // const [symptoms, setsymptoms] = useState('');
   const [imageData, setImageData] = useState();
   const [filePath, setFilePath] = useState({});
   const [status, setstatus] = useState(0);
 
+  let symptoms = [];
+
+  //adding all the symptoms
+  const [cough, setcough] = useState(false);
+  if (cough === true) {
+    symptoms.push('Cough');
+  }
+  const [legpain, setlegpain] = useState(false);
+  if (legpain === true) {
+    symptoms.push('Leg Pain');
+  }
+  const [backpain, setbackpain] = useState(false);
+  if (backpain === true) {
+    symptoms.push('Back Pain');
+  }
+
+  //this function is populating vitals and visits table
   const vits = patient_id => {
     addvits();
     visit(patient_id);
+    alert('Vitals And New Visit Added');
   };
 
   const visit = async () => {
     fetch(
-      global.ip`http://${global.MyVar}/fyp/api/Patient/Visits?patient_id=${patient_id}&status=${status}`,
+      `http://${global.MyVar}/fyp/api/Patient/Visits?patient_id=${patient_id}&status=${status}`,
       {
         method: 'POST',
-        body: JSON.stringify({
-          patient_id: `${patient_id}`,
-        }),
+        // body: JSON.stringify({
+        //   // patient_id: `${patient_id}`,
+        // }),
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
         },
@@ -259,6 +278,76 @@ const Addvitals = ({route, navigation}) => {
           <Text style={{color: 'red', fontSize: responsiveFontSize(2)}}>
             Choose Symptoms
           </Text>
+          <View
+            style={{
+              justifyContent: 'space-between',
+              marginTop: 5,
+              alignItems: 'center',
+              flexDirection: 'row',
+            }}>
+            <View style={{alignItems: 'center', flexDirection: 'row'}}>
+              <CheckBox
+                value={cough}
+                onValueChange={value => {
+                  setcough(value);
+                }}
+              />
+              <Text>Cough</Text>
+            </View>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <CheckBox
+                value={legpain}
+                onValueChange={value => {
+                  setlegpain(value);
+                }}
+              />
+              <Text>Leg Pain</Text>
+            </View>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <CheckBox
+                value={backpain}
+                onValueChange={value => {
+                  setbackpain(value);
+                }}
+              />
+              <Text>Back Pain</Text>
+            </View>
+          </View>
+          <View
+            style={{
+              justifyContent: 'space-between',
+              marginTop: 5,
+              alignItems: 'center',
+              flexDirection: 'row',
+            }}>
+            <View style={{alignItems: 'center', flexDirection: 'row'}}>
+              <CheckBox
+                value={cough}
+                onValueChange={value => {
+                  setcough(value);
+                }}
+              />
+              <Text>Headache</Text>
+            </View>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <CheckBox
+                value={legpain}
+                onValueChange={value => {
+                  setlegpain(value);
+                }}
+              />
+              <Text>Stomach Pain</Text>
+            </View>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <CheckBox
+                value={backpain}
+                onValueChange={value => {
+                  setbackpain(value);
+                }}
+              />
+              <Text>Throat Pain</Text>
+            </View>
+          </View>
         </View>
         {filePath.uri === null ? (
           null()
@@ -271,7 +360,7 @@ const Addvitals = ({route, navigation}) => {
               marginTop: 5,
             }}>
             <Image
-              style={{height: 200, width: 200, resizeMode: 'contain'}}
+              style={{height: 100, width: 100, resizeMode: 'center'}}
               source={{uri: filePath.uri}}
             />
           </View>
@@ -293,8 +382,8 @@ const Addvitals = ({route, navigation}) => {
               height: 35,
               width: 100,
             }}
-            onPress={vits}>
-            <Text style={{color: 'white'}}>Submit</Text>
+            onPress={() => chooseFile('photo')}>
+            <Text style={{color: 'white'}}>Choose Image</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={{
@@ -305,8 +394,8 @@ const Addvitals = ({route, navigation}) => {
               height: 35,
               width: 100,
             }}
-            onPress={() => chooseFile('photo')}>
-            <Text style={{color: 'white'}}>Choose Image</Text>
+            onPress={vits}>
+            <Text style={{color: 'white'}}>Submit</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={{

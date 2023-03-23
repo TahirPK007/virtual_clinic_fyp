@@ -1,7 +1,24 @@
 import {View, Text} from 'react-native';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 const Patientdetails = ({route, navigation}) => {
+  useEffect(() => {
+    showItem();
+  }, []);
+
+  const showItem = () => {
+    const imageuri = `http://${global.MyVar}/fyp/api/Content/Uploads/${image}/${route.params.paramkey.p.patient_id}`;
+    return (
+      <View style={{marginTop: 10, alignItems: 'center'}}>
+        <ScrollView>
+          <View style={{alignItems: 'center'}}>
+            <Image source={{uri: imageuri}} style={{height: 500, width: 500}} />
+          </View>
+        </ScrollView>
+      </View>
+    );
+  };
+
   return (
     <View style={{flex: 1}}>
       <View>
