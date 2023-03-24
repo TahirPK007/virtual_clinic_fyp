@@ -1,23 +1,18 @@
-import {View, Text} from 'react-native';
+import {View, Text, Image, ScrollView, FlatList} from 'react-native';
 import React, {useState, useEffect} from 'react';
 
 const Patientdetails = ({route, navigation}) => {
+  const [data, setdata] = useState([]);
   useEffect(() => {
-    showItem();
+    // showItem();
   }, []);
 
-  const showItem = () => {
-    const imageuri = `http://${global.MyVar}/fyp/api/Content/Uploads/${image}/${route.params.paramkey.p.patient_id}`;
-    return (
-      <View style={{marginTop: 10, alignItems: 'center'}}>
-        <ScrollView>
-          <View style={{alignItems: 'center'}}>
-            <Image source={{uri: imageuri}} style={{height: 500, width: 500}} />
-          </View>
-        </ScrollView>
-      </View>
-    );
-  };
+  // let imageuri;
+  // const showItem = () => {
+  //   imageuri = `http://${global.MyVar}/fyp/Content/Uploads/ctn.png`;
+  // };
+
+  let imgname = route.params.paramkey.vv.image;
 
   return (
     <View style={{flex: 1}}>
@@ -35,6 +30,7 @@ const Patientdetails = ({route, navigation}) => {
           Blood Pressure : {route.params.paramkey.vv.blood_pressure}
         </Text>
         <Text style={{color: 'green', fontSize: 20, fontWeight: 'bold'}}>
+          {' '}
           Patient Name : {route.params.paramkey.vv.sugar}
         </Text>
         <Text style={{color: 'green', fontSize: 20, fontWeight: 'bold'}}>
@@ -48,6 +44,20 @@ const Patientdetails = ({route, navigation}) => {
         <Text style={{fontWeight: 'bold', fontSize: 20}}>
           {route.params.paramkey.vv.symptoms}
         </Text>
+      </View>
+      <View
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginTop: 2
+        }}>
+        <Text style={{fontSize: 20}}>This is an image</Text>
+        <Image
+          source={{
+            uri: `http://${global.MyVar}/fyp/Content/Uploads/${imgname}`,
+          }}
+          style={{width: 200, height: 200, resizeMode: 'contain'}}
+        />
       </View>
     </View>
   );

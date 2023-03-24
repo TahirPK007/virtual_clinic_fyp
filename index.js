@@ -8,6 +8,7 @@ import {name as appName} from './app.json';
 import Addpatient from './screens/Addpatient';
 import Addvitals from './screens/Addvitals';
 import Login from './screens/Login';
+import Patientdetails from './screens/Patientdetails';
 import Signup from './screens/Signup';
 import Splash from './screens/Splash';
 // global.MyVar = '10.0.2.2';

@@ -72,25 +72,30 @@ const Jrdoc = ({route, navigation}) => {
 
   return (
     <View style={{flex: 1}}>
-      <View style={{alignItems: 'flex-end'}}>
-        <TouchableOpacity
-          style={{
-            backgroundColor: 'black',
-            height: 50,
-            width: 50,
-            borderRadius: 10,
-            marginRight: 10,
-            justifyContent: 'center',
-            marginTop: 10,
-          }}
-          onPress={logout}>
-          <Text style={{color: 'white', textAlign: 'center'}}>Logout</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={{justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={{fontSize: 20, color: 'red', fontWeight: 'bold'}}>
-          Junior Doctor Name : {route.params.paramkey.full_name}
-        </Text>
+      <View style={{flexDirection: 'row', width: '90%',justifyContent:"space-around",alignItems:"center"}}>
+        <View style={{justifyContent:"center",alignItems:"center"}}>
+          <Text style={{fontSize: 20, color: 'red', fontWeight: 'bold'}}>
+            Junior Doctor: {route.params.paramkey.full_name}
+          </Text>
+        </View>
+        <View style={{justifyContent:"center",alignItems:"center"}}>
+          <TouchableOpacity
+            style={{
+              backgroundColor: 'green',
+              height: 30,
+              width: 70,
+              borderRadius: 10,
+              marginRight: 10,
+              justifyContent: 'center',
+              marginTop: 10,
+              justifyContent:"center",
+              alignItems:"center",
+              
+            }}
+            onPress={logout}>
+            <Text style={{color: 'white', textAlign: 'center'}}>Logout</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       <FlatList
         data={data}

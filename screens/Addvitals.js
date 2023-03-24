@@ -20,8 +20,8 @@ import {
 import CheckBox from '@react-native-community/checkbox';
 
 const Addvitals = ({route, navigation}) => {
-  // const {patient_id} = route.params;
-  // console.log(patient_id, 'on the addvitals page');
+  const {patient_id} = route.params;
+  console.log(patient_id, 'on the addvitals page');
 
   const [bp, setbp] = useState('');
   const [sugar, setsugar] = useState('');
