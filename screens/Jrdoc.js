@@ -6,7 +6,7 @@ const Jrdoc = ({route, navigation}) => {
   var jrdocid = route.params.paramkey.jrdoc_id;
   console.log(jrdocid, 'jrdoc id to send');
 
-  const [data, setdata] = useState([]);
+  const [data, setdata] = useState(null);
   const [patid, setpatid] = useState();
   const [visitid, setvisitid] = useState();
 
@@ -26,9 +26,9 @@ const Jrdoc = ({route, navigation}) => {
       setdata(mydata);
       console.log(mydata, 'this is api response');
       //gettting patid to send it to api function that will be using in acceptedcase
-      setpatid(mydata[0].p.patient_id);
+      setpatid(mydata.p.patient_id);
       //gettting visitid to send it to api function that will be using in acceptedcase
-      setvisitid(mydata[0].x.visit_id);
+      setvisitid(mydata.x.visit_id);
     } catch (error) {
       console.log(error);
     }
@@ -72,13 +72,19 @@ const Jrdoc = ({route, navigation}) => {
 
   return (
     <View style={{flex: 1}}>
-      <View style={{flexDirection: 'row', width: '90%',justifyContent:"space-around",alignItems:"center"}}>
-        <View style={{justifyContent:"center",alignItems:"center"}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          width: '90%',
+          justifyContent: 'space-around',
+          alignItems: 'center',
+        }}>
+        <View style={{justifyContent: 'center', alignItems: 'center'}}>
           <Text style={{fontSize: 20, color: 'red', fontWeight: 'bold'}}>
             Junior Doctor: {route.params.paramkey.full_name}
           </Text>
         </View>
-        <View style={{justifyContent:"center",alignItems:"center"}}>
+        <View style={{justifyContent: 'center', alignItems: 'center'}}>
           <TouchableOpacity
             style={{
               backgroundColor: 'green',
@@ -88,16 +94,15 @@ const Jrdoc = ({route, navigation}) => {
               marginRight: 10,
               justifyContent: 'center',
               marginTop: 10,
-              justifyContent:"center",
-              alignItems:"center",
-              
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
             onPress={logout}>
             <Text style={{color: 'white', textAlign: 'center'}}>Logout</Text>
           </TouchableOpacity>
         </View>
       </View>
-      <FlatList
+      {/* <FlatList
         data={data}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({item}) => (
@@ -120,15 +125,35 @@ const Jrdoc = ({route, navigation}) => {
             </TouchableOpacity>
           </View>
         )}
-      />
+      /> */}
+      {/* 
+      {data &&
+        data.map(item => {
+          return (
+            <View>
+              <Text>Patient Name = {item.p.full_name}</Text>
+            </View>
+          );
+        })} */}
+      {/* 
+      {data &&
+        data.map(item => {
+          return (
+            <View>
+              <Text>name= {item.full_name}</Text>
+            </View>
+          );
+        })} */}
 
-      <View
-        style={{
-          widht: '100%',
-          backgroundColor: 'white',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}></View>
+      {data && (
+        <TouchableOpacity
+          onPress={() => {
+            acceptcase();
+            navigation.navigate('Patientdetails', {paramkey: data});
+          }}>
+          <Text>name = {data.p.full_name}</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
