@@ -12,9 +12,7 @@ import React, {useState, useEffect} from 'react';
 
 const Patientdetails = ({route, navigation}) => {
   const [prescription, setprescription] = useState('');
-  useEffect(() => {
-    // showItem();
-  }, []);
+  useEffect(() => {}, []);
 
   // let imageuri;
   // const showItem = () => {
@@ -25,7 +23,7 @@ const Patientdetails = ({route, navigation}) => {
 
   return (
     <View style={{flex: 1}}>
-      {/* <View style={{width: '80%', marginLeft: 20}}>
+      <View style={{width: '80%', marginLeft: 20}}>
         <Text style={{color: 'black', fontSize: 20, fontWeight: 'bold'}}>
           Patient Details:
         </Text>
@@ -65,29 +63,29 @@ const Patientdetails = ({route, navigation}) => {
           </Text>
         </View>
       </View>
-      <View style={{flexDirection:'row'}}>
-      <View
-        style={{
-          marginTop: 10,
-          width: '40%',
-          marginLeft: 20,
-        }}>
-        <Text style={{color: 'black', fontSize: 20, fontWeight: 'bold'}}>
-          Symptoms
-        </Text>
-        <Text style={{marginLeft: 20, color: 'red', fontWeight: '600'}}>
-          {route.params.paramkey.v.symptoms}
-        </Text>
+      <View style={{flexDirection: 'row'}}>
+        <View
+          style={{
+            marginTop: 10,
+            width: '40%',
+            marginLeft: 20,
+          }}>
+          <Text style={{color: 'black', fontSize: 20, fontWeight: 'bold'}}>
+            Symptoms
+          </Text>
+          <Text style={{marginLeft: 20, color: 'red', fontWeight: '600'}}>
+            {route.params.paramkey.v.symptoms}
+          </Text>
+        </View>
+        <View style={{width: '40%', marginTop: 0, marginLeft: 20}}>
+          <Image
+            source={{
+              uri: route.params.paramkey.v.image,
+            }}
+            style={{width: 200, height: 150, resizeMode: 'contain'}}
+          />
+        </View>
       </View>
-      <View style={{width:"40%",marginTop:30,marginLeft:30}}>
-      <Image
-        source={{
-          uri: `http://${global.MyVar}/fyp/Content/Uploads/${imgname}`,
-        }}
-        style={{width: 100, height: 100, resizeMode: 'contain'}}
-      />
-      </View>
-      </View> */}
       <View
         style={{
           widht: '80%',

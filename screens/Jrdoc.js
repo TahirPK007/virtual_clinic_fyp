@@ -26,9 +26,9 @@ const Jrdoc = ({route, navigation}) => {
       setdata(mydata);
       console.log(mydata, 'this is api response');
       //gettting patid to send it to api function that will be using in acceptedcase
-      setpatid(mydata.p.patient_id);
+      // setpatid(mydata.p.patient_id);
       //gettting visitid to send it to api function that will be using in acceptedcase
-      setvisitid(mydata.x.visit_id);
+      // setvisitid(mydata.x.visit_id);
     } catch (error) {
       console.log(error);
     }
@@ -102,7 +102,7 @@ const Jrdoc = ({route, navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
-      {/* <FlatList
+      <FlatList
         data={data}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({item}) => (
@@ -125,7 +125,7 @@ const Jrdoc = ({route, navigation}) => {
             </TouchableOpacity>
           </View>
         )}
-      /> */}
+      />
       {/* 
       {data &&
         data.map(item => {
@@ -145,7 +145,7 @@ const Jrdoc = ({route, navigation}) => {
           );
         })} */}
 
-      {data && (
+      {/* {data !== null ? (
         <TouchableOpacity
           onPress={() => {
             acceptcase();
@@ -153,7 +153,9 @@ const Jrdoc = ({route, navigation}) => {
           }}>
           <Text>name = {data.p.full_name}</Text>
         </TouchableOpacity>
-      )}
+      ) : (
+        <Text>No New Cases</Text>
+      )} */}
     </View>
   );
 };
