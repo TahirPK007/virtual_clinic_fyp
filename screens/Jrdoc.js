@@ -1,4 +1,13 @@
-import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  ScrollView,
+  RefreshControl,
+  SafeAreaView,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 
 const Jrdoc = ({route, navigation}) => {
@@ -6,15 +15,10 @@ const Jrdoc = ({route, navigation}) => {
   var jrdocid = route.params.paramkey.jrdoc_id;
   console.log(jrdocid, 'jrdoc id to send');
 
-  const [data, setdata] = useState(null);
+  const [data, setdata] = useState([]);
   const [patid, setpatid] = useState();
   const [visitid, setvisitid] = useState();
-
-  useEffect(() => {
-    setTimeout(() => {
-      showingpat();
-    }, 3000);
-  }, []);
+  const [refreshing, setRefreshing] = useState(false);
 
   //this function will fetch the patient details
   const showingpat = async () => {
@@ -26,9 +30,9 @@ const Jrdoc = ({route, navigation}) => {
       setdata(mydata);
       console.log(mydata, 'this is api response');
       //gettting patid to send it to api function that will be using in acceptedcase
-      // setpatid(mydata.p.patient_id);
+      setpatid(mydata[0].p.patient_id);
       //gettting visitid to send it to api function that will be using in acceptedcase
-      // setvisitid(mydata.x.visit_id);
+      setvisitid(mydata[0].x.visit_id);
     } catch (error) {
       console.log(error);
     }
@@ -70,93 +74,109 @@ const Jrdoc = ({route, navigation}) => {
       .then(json => console.log(json));
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      showingpat();
+    }, 3000);
+  }, []);
+
+  const handlerefresh = () => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  };
+
   return (
-    <View style={{flex: 1}}>
-      <View
-        style={{
-          flexDirection: 'row',
-          width: '90%',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-        }}>
-        <View style={{justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={{fontSize: 20, color: 'red', fontWeight: 'bold'}}>
-            Junior Doctor: {route.params.paramkey.full_name}
-          </Text>
-        </View>
-        <View style={{justifyContent: 'center', alignItems: 'center'}}>
-          <TouchableOpacity
-            style={{
-              backgroundColor: 'green',
-              height: 30,
-              width: 70,
-              borderRadius: 10,
-              marginRight: 10,
-              justifyContent: 'center',
-              marginTop: 10,
-              justifyContent: 'center',
-              alignItems: 'center',
+    <SafeAreaView style={{flex: 1}}>
+      <ScrollView
+        style={{height: '100%', width: '100%', backgroundColor: 'whitesmoke'}}
+        refreshControl={
+          <RefreshControl
+            onRefresh={() => {
+              handlerefresh();
             }}
-            onPress={logout}>
-            <Text style={{color: 'white', textAlign: 'center'}}>Logout</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <FlatList
-        data={data}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({item}) => (
-          <View
-            style={{
-              backgroundColor: 'black',
-              margin: 10,
-              padding: 10,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
+            refreshing={refreshing}
+          />
+        }>
+        <View
+          style={{
+            flexDirection: 'row',
+            width: '90%',
+            justifyContent: 'space-around',
+            alignItems: 'center',
+          }}>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={{fontSize: 20, color: 'red', fontWeight: 'bold'}}>
+              Junior Doctor: {route.params.paramkey.full_name}
+            </Text>
+          </View>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <TouchableOpacity
-              onPress={() => {
-                acceptcase();
-                navigation.navigate('Patientdetails', {paramkey: item});
-              }}>
-              <Text style={{color: 'white'}}>
-                Patient Name : {item.p.full_name}
-              </Text>
+              style={{
+                backgroundColor: 'green',
+                height: 30,
+                width: 70,
+                borderRadius: 10,
+                marginRight: 10,
+                justifyContent: 'center',
+                marginTop: 10,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              onPress={logout}>
+              <Text style={{color: 'white', textAlign: 'center'}}>Logout</Text>
             </TouchableOpacity>
           </View>
-        )}
-      />
-      {/* 
-      {data &&
-        data.map(item => {
-          return (
-            <View>
-              <Text>Patient Name = {item.p.full_name}</Text>
-            </View>
-          );
-        })} */}
-      {/* 
-      {data &&
-        data.map(item => {
-          return (
-            <View>
-              <Text>name= {item.full_name}</Text>
-            </View>
-          );
-        })} */}
-
-      {/* {data !== null ? (
-        <TouchableOpacity
-          onPress={() => {
-            acceptcase();
-            navigation.navigate('Patientdetails', {paramkey: data});
-          }}>
-          <Text>name = {data.p.full_name}</Text>
-        </TouchableOpacity>
-      ) : (
-        <Text>No New Cases</Text>
-      )} */}
-    </View>
+        </View>
+        <FlatList
+          data={data}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({item}) => {
+            return (
+              <View
+                style={{
+                  backgroundColor: 'black',
+                  margin: 10,
+                  padding: 10,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    acceptcase();
+                    navigation.navigate('Patientdetails', {paramkey: item});
+                  }}>
+                  <Text style={{color: 'white'}}>
+                    Patient Name : {item.p.full_name}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            );
+          }}
+        />
+        {/* {data === null ? (
+          <Text>No New Cases</Text>
+        ) : (
+          <View>
+            {data.map(item => {
+              return (
+                <TouchableOpacity
+                key={item.id}
+                  onPress={() => {
+                    acceptcase();
+                    navigation.navigate('Patientdetails', {paramkey: item});
+                  }}>
+                  <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+                    Patient Name = {item.p.full_name}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        )} */}
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

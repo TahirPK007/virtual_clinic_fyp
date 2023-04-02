@@ -7,12 +7,34 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 
 const Patientdetails = ({route, navigation}) => {
   const [prescription, setprescription] = useState('');
+  const [patid, setpatid] = useState(route.params.paramkey.p.patient_id)
+  const [jrdocid, setjrdocid] = useState()
+
+
   useEffect(() => {}, []);
+
+  const historypres = async () => {
+    await fetch(
+      `http://${global.MyVar}/fyp/api/Jrdoc/PrescriptionHistory?jrdocid=${jrdocid}&patid?${patid}`,
+      {
+        method: 'POST',
+        
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      },
+    )
+      .then(response => response.json())
+      .then(json => {
+        Alert.alert(json);
+      });
+  };
 
   // let imageuri;
   // const showItem = () => {
