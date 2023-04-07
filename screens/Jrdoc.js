@@ -15,10 +15,15 @@ const Jrdoc = ({route, navigation}) => {
   var jrdocid = route.params.paramkey.jrdoc_id;
   console.log(jrdocid, 'jrdoc id to send');
 
-  const [data, setdata] = useState([]);
+  const [data, setdata] = useState(null);
   const [patid, setpatid] = useState();
   const [visitid, setvisitid] = useState();
   const [refreshing, setRefreshing] = useState(false);
+
+  // //gettting patid to send it to api function that will be using in acceptedcase
+  // setpatid(mydata[0].p.patient_id);
+  // //gettting visitid to send it to api function that will be using in acceptedcase
+  // setvisitid(mydata[0].x.visit_id);
 
   //this function will fetch the patient details
   const showingpat = async () => {
@@ -29,10 +34,6 @@ const Jrdoc = ({route, navigation}) => {
       const mydata = await response.json();
       setdata(mydata);
       console.log(mydata, 'this is api response');
-      //gettting patid to send it to api function that will be using in acceptedcase
-      setpatid(mydata[0].p.patient_id);
-      //gettting visitid to send it to api function that will be using in acceptedcase
-      setvisitid(mydata[0].x.visit_id);
     } catch (error) {
       console.log(error);
     }
@@ -88,95 +89,69 @@ const Jrdoc = ({route, navigation}) => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <ScrollView
-        style={{height: '100%', width: '100%', backgroundColor: 'whitesmoke'}}
-        refreshControl={
-          <RefreshControl
-            onRefresh={() => {
-              handlerefresh();
-            }}
-            refreshing={refreshing}
-          />
-        }>
-        <View
+    // refreshControl={
+    //     <RefreshControl
+    //       onRefresh={() => {
+    //         handlerefresh();
+    //       }}
+    //       refreshing={refreshing}
+    //     />
+    //   }
+    <View style={{flex: 1}}>
+      <View
+        style={{
+          width: '100%',
+          height: 70,
+          borderBottomColor: 'black',
+          borderWidth: 1,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
+        <Text
           style={{
-            flexDirection: 'row',
-            width: '90%',
-            justifyContent: 'space-around',
-            alignItems: 'center',
+            marginLeft: 10,
+            fontSize: 20,
+            fontWeight: '600',
+            color: 'black',
           }}>
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{fontSize: 20, color: 'red', fontWeight: 'bold'}}>
-              Junior Doctor: {route.params.paramkey.full_name}
-            </Text>
-          </View>
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
-            <TouchableOpacity
-              style={{
-                backgroundColor: 'green',
-                height: 30,
-                width: 70,
-                borderRadius: 10,
-                marginRight: 10,
-                justifyContent: 'center',
-                marginTop: 10,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-              onPress={logout}>
-              <Text style={{color: 'white', textAlign: 'center'}}>Logout</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+          Junior Doctor: {route.params.paramkey.full_name}
+        </Text>
+
+        <TouchableOpacity
+          style={{
+            backgroundColor: 'green',
+            marginRight: 10,
+            height: 35,
+            width: 70,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 15,
+          }}
+          onPress={logout}>
+          <Text style={{color: 'white'}}>Logout</Text>
+        </TouchableOpacity>
+      </View>
+      <View>
         <FlatList
           data={data}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({item}) => {
             return (
-              <View
-                style={{
-                  backgroundColor: 'black',
-                  margin: 10,
-                  padding: 10,
-                  justifyContent: 'center',
-                  alignItems: 'center',
+              <TouchableOpacity
+                onPress={() => {
+                  acceptcase();
+                  navigation.navigate('Patientdetails', {paramkey: item});
                 }}>
-                <TouchableOpacity
-                  onPress={() => {
-                    acceptcase();
-                    navigation.navigate('Patientdetails', {paramkey: item});
-                  }}>
-                  <Text style={{color: 'white'}}>
-                    Patient Name : {item.p.full_name}
-                  </Text>
-                </TouchableOpacity>
-              </View>
+                <Text style={{color: 'white'}}>
+                  Patient Name : {item.p.full_name}
+                </Text>
+              </TouchableOpacity>
             );
           }}
         />
-        {/* {data === null ? (
-          <Text>No New Cases</Text>
-        ) : (
-          <View>
-            {data.map(item => {
-              return (
-                <TouchableOpacity
-                key={item.id}
-                  onPress={() => {
-                    acceptcase();
-                    navigation.navigate('Patientdetails', {paramkey: item});
-                  }}>
-                  <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-                    Patient Name = {item.p.full_name}
-                  </Text>
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-        )} */}
-      </ScrollView>
-    </SafeAreaView>
+      </View>
+    </View>
   );
 };
 
