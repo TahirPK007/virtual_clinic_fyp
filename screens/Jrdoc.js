@@ -7,6 +7,7 @@ import {
   ScrollView,
   RefreshControl,
   SafeAreaView,
+  Modal,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 
@@ -18,13 +19,14 @@ const Jrdoc = ({route, navigation}) => {
   const [data, setdata] = useState(null);
   const [patid, setpatid] = useState();
   const [visitid, setvisitid] = useState();
-  const [refreshing, setRefreshing] = useState(false);
+  const [loading, setloading] = useState(false);
 
-  // //gettting patid to send it to api function that will be using in acceptedcase
-  // setpatid(mydata[0].p.patient_id);
-  // //gettting visitid to send it to api function that will be using in acceptedcase
-  // setvisitid(mydata[0].x.visit_id);
-
+  //logic for refreshing
+  const reloading = () => {
+    setloading(true);
+    showingpat();
+    setloading(false);
+  };
   //this function will fetch the patient details
   const showingpat = async () => {
     try {
@@ -33,6 +35,11 @@ const Jrdoc = ({route, navigation}) => {
       );
       const mydata = await response.json();
       setdata(mydata);
+      // //gettting patid to send it to api function that will be using in acceptedcase
+      setpatid(mydata[0].p.patient_id);
+      // //gettting visitid to send it to api function that will be using in acceptedcase
+      setvisitid(mydata[0].x.visit_id);
+
       console.log(mydata, 'this is api response');
     } catch (error) {
       console.log(error);
@@ -75,82 +82,90 @@ const Jrdoc = ({route, navigation}) => {
       .then(json => console.log(json));
   };
 
+  //populating data to appointment table
+  const addingappointment = () => {
+    fetch(
+      `http://${global.MyVar}/fyp/api/Jrdoc/Appointment?jrdocid=${jrdocid}&patid=${patid}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      },
+    )
+      .then(response => response.json())
+      .then(json => console.log(json));
+  };
+
   useEffect(() => {
     setTimeout(() => {
       showingpat();
     }, 3000);
   }, []);
 
-  const handlerefresh = () => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  };
-
   return (
-    // refreshControl={
-    //     <RefreshControl
-    //       onRefresh={() => {
-    //         handlerefresh();
-    //       }}
-    //       refreshing={refreshing}
-    //     />
-    //   }
     <View style={{flex: 1}}>
-      <View
-        style={{
-          width: '100%',
-          height: 70,
-          borderBottomColor: 'black',
-          borderWidth: 1,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
+      <RefreshControl
+        style={{flex: 1}}
+        refreshing={loading}
+        onRefresh={() => {
+          reloading();
         }}>
-        <Text
+        <View
           style={{
-            marginLeft: 10,
-            fontSize: 20,
-            fontWeight: '600',
-            color: 'black',
-          }}>
-          Junior Doctor: {route.params.paramkey.full_name}
-        </Text>
-
-        <TouchableOpacity
-          style={{
-            backgroundColor: 'green',
-            marginRight: 10,
-            height: 35,
-            width: 70,
-            justifyContent: 'center',
+            width: '100%',
+            height: 70,
+            borderBottomColor: 'black',
+            borderWidth: 1,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
             alignItems: 'center',
-            borderRadius: 15,
-          }}
-          onPress={logout}>
-          <Text style={{color: 'white'}}>Logout</Text>
-        </TouchableOpacity>
-      </View>
-      <View>
-        <FlatList
-          data={data}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({item}) => {
-            return (
-              <TouchableOpacity
-                onPress={() => {
-                  acceptcase();
-                  navigation.navigate('Patientdetails', {paramkey: item});
-                }}>
-                <Text style={{color: 'white'}}>
-                  Patient Name : {item.p.full_name}
-                </Text>
-              </TouchableOpacity>
-            );
-          }}
-        />
-      </View>
+          }}>
+          <Text
+            style={{
+              marginLeft: 10,
+              fontSize: 20,
+              fontWeight: '600',
+              color: 'black',
+            }}>
+            Junior Doctor: {route.params.paramkey.full_name}
+          </Text>
+
+          <TouchableOpacity
+            style={{
+              backgroundColor: 'green',
+              marginRight: 10,
+              height: 35,
+              width: 70,
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 15,
+            }}
+            onPress={logout}>
+            <Text style={{color: 'white'}}>Logout</Text>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <FlatList
+            data={data}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({item}) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    acceptcase();
+                    addingappointment();
+                    navigation.navigate('Patientdetails', {paramkey: item});
+                  }}>
+                  <Text style={{color: 'black'}}>
+                    Patient Name : {item.p.full_name}
+                  </Text>
+                </TouchableOpacity>
+              );
+            }}
+          />
+        </View>
+      </RefreshControl>
     </View>
   );
 };
