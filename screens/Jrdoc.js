@@ -16,10 +16,13 @@ const Jrdoc = ({route, navigation}) => {
   var jrdocid = route.params.paramkey.jrdoc_id;
   console.log(jrdocid, 'jrdoc id to send');
 
-  const [data, setdata] = useState(null);
+  const [data, setdata] = useState([]);
   const [patid, setpatid] = useState();
   const [visitid, setvisitid] = useState();
   const [loading, setloading] = useState(false);
+
+  console.log(patid, 'patid to send');
+  console.log(visitid, 'visit id to send');
 
   //logic for refreshing
   const reloading = () => {
@@ -35,19 +38,15 @@ const Jrdoc = ({route, navigation}) => {
       );
       const mydata = await response.json();
       setdata(mydata);
-      // //gettting patid to send it to api function that will be using in acceptedcase
+      //gettting patid to send it to api function that will be using in acceptedcase
       setpatid(mydata[0].p.patient_id);
-      // //gettting visitid to send it to api function that will be using in acceptedcase
+      //gettting visitid to send it to api function that will be using in acceptedcase
       setvisitid(mydata[0].x.visit_id);
-
       console.log(mydata, 'this is api response');
     } catch (error) {
       console.log(error);
     }
   };
-
-  console.log(patid, 'patid to send');
-  console.log(visitid, 'visit id to send');
 
   //logout function it will also set the logged in jrdoc status to 0
   const logout = async () => {
@@ -114,12 +113,12 @@ const Jrdoc = ({route, navigation}) => {
         <View
           style={{
             width: '100%',
-            height: 70,
-            borderBottomColor: 'black',
-            borderWidth: 1,
+            height: 90,
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
+            borderBottomWidth: 3,
+            borderBottomColor: 'green',
           }}>
           <Text
             style={{
@@ -145,19 +144,46 @@ const Jrdoc = ({route, navigation}) => {
             <Text style={{color: 'white'}}>Logout</Text>
           </TouchableOpacity>
         </View>
-        <View>
+
+        <View style={{marginTop: 10}}>
+          <Text
+            style={{
+              fontSize: 40,
+              color: 'red',
+              marginLeft: 20,
+              fontWeight: '600',
+              textDecorationLine: 'underline',
+            }}>
+            Cases
+          </Text>
           <FlatList
             data={data}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({item}) => {
               return (
                 <TouchableOpacity
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderWidth: 1,
+                    height: 50,
+                    width: '90%',
+                    alignSelf: 'center',
+                    elevation: 1,
+                    backgroundColor: 'white',
+                  }}
                   onPress={() => {
                     acceptcase();
                     addingappointment();
                     navigation.navigate('Patientdetails', {paramkey: item});
                   }}>
-                  <Text style={{color: 'black'}}>
+                  <Text
+                    style={{
+                      color: 'black',
+                      fontSize: 20,
+                      fontWeight: '600',
+                      elevation: 1,
+                    }}>
                     Patient Name : {item.p.full_name}
                   </Text>
                 </TouchableOpacity>

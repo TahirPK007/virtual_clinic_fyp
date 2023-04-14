@@ -26,7 +26,6 @@ const Addvitals = ({route, navigation}) => {
   const [bp, setbp] = useState('');
   const [sugar, setsugar] = useState('');
   const [temperature, settemperature] = useState('');
-  // const [symptoms, setsymptoms] = useState('');
   const [imageData, setImageData] = useState();
   const [filePath, setFilePath] = useState({});
   const [status, setstatus] = useState(0);
@@ -45,6 +44,18 @@ const Addvitals = ({route, navigation}) => {
   const [backpain, setbackpain] = useState(false);
   if (backpain === true) {
     symptoms.push('Back Pain');
+  }
+  const [headache, setheadache] = useState(false);
+  if (headache === true) {
+    symptoms.push('Headache');
+  }
+  const [stomachpain, setstomachpain] = useState(false);
+  if (stomachpain === true) {
+    symptoms.push('Stomach Pain');
+  }
+  const [throatpain, setthroatpain] = useState(false);
+  if (throatpain === true) {
+    symptoms.push('Throat Pain');
   }
 
   //this function is populating vitals and visits table
@@ -322,27 +333,27 @@ const Addvitals = ({route, navigation}) => {
             }}>
             <View style={{alignItems: 'center', flexDirection: 'row'}}>
               <CheckBox
-                value={cough}
+                value={headache}
                 onValueChange={value => {
-                  setcough(value);
+                  setheadache(value);
                 }}
               />
               <Text>Headache</Text>
             </View>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <CheckBox
-                value={legpain}
+                value={stomachpain}
                 onValueChange={value => {
-                  setlegpain(value);
+                  setstomachpain(value);
                 }}
               />
               <Text>Stomach Pain</Text>
             </View>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <CheckBox
-                value={backpain}
+                value={throatpain}
                 onValueChange={value => {
-                  setbackpain(value);
+                  setthroatpain(value);
                 }}
               />
               <Text>Throat Pain</Text>
