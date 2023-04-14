@@ -27,7 +27,6 @@ const Login = ({navigation}) => {
     getUser();
   }, []);
 
-
   //created this funciton to call other 2 functions
   const loginandstoring = () => {
     saveuser();
@@ -90,7 +89,27 @@ const Login = ({navigation}) => {
             .then(json => {
               if (json.role == 'jrdoc') {
                 navigation.navigate('Jrdoc', {paramkey: json});
-              } else alert('wrong email or password');
+              } else {
+                fetch(
+                  `http://${global.MyVar}/fyp/api/Srdoc/Srdoclogin?email=${email}&password=${password}`,
+                  {
+                    method: 'POST',
+                    // body: JSON.stringify({
+                    //   email: `${email}`,
+                    //   password: `${password}`,
+                    // }),
+                    headers: {
+                      'Content-type': 'application/json; charset=UTF-8',
+                    },
+                  },
+                )
+                  .then(response => response.json())
+                  .then(json => {
+                    if (json.role == 'srdoc') {
+                      navigation.navigate('Srdoc', {paramkey: json});
+                    } else alert('wrong email or password');
+                  });
+              }
             });
         }
       });
