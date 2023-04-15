@@ -28,6 +28,7 @@ const Addpatient = ({route, navigation}) => {
   const [updatecnicfiled, setupdatecnicfiled] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
+  //this will upate the patients cnic and other details
   const updatepatientdetails = async () => {
     fetch(
       `http://${global.MyVar}/fyp/api/Patient/Updatepatdetails?patient_id=${patid}&newcnic=${newcnic}`,
@@ -92,6 +93,7 @@ const Addpatient = ({route, navigation}) => {
       .then(response => response.json())
       .then(json => {
         setpatid(json);
+        Alert.alert('New Patient Added Successfully');
       });
   };
 

@@ -2,6 +2,7 @@ import {View, Text, StyleSheet, Image, ScrollView} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {TextInput, RadioButton} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {useNavigation} from '@react-navigation/native';
 
 const Signup = () => {
   const [fullname, setfullname] = useState('');
@@ -13,6 +14,8 @@ const Signup = () => {
   const [contact, setcontact] = useState('');
   const [role, setrole] = useState('jrdoc');
   const [status, setstatus] = useState(0);
+
+  const navigation = useNavigation();
 
   const newuser = () => {
     fetch(`http://${global.MyVar}/fyp/api/Jrdoc/Jrsignup`, {
@@ -157,7 +160,10 @@ const Signup = () => {
             }}
             name="person-add-sharp"
             backgroundColor="green"
-            onPress={newuser}>
+            onPress={() => {
+              newuser();
+              navigation.navigate('Login');
+            }}>
             Continue
           </Icon.Button>
         </View>

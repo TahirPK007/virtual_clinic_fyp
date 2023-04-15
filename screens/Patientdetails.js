@@ -602,6 +602,7 @@ const Patientdetails = ({route, navigation}) => {
             }}
             onPress={() => {
               patprescription();
+              navigation.navigation('Jrdoc');
             }}>
             <Text style={{color: 'black', fontSize: 20, fontWeight: 'bold'}}>
               Done

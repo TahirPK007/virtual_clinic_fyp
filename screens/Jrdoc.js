@@ -84,7 +84,7 @@ const Jrdoc = ({route, navigation}) => {
   //populating data to appointment table
   const addingappointment = () => {
     fetch(
-      `http://${global.MyVar}/fyp/api/Jrdoc/Appointment?jrdocid=${jrdocid}&patid=${patid}`,
+      `http://${global.MyVar}/fyp/api/Jrdoc/Appointment?jrdocid=${jrdocid}&patid=${patid}&visitid=${visitid}`,
       {
         method: 'POST',
         headers: {
