@@ -1,22 +1,23 @@
-import {View, Text, FlatList, TouchableOpacity} from 'react-native';
+import {View, Text, FlatList, TouchableOpacity, Image} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {Rating, AirbnbRating} from 'react-native-ratings';
 import {useNavigation} from '@react-navigation/native';
 
 const Appointmentdetails = ({route}) => {
   const navigation = useNavigation();
+
   const [data, setdata] = useState(null);
   const [presdetails, setpresdetails] = useState(null);
+
   const [rating, setrating] = useState();
   console.log(rating, 'rating given');
 
   let visitid = route.params.paramkey.visit_id;
   let aptid = route.params.paramkey.appointment_id;
-  //this is the srdoc id to send it back to the main sr doc page to avoid missing id error
-  let srdoc_id = route.params.paramkey.srdoc_id;
-  console.log(srdoc_id, 'srdoc id to send to main page');
+  let patid = route.params.paramkey.patient_id;
   console.log(aptid, 'apointment id to feth prescriptions');
   console.log(visitid, 'its visit id');
+  console.log(patid, 'pat id to update vitals rated');
 
   //getting appointment details
   const gettingappointmentdetails = async visitid => {
@@ -52,7 +53,7 @@ const Appointmentdetails = ({route}) => {
   //done appointment it will give rating and set status to 1 for the current appointment
   const donecurrentappointment = async (aptid, rating) => {
     fetch(
-      `http://${global.MyVar}/fyp/api/Srdoc/DoneAppointment?aptid=${aptid}&rating=${rating}`,
+      `http://${global.MyVar}/fyp/api/Srdoc/DoneAppointment?aptid=${aptid}&rating=${rating}&patid=${patid}`,
       {
         method: 'POST',
         // body: JSON.stringify({
@@ -190,9 +191,16 @@ const Appointmentdetails = ({route}) => {
                   <Text style={{color: 'green', marginLeft: 10, marginTop: 5}}>
                     Symptoms
                   </Text>
-                  <Text style={{marginLeft: 70, color: 'black'}}>
-                    {item.v.symptoms.replace(/,/g, '\n')}
-                  </Text>
+                  <View style={{flexDirection: 'row'}}>
+                    <Text style={{marginLeft: 70, color: 'black'}}>
+                      {item.v.symptoms.replace(/,/g, '\n')}
+                    </Text>
+                    <Image
+                      source={{uri: item.v.image}}
+                      style={{height: 90, width: 100, marginLeft: 100}}
+                    />
+                  </View>
+
                   <View
                     style={{
                       borderBottomWidth: 1,

@@ -10,8 +10,10 @@ import {
   Modal,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
+import {useIsFocused} from '@react-navigation/native';
 
 const Jrdoc = ({route, navigation}) => {
+  const isFoucsed = useIsFocused();
   //getting logged in jr doc id here
   var jrdocid = route.params.paramkey.jrdoc_id;
   console.log(jrdocid, 'jrdoc id to send');
@@ -102,7 +104,7 @@ const Jrdoc = ({route, navigation}) => {
     setTimeout(() => {
       showingpat();
     }, 3000);
-  }, []);
+  }, [isFoucsed]);
 
   return (
     <View style={{flex: 1}}>

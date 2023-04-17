@@ -623,7 +623,7 @@ const Patientdetails = ({route}) => {
             onPress={() => {
               patprescription();
               updatingvitalstatus();
-              navigation.navigation('Jrdoc');
+              navigation.goBack();
             }}>
             <Text style={{color: 'black', fontSize: 20, fontWeight: 'bold'}}>
               Done
