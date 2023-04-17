@@ -12,9 +12,12 @@ import {
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import CheckBox from '@react-native-community/checkbox';
+import {useNavigation} from '@react-navigation/native';
 
-const Patientdetails = ({route, navigation}) => {
+const Patientdetails = ({route}) => {
+  const navigation = useNavigation();
   const [patid, setpatid] = useState(route.params.paramkey.p.patient_id);
+  const [vital_id, setvital_id] = useState(route.params.paramkey.v.vital_id);
   const [jrdocid, setjrdocid] = useState();
   const [appointmentid, setappointmentid] = useState();
 
@@ -121,6 +124,23 @@ const Patientdetails = ({route, navigation}) => {
         'Content-type': 'application/json; charset=UTF-8',
       },
     })
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+      });
+  };
+
+  //upadting current patients's vitals status to prevent it from refetching
+  const updatingvitalstatus = async () => {
+    await fetch(
+      `http://${global.MyVar}/fyp/api/Jrdoc/Updatingvitalstatus?vitalid=${vital_id}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      },
+    )
       .then(response => response.json())
       .then(json => {
         console.log(json);
@@ -602,6 +622,7 @@ const Patientdetails = ({route, navigation}) => {
             }}
             onPress={() => {
               patprescription();
+              updatingvitalstatus();
               navigation.navigation('Jrdoc');
             }}>
             <Text style={{color: 'black', fontSize: 20, fontWeight: 'bold'}}>

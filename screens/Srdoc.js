@@ -5,12 +5,16 @@ import {
   TouchableOpacity,
   RefreshControl,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 
-const Srdoc = ({route, navigation}) => {
+const Srdoc = ({route}) => {
+  const navigation = useNavigation();
+  const ref = useRef();
+  const isFocused = useIsFocused();
   let srdocid = route.params.paramkey.srdoc_id;
   console.log(srdocid, 'logged in srdoc id');
-  const [data, setdata] = useState([]);
+  const [data, setdata] = useState(null);
   const [loading, setloading] = useState(false);
 
   //this function will get the assigned appointments
@@ -28,8 +32,10 @@ const Srdoc = ({route, navigation}) => {
   };
 
   useEffect(() => {
-    appointments();
-  }, []);
+    setTimeout(() => {
+      appointments();
+    }, 3000);
+  }, [isFocused]);
 
   const reloading = () => {
     setloading(true);
@@ -69,32 +75,38 @@ const Srdoc = ({route, navigation}) => {
             {route.params.paramkey.full_name}
           </Text>
         </View>
-        <View style={{marginTop: 10}}>
-          <FlatList
-            data={data}
-            renderItem={({item, index}) => {
-              return (
-                <TouchableOpacity
-                  style={{
-                    width: '90%',
-                    height: 40,
-                    backgroundColor: 'white',
-                    marginTop: 5,
-                    justifyContent: 'center',
-                    borderWidth: 2,
-                    alignSelf: 'center',
-                  }}
-                  onPress={() => {
-                    navigation.navigate('Appointmentdetails', {paramkey: item});
-                  }}>
-                  <Text style={{color: 'black', marginLeft: 20}}>
-                    {'Appointment ' + (index + 1)}
-                  </Text>
-                </TouchableOpacity>
-              );
-            }}
-          />
-        </View>
+        {data ? (
+          <View style={{marginTop: 10}}>
+            <FlatList
+              data={data}
+              renderItem={({item, index}) => {
+                return (
+                  <TouchableOpacity
+                    style={{
+                      width: '90%',
+                      height: 40,
+                      backgroundColor: 'white',
+                      marginTop: 5,
+                      justifyContent: 'center',
+                      borderWidth: 2,
+                      alignSelf: 'center',
+                    }}
+                    onPress={() => {
+                      navigation.navigate('Appointmentdetails', {
+                        paramkey: item,
+                      });
+                    }}>
+                    <Text style={{color: 'black', marginLeft: 20}}>
+                      {'Appointment ' + (index + 1)}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              }}
+            />
+          </View>
+        ) : (
+          <Text>No New Appointments</Text>
+        )}
       </RefreshControl>
     </View>
   );
