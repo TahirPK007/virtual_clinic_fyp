@@ -84,7 +84,6 @@ const Jrdoc = ({route, navigation}) => {
       .then(response => response.json())
       .then(json => console.log(json));
   };
-
   //populating data to appointment table
   const addingappointment = () => {
     fetch(
@@ -100,11 +99,32 @@ const Jrdoc = ({route, navigation}) => {
       .then(json => console.log(json));
   };
 
+  //this function is getting the average rating from appointment table and assigning it to the logged in junior doctor
+  const assigningrating = () => {
+    fetch(
+      `http://${global.MyVar}/fyp/api/Jobs/CalculateRatingAndAssingToJrdoc?jrdocid=${jrdocid}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      },
+    )
+      .then(response => response.json())
+      .then(json => console.log(json));
+  };
+
   useEffect(() => {
     setTimeout(() => {
+      assigningrating();
       showingpat();
     }, 3000);
   }, [isFoucsed]);
+
+  //if u wnat to run the function after every minute pass the time to it
+  // setInterval(() => {
+  //   showingpat();
+  // }, interval);
 
   return (
     <View style={{flex: 1}}>

@@ -610,25 +610,6 @@ const Patientdetails = ({route}) => {
               Add
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: 'mediumseagreen',
-              height: 40,
-              width: 300,
-              borderRadius: 10,
-              marginTop: 5,
-            }}
-            onPress={() => {
-              patprescription();
-              updatingvitalstatus();
-              navigation.goBack();
-            }}>
-            <Text style={{color: 'black', fontSize: 20, fontWeight: 'bold'}}>
-              Done
-            </Text>
-          </TouchableOpacity>
         </View>
         <View style={{marginTop: 5}}>
           <FlatList
@@ -662,6 +643,26 @@ const Patientdetails = ({route}) => {
               );
             }}
           />
+          <TouchableOpacity
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'mediumseagreen',
+              height: 40,
+              width: 300,
+              borderRadius: 10,
+              marginTop: 5,
+              alignSelf: 'center',
+            }}
+            onPress={() => {
+              patprescription();
+              updatingvitalstatus();
+              navigation.goBack();
+            }}>
+            <Text style={{color: 'black', fontSize: 20, fontWeight: 'bold'}}>
+              Done
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
