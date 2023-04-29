@@ -114,17 +114,22 @@ const Jrdoc = ({route, navigation}) => {
       .then(json => console.log(json));
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      assigningrating();
-      showingpat();
-    }, 3000);
-  }, [isFoucsed]);
+  // useEffect(() => {
+  //   assigningrating();
+  //   showingpat();
+  // }, [isFoucsed]);
 
   //if u wnat to run the function after every minute pass the time to it
-  // setInterval(() => {
-  //   showingpat();
-  // }, interval);
+  useEffect(() => {
+    // Start the interval timer
+    const intervalId = setInterval(() => {
+      assigningrating();
+      showingpat();
+    }, 10000); // 1000 milliseconds = 1 second
+
+    // Clean up the interval timer when the component is unmounted
+    return () => clearInterval(intervalId);
+  }, [isFoucsed]);
 
   return (
     <View style={{flex: 1}}>
