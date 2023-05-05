@@ -6,6 +6,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Modal,
 } from 'react-native';
 import {
   responsiveHeight,
@@ -20,6 +21,9 @@ import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
 const Login = ({navigation}) => {
   const [email, setemail] = useState();
   const [password, setpassword] = useState();
+  const [user, setuser] = useState('admin');
+  const [pass, setpass] = useState('admin');
+  const [visible, setvisible] = useState(false);
   console.log(email, 'email');
   console.log(password, 'password');
 
@@ -115,9 +119,87 @@ const Login = ({navigation}) => {
       });
   };
 
+  const checkadmin = () => {
+    if (user == 'admin' && pass == 'admin') {
+      navigation.navigate('Adminpanel');
+      setvisible(false);
+    } else {
+      alert('Wrong Credentials');
+    }
+  };
+
   return (
     <ScrollView>
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Modal visible={visible} transparent>
+          <View style={{flex: 1, backgroundColor: 'rgba(255,255,255,0.5)'}}>
+            <View
+              style={{
+                height: 300,
+                width: '90%',
+                backgroundColor: 'black',
+                // justifyContent: 'center',
+                // alignItems: 'center',
+                marginTop: 300,
+                alignSelf: 'center',
+                borderRadius: 15,
+              }}>
+              <TextInput
+                style={{width: '85%', alignSelf: 'center', marginTop: 30}}
+                mode="flat"
+                label="Enter Your Username"
+                value={user}
+                onChangeText={value => setuser(value)}
+              />
+              <TextInput
+                style={{width: '85%', alignSelf: 'center', marginTop: 15}}
+                mode="flat"
+                label="Enter Your Password"
+                value={pass}
+                onChangeText={value => setpass(value)}
+              />
+              <View
+                style={{
+                  width: '100%',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <TouchableOpacity
+                  style={{
+                    borderWidth: 1,
+                    borderColor: 'white',
+                    marginTop: 10,
+                    width: '80%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 15,
+                    height: 40,
+                  }}
+                  onPress={() => {
+                    checkadmin();
+                  }}>
+                  <Text style={{color: 'white'}}>OK</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    borderWidth: 1,
+                    borderColor: 'white',
+                    marginTop: 10,
+                    width: '80%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 15,
+                    height: 40,
+                  }}
+                  onPress={() => {
+                    setvisible(false);
+                  }}>
+                  <Text style={{color: 'white'}}>Cancel</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
         <View
           style={{
             marginTop: responsiveHeight(8),
@@ -193,6 +275,47 @@ const Login = ({navigation}) => {
               Signup
             </Icon2.Button>
           </View>
+        </View>
+        <View
+          style={{
+            width: '90%',
+          }}>
+          <TouchableOpacity
+            style={{
+              backgroundColor: 'green',
+              width: '88%',
+              height: 40,
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 5,
+              marginTop: 5,
+              alignSelf: 'center',
+            }}
+            onPress={() => {
+              navigation.navigate('Patientend');
+            }}>
+            <Text style={{color: 'white', fontSize: 17, fontWeight: '600'}}>
+              Patient
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              backgroundColor: 'green',
+              width: '88%',
+              height: 40,
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 5,
+              marginTop: 5,
+              alignSelf: 'center',
+            }}
+            onPress={() => {
+              setvisible(true);
+            }}>
+            <Text style={{color: 'white', fontSize: 17, fontWeight: '600'}}>
+              Admin
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>

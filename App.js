@@ -13,6 +13,10 @@ import Splash from './screens/Splash';
 import Patientdetails from './screens/Patientdetails';
 import Srdoc from './screens/Srdoc';
 import Appointmentdetails from './screens/Appointmentdetails';
+import Addnurse from './screens/Addnurse';
+import Patientend from './screens/Patientend';
+import Adminpanel from './screens/Adminpanel';
+import Addsrdoc from './screens/Addsrdoc';
 
 const Stack = createNativeStackNavigator();
 
@@ -74,6 +78,26 @@ const App = () => {
             <Stack.Screen
               name="Appointmentdetails"
               component={Appointmentdetails}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Patientend"
+              component={Patientend}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Adminpanel"
+              component={Adminpanel}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Addnurse"
+              component={Addnurse}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Addsrdoc"
+              component={Addsrdoc}
               options={{headerShown: false}}
             />
           </Stack.Navigator>

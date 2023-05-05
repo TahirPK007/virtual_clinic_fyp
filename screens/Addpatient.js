@@ -67,7 +67,9 @@ const Addpatient = ({route, navigation}) => {
       .then(json => {
         setfullname(json.full_name);
         setrelation(json.relation);
+
         setrelativename(json.relative_name);
+
         setdob(json.dob);
         setgender(json.gender);
         setpatid(json.patient_id);

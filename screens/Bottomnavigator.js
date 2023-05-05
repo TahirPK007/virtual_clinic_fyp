@@ -23,14 +23,14 @@ const Bottomnavigator = ({route, navigation}) => {
           headerShown: false,
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Ongoing Cases"
         component={Ongoingcases}
         options={{
           tabBarIcon: ({}) => <Icon3 name="walking" size={30} color="black" />,
           headerShown: false,
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Reports"
         component={Reports}
