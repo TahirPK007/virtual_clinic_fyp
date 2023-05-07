@@ -1,6 +1,14 @@
-import {View, Text, StyleSheet, Image, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {TextInput, RadioButton} from 'react-native-paper';
+import {RadioButton} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
 
@@ -43,130 +51,149 @@ const Signup = () => {
   };
   return (
     <ScrollView>
-      <View style={{flex: 1, justifyContent: 'center'}}>
-        <View
-          style={
-            {
-              // marginTop: 20,
-              // justifyContent: 'center',
-              // alignItems: 'center',
-            }
-          }>
-          {/* <Image
-            style={{
-              height: 100,
-              width: 100,
-              resizeMode: 'center',
-              borderWidth: 2,
-              borderColor: 'green',
-              borderRadius: 100,
-            }}
-            source={require('../images/icon.png')}
-          /> */}
-          <Text style={styles.virtualclinic}>Sign Up</Text>
-        </View>
+      <View style={{flex: 1}}>
+        <Text
+          style={{
+            color: 'green',
+            fontSize: 40,
+            fontWeight: '800',
+            marginTop: 10,
+            alignSelf: 'center',
+          }}>
+          Junior Doctor Signup
+        </Text>
         <View
           style={{
-            // justifyContent: 'center',
+            justifyContent: 'center',
             alignItems: 'center',
-            width: '100%',
+            borderTopWidth: 1,
+            width: '95%',
+            alignSelf: 'center',
           }}>
           <TextInput
-            style={styles.txtinput}
-            mode="outlined"
-            label="Full Name"
+            style={{
+              width: '90%',
+              borderWidth: 1,
+              borderRadius: 15,
+              paddingLeft: 15,
+              marginTop: 10,
+            }}
+            placeholder="Enter Full Name"
+            placeholderTextColor={'black'}
             value={fullname}
             onChangeText={value => setfullname(value)}
           />
           <TextInput
-            style={styles.txtinput}
-            mode="outlined"
-            label="Father Name"
+            style={{
+              width: '90%',
+              borderWidth: 1,
+              borderRadius: 15,
+              paddingLeft: 15,
+              marginTop: 10,
+            }}
+            placeholder="Enter Father Name"
+            placeholderTextColor={'black'}
             value={fathername}
             onChangeText={value => setfathername(value)}
           />
           <TextInput
-            style={styles.txtinput}
-            mode="outlined"
-            label="Email"
+            style={{
+              width: '90%',
+              borderWidth: 1,
+              borderRadius: 15,
+              paddingLeft: 15,
+              marginTop: 10,
+            }}
+            placeholder="Enter Email Address"
+            placeholderTextColor={'black'}
             value={email}
             onChangeText={value => setemail(value)}
+            keyboardType="email-address"
           />
           <TextInput
-            style={styles.txtinput}
-            mode="outlined"
-            label="Password"
+            style={{
+              width: '90%',
+              borderWidth: 1,
+              borderRadius: 15,
+              paddingLeft: 15,
+              marginTop: 10,
+            }}
+            placeholder="Enter Password"
+            placeholderTextColor={'black'}
             value={password}
             onChangeText={value => setpassword(value)}
+            secureTextEntry={true}
           />
           <TextInput
-            style={styles.txtinput}
-            mode="outlined"
-            label="Date Of Birth"
+            style={{
+              width: '90%',
+              borderWidth: 1,
+              borderRadius: 15,
+              paddingLeft: 15,
+              marginTop: 10,
+            }}
+            placeholder="DD-MM-YYYY"
+            placeholderTextColor={'black'}
             value={dob}
             onChangeText={value => setdob(value)}
           />
           <TextInput
-            style={styles.txtinput}
-            mode="outlined"
-            label="Contact"
+            style={{
+              width: '90%',
+              borderWidth: 1,
+              borderRadius: 15,
+              paddingLeft: 15,
+              marginTop: 10,
+            }}
+            placeholder="Enter Contact Number"
+            placeholderTextColor={'black'}
             value={contact}
             onChangeText={value => setcontact(value)}
+            keyboardType="number-pad"
           />
-          <View
-            style={{
-              // justifyContent: 'center',
-              // alignItems: 'center',
-              width: '100%',
-              flexDirection: 'column',
-            }}>
-            <RadioButton.Group
-              onValueChange={value => setgender(value)}
-              value={gender}>
-              <Text style={{fontSize: 20, marginLeft: 40, color: 'black'}}>
-                Gender :
-              </Text>
-              <View
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  flexDirection: 'row',
-                }}>
-                <RadioButton.Item
-                  label="Male"
-                  value="male"
-                  style={{width: 120}}
-                />
-                <RadioButton.Item
-                  label="Female"
-                  value="female"
-                  style={{width: 120}}
-                />
-              </View>
-            </RadioButton.Group>
-          </View>
         </View>
         <View
           style={{
-            flexDirection: 'row',
+            borderWidth: 1,
+            width: '85%',
+            alignSelf: 'center',
             marginTop: 10,
-            justifyContent: 'center',
+            borderRadius: 15,
           }}>
-          <Icon.Button
+          <Text
             style={{
-              width: 200,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            name="person-add-sharp"
-            backgroundColor="green"
-            onPress={() => {
-              newuser();
-              navigation.navigate('Login');
+              fontSize: 20,
+              color: 'black',
+              fontWeight: 'bold',
+              marginLeft: 10,
+              marginTop: 10,
             }}>
-            Continue
-          </Icon.Button>
+            Select Your Gender
+          </Text>
+          <RadioButton.Group
+            onValueChange={value => setgender(value)}
+            value={gender}>
+            <RadioButton.Item label="Male" value="Male" />
+            <RadioButton.Item label="Female" value="Female" />
+          </RadioButton.Group>
         </View>
+        <TouchableOpacity
+          style={{
+            borderWidth: 1,
+            width: '70%',
+            height: 40,
+            alignSelf: 'center',
+            marginTop: 20,
+            borderRadius: 15,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          onPress={() => {
+            newuser();
+            navigation.navigate('Login');
+          }}>
+          <Text style={{color: 'black', fontWeight: '600'}}>Continue</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );

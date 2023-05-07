@@ -5,10 +5,16 @@ const Splash = () => {
   const {height, width} = Dimensions.get('screen');
 
   return (
-    <View style={{flex: 1, backgroundColor: 'light-green'}}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: 'light-green',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
       <Image
-        style={{height: height, width: width,resizeMode:"contain"}}
-        source={require('../images/splash2.png')}
+        style={{height: 100, width: 100}}
+        source={require('../images/pharmacy.png')}
       />
     </View>
   );

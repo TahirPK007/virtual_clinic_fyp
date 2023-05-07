@@ -46,7 +46,7 @@ const Patientdetails = ({route}) => {
   const [days15, setdays15] = useState(false);
   const [days30, setdays30] = useState(false);
 
-  //timings
+  //timings modal
   const [timings, settimings] = useState('');
   const [morevenig, setmorevenig] = useState(false);
   const [morning, setmorning] = useState(false);
@@ -174,7 +174,7 @@ const Patientdetails = ({route}) => {
           <View style={{flexDirection: 'row'}}>
             <Text style={{color: 'red'}}>Blood Pressure</Text>
             <Text style={{marginLeft: 38, textDecorationLine: 'underline'}}>
-              {route.params.paramkey.v.blood_pressure}
+              {`${route.params.paramkey.v.systolic}"|"${route.params.paramkey.v.diastolic}`}
             </Text>
           </View>
           <View style={{flexDirection: 'row'}}>
@@ -204,14 +204,16 @@ const Patientdetails = ({route}) => {
               {route.params.paramkey.v.symptoms}
             </Text>
           </View>
-          <View style={{width: '40%', marginTop: 0, marginLeft: 20}}>
-            <Image
-              source={{
-                uri: route.params.paramkey.v.image,
-              }}
-              style={{width: 200, height: 150, resizeMode: 'contain'}}
-            />
-          </View>
+          {route.params.paramkey.v.image == null ? null : (
+            <View style={{width: '40%', marginTop: 0, marginLeft: 20}}>
+              <Image
+                source={{
+                  uri: route.params.paramkey.v.image,
+                }}
+                style={{width: 200, height: 150, resizeMode: 'contain'}}
+              />
+            </View>
+          )}
         </View>
         <View
           style={{
@@ -224,7 +226,9 @@ const Patientdetails = ({route}) => {
           <Text style={{color: 'black', fontSize: 20, fontWeight: 'bold'}}>
             Prescription
           </Text>
+
           {/* this is the modal for medicines */}
+
           <Modal visible={visible}>
             <View
               style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -573,8 +577,8 @@ const Patientdetails = ({route}) => {
               justifyContent: 'center',
               alignItems: 'center',
               backgroundColor: 'mediumseagreen',
-              height: 40,
-              width: 300,
+              height: 35,
+              width: 200,
               borderRadius: 10,
             }}
             onPress={() => {
@@ -611,7 +615,12 @@ const Patientdetails = ({route}) => {
             </Text>
           </TouchableOpacity>
         </View>
-        <View style={{marginTop: 5}}>
+        <View
+          style={{
+            marginTop: 5,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
           <FlatList
             data={prescription}
             renderItem={({item, index}) => {
@@ -639,6 +648,16 @@ const Patientdetails = ({route}) => {
                     style={{color: 'black', fontWeight: '500', fontSize: 18}}>
                     {item.timings}
                   </Text>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setprescription(
+                        prescription.filter(
+                          x => x.medicine_name !== item.medicine_name,
+                        ),
+                      );
+                    }}>
+                    <Text style={{color: 'red'}}>Remove</Text>
+                  </TouchableOpacity>
                 </View>
               );
             }}
@@ -648,11 +667,11 @@ const Patientdetails = ({route}) => {
               justifyContent: 'center',
               alignItems: 'center',
               backgroundColor: 'mediumseagreen',
-              height: 40,
-              width: 300,
+              height: 35,
+              width: 200,
               borderRadius: 10,
               marginTop: 5,
-              alignSelf: 'center',
+              marginLeft: 30,
             }}
             onPress={() => {
               patprescription();

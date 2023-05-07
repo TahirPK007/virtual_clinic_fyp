@@ -8,9 +8,10 @@ import {
   Platform,
   PermissionsAndroid,
   ScrollView,
+  TextInput,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {TextInput, RadioButton, Button} from 'react-native-paper';
+import {RadioButton, Button} from 'react-native-paper';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {
   responsiveHeight,
@@ -23,7 +24,8 @@ const Addvitals = ({route, navigation}) => {
   const {patient_id} = route.params;
   console.log(patient_id, 'on the addvitals page');
 
-  const [bp, setbp] = useState('');
+  const [systolic, setSystolic] = useState('');
+  const [diastolic, setDiastolic] = useState('');
   const [sugar, setsugar] = useState('');
   const [temperature, settemperature] = useState('');
   const [imageData, setImageData] = useState();
@@ -63,6 +65,7 @@ const Addvitals = ({route, navigation}) => {
     addvits();
     visit(patient_id);
     alert('Vitals And New Visit Added');
+    navigation.navigate('Addpatient');
   };
 
   const visit = async () => {
@@ -70,9 +73,6 @@ const Addvitals = ({route, navigation}) => {
       `http://${global.MyVar}/fyp/api/Patient/Visits?patient_id=${patient_id}&status=${status}`,
       {
         method: 'POST',
-        // body: JSON.stringify({
-        //   // patient_id: `${patient_id}`,
-        // }),
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
         },
@@ -85,15 +85,16 @@ const Addvitals = ({route, navigation}) => {
   const addvits = async () => {
     let data = new FormData();
     if (filePath === '') {
-      data.append('blood_pressure', bp);
+      data.append('systolic', systolic);
+      data.append('diastolic', diastolic);
       data.append('sugar', sugar);
       data.append('temperature', temperature);
       data.append('symptoms', symptoms);
       data.append('image', null);
       data.append('patient_id', patient_id);
     } else {
-      data.append('blood_pressure', bp);
-      data.append('sugar', sugar);
+      data.append('systolic', systolic);
+      data.append('diastolic', diastolic);
       data.append('temperature', temperature);
       data.append('symptoms', symptoms);
       data.append('image', imageData);
@@ -225,78 +226,151 @@ const Addvitals = ({route, navigation}) => {
       setFilePath(response.assets[0]);
     });
   };
-
+  console.log(filePath.uri, 'uri');
   return (
     <ScrollView>
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{flex: 1}}>
         <View
           style={{
             justifyContent: 'center',
             alignItems: 'center',
-            marginTop: responsiveHeight(1.5),
             backgroundColor: 'white',
-            elevation: 1,
-            borderRadius: 10,
-            height: 40,
-            width: '70%',
+            height: 50,
           }}>
           <Text
             style={{
-              fontWeight: 'bold',
-              fontSize: responsiveFontSize(2.5),
+              fontSize: 20,
               color: 'black',
+              fontWeight: '600',
             }}>
-            Add Vitals
+            Add Patient's Vitals
           </Text>
         </View>
-        <View style={{width: responsiveWidth(85)}}>
-          <Text style={{color: 'red', fontSize: responsiveFontSize(2)}}>
-            Blood Pressure
-          </Text>
+        <Text
+          style={{
+            color: 'black',
+            alignSelf: 'flex-start',
+            marginLeft: 20,
+            marginTop: 10,
+          }}>
+          Blood Pressure
+        </Text>
+        <View
+          style={{
+            width: '100%',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-evenly',
+          }}>
           <TextInput
-            style={{height: 40, backgroundColor: 'white'}}
-            // label="Cnic"
-            mode="outlined"
-            value={bp}
-            onChangeText={text => setbp(text)}
+            style={{
+              width: '40%',
+              borderWidth: 1,
+              borderRadius: 15,
+              paddingLeft: 10,
+              marginTop: 10,
+              height: 35,
+            }}
+            placeholder="Systolic"
+            placeholderTextColor={'black'}
+            value={systolic}
+            onChangeText={value => setSystolic(value)}
+            keyboardType="number-pad"
+          />
+          <TextInput
+            style={{
+              width: '40%',
+              borderWidth: 1,
+              borderRadius: 15,
+              paddingLeft: 15,
+              marginTop: 10,
+              height: 35,
+            }}
+            placeholder="Diastolic"
+            placeholderTextColor={'black'}
+            value={diastolic}
+            onChangeText={value => setDiastolic(value)}
+            keyboardType="number-pad"
           />
         </View>
-        <View style={{width: responsiveWidth(85)}}>
-          <Text style={{color: 'red', fontSize: responsiveFontSize(2)}}>
+        <View
+          style={{
+            width: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Text
+            style={{
+              color: 'black',
+              alignSelf: 'flex-start',
+              marginLeft: 20,
+              marginTop: 10,
+            }}>
             Sugar
           </Text>
           <TextInput
-            style={{height: 40, backgroundColor: 'white'}}
-            // label="Cnic"
-            mode="outlined"
+            style={{
+              width: '90%',
+              borderWidth: 1,
+              borderRadius: 15,
+              paddingLeft: 15,
+              marginTop: 10,
+              height: 35,
+            }}
+            placeholder=""
+            placeholderTextColor={'black'}
             value={sugar}
-            onChangeText={text => setsugar(text)}
+            onChangeText={value => setsugar(value)}
+            keyboardType="number-pad"
           />
-        </View>
-        <View style={{width: responsiveWidth(85)}}>
-          <Text style={{color: 'red', fontSize: responsiveFontSize(2)}}>
+          <Text
+            style={{
+              color: 'black',
+              alignSelf: 'flex-start',
+              marginLeft: 20,
+              marginTop: 10,
+            }}>
             Temperature
           </Text>
           <TextInput
-            style={{height: 40, backgroundColor: 'white'}}
-            // label="Cnic"
-            mode="outlined"
+            style={{
+              width: '90%',
+              borderWidth: 1,
+              borderRadius: 15,
+              paddingLeft: 15,
+              marginTop: 10,
+              height: 35,
+            }}
+            placeholder="Temperature In Fahrenheit"
+            placeholderTextColor={'black'}
             value={temperature}
-            onChangeText={text => settemperature(text)}
+            onChangeText={value => settemperature(value)}
+            keyboardType="number-pad"
           />
         </View>
-        <View style={{width: responsiveWidth(85)}}>
-          <Text style={{color: 'red', fontSize: responsiveFontSize(2)}}>
-            Choose Symptoms
-          </Text>
+        <Text
+          style={{
+            color: 'black',
+            alignSelf: 'flex-start',
+            marginLeft: 20,
+            marginTop: 10,
+          }}>
+          Choose Symptoms
+        </Text>
+        <View style={{width: '100%'}}>
           <View
             style={{
-              justifyContent: 'space-between',
+              width: '100%',
+              justifyContent: 'space-evenly',
               marginTop: 5,
               alignItems: 'center',
               flexDirection: 'row',
             }}>
-            <View style={{alignItems: 'center', flexDirection: 'row'}}>
+            <View
+              style={{
+                alignItems: 'center',
+                flexDirection: 'row',
+              }}>
               <CheckBox
                 value={cough}
                 onValueChange={value => {
@@ -326,7 +400,8 @@ const Addvitals = ({route, navigation}) => {
           </View>
           <View
             style={{
-              justifyContent: 'space-between',
+              width: '100%',
+              justifyContent: 'space-evenly',
               marginTop: 5,
               alignItems: 'center',
               flexDirection: 'row',
@@ -360,65 +435,77 @@ const Addvitals = ({route, navigation}) => {
             </View>
           </View>
         </View>
-        {filePath.uri === null ? (
-          null()
-        ) : (
-          <View
+
+        {filePath.uri === undefined ? (
+          <Image
+            source={require('../images/image.png')}
             style={{
-              width: responsiveWidth(85),
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: 5,
-            }}>
-            <Image
-              style={{height: 100, width: 100, resizeMode: 'center'}}
-              source={{uri: filePath.uri}}
-            />
-          </View>
+              width: 200,
+              height: 100,
+              alignSelf: 'center',
+              marginTop: 10,
+              resizeMode: 'stretch',
+            }}
+          />
+        ) : (
+          <Image
+            style={{
+              height: 100,
+              width: 200,
+              alignSelf: 'center',
+              marginTop: 10,
+              resizeMode: 'stretch',
+            }}
+            source={{uri: filePath.uri}}
+          />
         )}
 
         <View
           style={{
-            width: responsiveWidth(85),
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginTop: 20,
+            marginTop: 10,
+            alignSelf: 'center',
+            width: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}>
           <TouchableOpacity
             style={{
-              backgroundColor: 'green',
               justifyContent: 'center',
               alignItems: 'center',
-              borderRadius: 20,
+              borderRadius: 15,
               height: 35,
-              width: 100,
-            }}
-            onPress={() => chooseFile('photo')}>
-            <Text style={{color: 'white'}}>Choose Image</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              backgroundColor: 'green',
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 20,
-              height: 35,
-              width: 100,
+              width: '70%',
+              borderWidth: 1,
             }}
             onPress={vits}>
-            <Text style={{color: 'white'}}>Submit</Text>
+            <Text style={{color: 'black'}}>Submit</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={{
-              backgroundColor: 'green',
               justifyContent: 'center',
               alignItems: 'center',
-              borderRadius: 20,
+              borderRadius: 15,
               height: 35,
-              width: 100,
+              width: '70%',
+              borderWidth: 1,
+              marginTop: 10,
+            }}
+            onPress={() => chooseFile('photo')}>
+            <Text style={{color: 'black'}}>Choose Image</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 15,
+              height: 35,
+              width: '70%',
+              borderWidth: 1,
+              marginTop: 10,
             }}
             onPress={() => captureImage('photo')}>
-            <Text style={{color: 'white'}}>Capture Image</Text>
+            <Text style={{color: 'black'}}>Capture Image</Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -245,7 +245,7 @@ const Login = ({navigation}) => {
           style={{
             flexDirection: 'row',
             wdith: '90%',
-            marginTop: responsiveHeight(3),
+            marginTop: 0,
           }}>
           <View style={{marginRight: responsiveWidth(4)}}>
             <Icon.Button
@@ -284,7 +284,7 @@ const Login = ({navigation}) => {
             style={{
               backgroundColor: 'green',
               width: '88%',
-              height: 40,
+              height: 35,
               justifyContent: 'center',
               alignItems: 'center',
               borderRadius: 5,
@@ -302,7 +302,7 @@ const Login = ({navigation}) => {
             style={{
               backgroundColor: 'green',
               width: '88%',
-              height: 40,
+              height: 35,
               justifyContent: 'center',
               alignItems: 'center',
               borderRadius: 5,

@@ -12,8 +12,8 @@ import {
   responsiveWidth,
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
-import Reac, {useState, useEffect} from 'react';
-import {RadioButton, Button, Modal} from 'react-native-paper';
+import React, {useState, useEffect} from 'react';
+import {RadioButton} from 'react-native-paper';
 import {Picker} from '@react-native-picker/picker';
 
 const Addpatient = ({route, navigation}) => {
@@ -22,7 +22,7 @@ const Addpatient = ({route, navigation}) => {
   const [fullname, setfullname] = useState('');
   const [relation, setrelation] = useState('self');
   const [relativename, setrelativename] = useState('');
-  const [dob, setdob] = useState();
+  const [dob, setdob] = useState('');
   const [gender, setgender] = useState('');
   const [patid, setpatid] = useState();
   const [updatecnicfiled, setupdatecnicfiled] = useState(false);
@@ -35,12 +35,12 @@ const Addpatient = ({route, navigation}) => {
       {
         method: 'POST',
         body: JSON.stringify({
-          cnic: `${cnic}`,
-          full_name: `${fullname}`,
-          relation: `${relation}`,
-          relative_name: `${relativename}`,
-          dob: `${dob}`,
-          gender: `${gender}`,
+          cnic: cnic,
+          full_name: fullname,
+          relation: relation,
+          relative_name: relativename,
+          dob: dob,
+          gender: gender,
         }),
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
@@ -48,17 +48,13 @@ const Addpatient = ({route, navigation}) => {
       },
     )
       .then(response => response.json())
-      .then(json => console.log(json));
+      .then(json => alert(json));
   };
 
   //this method will check the cnic of the patient in database if its exist or not if cnic exist it will populate the fields
-  const checkcnic = cnic => {
-    setcnic(cnic);
+  const checkcnic = () => {
     fetch(`http://${global.MyVar}/fyp/api/Patient/Checkcnic?cnic=${cnic}`, {
       method: 'POST',
-      body: JSON.stringify({
-        cnic: `${cnic}`,
-      }),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
       },
@@ -67,9 +63,9 @@ const Addpatient = ({route, navigation}) => {
       .then(json => {
         setfullname(json.full_name);
         setrelation(json.relation);
-
-        setrelativename(json.relative_name);
-
+        if (json.relation !== 'self') {
+          setrelativename(json.relative_name);
+        }
         setdob(json.dob);
         setgender(json.gender);
         setpatid(json.patient_id);
@@ -78,281 +74,250 @@ const Addpatient = ({route, navigation}) => {
 
   //it will add the patient personal details to db after saving it will return the id and store it to patid state
   const addpat = async () => {
-    fetch(`http://${global.MyVar}/fyp/api/Patient/Addpat`, {
-      method: 'POST',
-      body: JSON.stringify({
-        cnic: `${cnic}`,
-        full_name: `${fullname}`,
-        relation: `${relation}`,
-        relative_name: `${relativename}`,
-        dob: `${dob}`,
-        gender: `${gender}`,
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
-    })
-      .then(response => response.json())
-      .then(json => {
-        setpatid(json);
-        Alert.alert('New Patient Added Successfully');
-      });
+    if (cnic === undefined) {
+      alert('pls provide all the information');
+    } else {
+      fetch(`http://${global.MyVar}/fyp/api/Patient/Addpat`, {
+        method: 'POST',
+        body: JSON.stringify({
+          cnic: cnic,
+          full_name: fullname,
+          relation: relation,
+          relative_name: relativename,
+          dob: dob,
+          gender: gender,
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      })
+        .then(response => response.json())
+        .then(json => {
+          setpatid(json);
+          Alert.alert('New Patient Added Successfully');
+        });
+    }
   };
 
   console.log(patid, 'Patient Id');
 
   return (
-    <>
-      <ScrollView>
-        <View style={{felx: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <View
+    <ScrollView>
+      <View style={{flex: 1}}>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'white',
+            height: 45,
+          }}>
+          <Text
+            style={{
+              fontWeight: '700',
+              fontSize: 23,
+              color: 'black',
+            }}>
+            Add New Patient
+          </Text>
+        </View>
+        <View
+          style={{
+            width: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <TextInput
+            style={{
+              width: '85%',
+              borderWidth: 1,
+              borderRadius: 15,
+              paddingLeft: 15,
+              marginTop: 10,
+              height: 45,
+            }}
+            placeholder="Enter Cnic"
+            placeholderTextColor={'black'}
+            value={cnic}
+            onChangeText={val => {
+              setcnic(val);
+              checkcnic();
+            }}
+            maxLength={14}
+            keyboardType="number-pad"
+          />
+          <TouchableOpacity
             style={{
               justifyContent: 'center',
               alignItems: 'center',
-              marginTop: responsiveHeight(1.5),
-              backgroundColor: 'white',
-              elevation: 1,
+              alignSelf: 'flex-end',
               borderRadius: 10,
-              height: 40,
-              width: '70%',
-            }}>
-            <Text
-              style={{
-                fontWeight: 'bold',
-                fontSize: responsiveFontSize(2.5),
-                color: 'black',
-              }}>
-              Add New Patient
-            </Text>
-          </View>
-          <View style={{width: responsiveWidth(85)}}>
-            <Text style={{color: 'red', fontSize: responsiveFontSize(2)}}>
-              Cnic
-            </Text>
-            <TextInput
-              style={{height: 40, backgroundColor: 'white'}}
-              // label="Cnic"
-              mode="outlined"
-              value={cnic}
-              onChangeText={checkcnic}
-            />
-          </View>
-          {/* <View style={{width: responsiveWidth(85)}}>
-            <Text style={{color: 'red', fontSize: responsiveFontSize(2.5),fontWeight:"700"}}>
-              New Cnic
-            </Text>
-            <TextInput
-              style={{
-                height: 50,
-                backgroundColor: 'white',
-                // borderRadius: 30,
-                padding: 15,
-                // borderBottomColor: 'black',
-                // borderWidth:1,
-                borderBottomWidth: 2,
-                borderBottomColor: 'black',
-                marginTop:5
-              }}
-              // placeholder="Enter Cnic"
-            />
-          </View> */}
-          <View
-            style={{
-              alignItems: 'flex-end',
-              marginTop: responsiveHeight(1),
-              width: responsiveWidth(85),
-            }}>
-            <TouchableOpacity
-              style={{
-                backgroundColor: 'green',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 20,
-                height: 35,
-                width: 100,
-              }}
-              onPress={() => setupdatecnicfiled(true)}>
-              <Text style={{color: 'white'}}>Update Cnic</Text>
-            </TouchableOpacity>
-          </View>
+              borderWidth: 1,
+              marginRight: 35,
+              marginTop: 10,
+              height: 30,
+              width: 100,
+            }}
+            onPress={() => setupdatecnicfiled(true)}>
+            <Text style={{color: 'black'}}>Update Cnic</Text>
+          </TouchableOpacity>
           {updatecnicfiled !== false ? (
-            <View
-              style={{
-                width: responsiveWidth(85),
-                marginBottom: responsiveHeight(2),
-              }}>
-              <Text style={{color: 'red', fontSize: responsiveFontSize(2)}}>
-                Update Cnic
-              </Text>
-              <TextInput
-                style={{height: 40, backgroundColor: 'white'}}
-                mode="outlined"
-                // label="Full Name"
-                value={newcnic}
-                onChangeText={text => setnewcnic(text)}
-              />
-            </View>
-          ) : null}
-          <View style={{width: responsiveWidth(85)}}>
-            <Text style={{color: 'red', fontSize: responsiveFontSize(2)}}>
-              Full Name
-            </Text>
             <TextInput
-              style={{height: 40, backgroundColor: 'white'}}
-              // label="Cnic"
-              mode="outlined"
-              value={fullname}
-              onChangeText={value => {
-                setfullname(value);
+              style={{
+                width: '85%',
+                borderWidth: 1,
+                borderRadius: 15,
+                paddingLeft: 15,
+                marginTop: 10,
+                height: 45,
               }}
+              placeholder="Enter Updated Cnic"
+              placeholderTextColor={'black'}
+              value={newcnic}
+              onChangeText={txt => setnewcnic(txt)}
             />
-          </View>
-          <View
+          ) : null}
+          <TextInput
             style={{
-              width: responsiveWidth(85),
-              marginTop: responsiveHeight(3),
+              width: '85%',
+              borderWidth: 1,
+              borderRadius: 15,
+              paddingLeft: 15,
+              marginTop: 10,
+              height: 45,
+            }}
+            placeholder="Enter Full Name"
+            placeholderTextColor={'black'}
+            value={fullname}
+            onChangeText={value => setfullname(value)}
+          />
+          <Picker
+            style={{
+              backgroundColor: 'white',
+              width: '85%',
+              marginTop: 10,
+            }}
+            selectedValue={relation}
+            onValueChange={value => {
+              setrelation(value);
             }}>
-            <Text style={{color: 'red', fontSize: responsiveFontSize(2)}}>
-              Relation
-            </Text>
-            <Picker
-              style={{backgroundColor: 'white', height: 40}}
-              selectedValue={relation}
-              onValueChange={value => {
-                setrelation(value);
-              }}>
-              <Picker.Item label="Self" value="self" />
-              <Picker.Item label="Wife/Spouse" value="wife" />
-              <Picker.Item label="Child" value="child" />
-              <Picker.Item label="Other Relatives" value="other_relatives" />
-            </Picker>
-          </View>
+            <Picker.Item label="Choose Relation" />
+            <Picker.Item label="Self" value="self" />
+            <Picker.Item label="Wife/Spouse" value="wife" />
+            <Picker.Item label="Child" value="child" />
+            <Picker.Item label="Other Relatives" value="other_relatives" />
+          </Picker>
           {relation !== 'self' ? (
-            <View
-              style={{
-                width: responsiveWidth(85),
-                marginTop: responsiveHeight(2),
-              }}>
-              <Text style={{color: 'red', fontSize: responsiveFontSize(2)}}>
-                Relative Name
-              </Text>
-              <TextInput
-                style={{height: 40, backgroundColor: 'white'}}
-                // label="Cnic"
-                mode="outlined"
-                value={relativename}
-                onChangeText={value => {
-                  setrelativename(value);
-                }}
-              />
-            </View>
-          ) : null}
-          <View
-            style={{
-              width: responsiveWidth(85),
-              marginTop: responsiveHeight(2),
-            }}>
-            <Text style={{color: 'red', fontSize: responsiveFontSize(2)}}>
-              Date Of Birth
-            </Text>
             <TextInput
-              style={{height: 40, backgroundColor: 'white'}}
-              // label="Cnic"
-              mode="outlined"
-              value={dob}
-              onChangeText={value => {
-                setdob(value);
+              style={{
+                width: '85%',
+                borderWidth: 1,
+                borderRadius: 15,
+                paddingLeft: 15,
+                marginTop: 10,
+                height: 45,
               }}
+              placeholder="Enter Relative Name"
+              placeholderTextColor={'black'}
+              value={relativename}
+              onChangeText={value => setrelativename(value)}
             />
-          </View>
-
-          <View
+          ) : null}
+          <TextInput
             style={{
-              // justifyContent: 'center',
-              // alignItems: 'center',
-              width: responsiveWidth(85),
-              flexDirection: 'column',
-              marginTop: responsiveHeight(2),
-            }}>
-            <RadioButton.Group
-              onValueChange={value => setgender(value)}
-              value={gender}>
-              <Text style={{fontSize: responsiveFontSize(2), color: 'red'}}>
-                Gender :
-              </Text>
-              <View
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  flexDirection: 'row',
-                }}>
-                <RadioButton.Item
-                  label="Male"
-                  value="male"
-                  style={{width: responsiveWidth(30)}}
-                />
-                <RadioButton.Item
-                  label="Female"
-                  value="female"
-                  style={{width: responsiveWidth(34)}}
-                />
-              </View>
-            </RadioButton.Group>
-          </View>
-          <View
-            style={{
-              width: responsiveWidth(85),
-              marginTop: responsiveHeight(2),
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
-            <TouchableOpacity
-              style={{
-                backgroundColor: 'green',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 20,
-                height: 35,
-                width: 100,
-              }}
-              onPress={addpat}>
-              <Text style={{color: 'white'}}>Save Patient</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={{
-                backgroundColor: 'green',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 20,
-                height: 35,
-                width: 100,
-              }}
-              onPress={() => {
-                navigation.navigate('Addvitals', {
-                  patient_id: patid,
-                });
-              }}>
-              <Text style={{color: 'white'}}>Add Vitals</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={{
-                backgroundColor: 'green',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 20,
-                height: 35,
-                width: 100,
-              }}
-              onPress={updatepatientdetails}>
-              <Text style={{color: 'white'}}>Update</Text>
-            </TouchableOpacity>
-          </View>
+              width: '85%',
+              borderWidth: 1,
+              borderRadius: 15,
+              paddingLeft: 15,
+              marginTop: 10,
+              height: 45,
+            }}
+            placeholder="DD-MM-YYYY"
+            placeholderTextColor={'black'}
+            value={dob}
+            onChangeText={value => setdob(value)}
+          />
         </View>
-      </ScrollView>
-    </>
+
+        <View
+          style={{
+            borderWidth: 1,
+            width: '85%',
+            alignSelf: 'center',
+            marginTop: 10,
+            borderRadius: 15,
+          }}>
+          <Text
+            style={{
+              fontSize: 20,
+              color: 'black',
+              fontWeight: '600',
+              marginLeft: 10,
+              marginTop: 10,
+            }}>
+            Select Gender
+          </Text>
+          <RadioButton.Group
+            onValueChange={value => setgender(value)}
+            value={gender}>
+            <RadioButton.Item label="Male" value="Male" />
+            <RadioButton.Item label="Female" value="Female" />
+          </RadioButton.Group>
+        </View>
+        <View
+          style={{
+            marginTop: 10,
+            alignSelf: 'center',
+            width: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <TouchableOpacity
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 15,
+              height: 35,
+              width: '70%',
+              borderWidth: 1,
+            }}
+            onPress={addpat}>
+            <Text style={{color: 'black'}}>Save Patient</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 15,
+              height: 35,
+              width: '70%',
+              borderWidth: 1,
+              marginTop: 10,
+            }}
+            onPress={() => {
+              navigation.navigate('Addvitals', {
+                patient_id: patid,
+              });
+            }}>
+            <Text style={{color: 'black'}}>Add Vitals</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 15,
+              height: 35,
+              width: '70%',
+              borderWidth: 1,
+              marginTop: 10,
+            }}
+            onPress={updatepatientdetails}>
+            <Text style={{color: 'black'}}>Update</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </ScrollView>
   );
 };
 
