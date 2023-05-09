@@ -32,9 +32,7 @@ const Srdoc = ({route}) => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      appointments();
-    }, 3000);
+    appointments();
   }, [isFocused]);
 
   const reloading = () => {
@@ -54,13 +52,11 @@ const Srdoc = ({route}) => {
         <View
           style={{
             width: '100%',
-            height: 50,
             flexDirection: 'row',
             backgroundColor: 'white',
             justifyContent: 'center',
             alignItems: 'center',
-            borderBottomWidth: 2,
-            borderBottomColor: 'green',
+            height: 50,
           }}>
           <Text style={{color: 'black', fontSize: 18, fontWeight: '700'}}>
             Senior Doctor:
@@ -70,7 +66,7 @@ const Srdoc = ({route}) => {
               color: 'black',
               fontSize: 18,
               fontWeight: '700',
-              marginLeft: 20,
+              marginLeft: 10,
             }}>
             {route.params.paramkey.full_name}
           </Text>
@@ -97,7 +93,7 @@ const Srdoc = ({route}) => {
                       });
                     }}>
                     <Text style={{color: 'black', marginLeft: 20}}>
-                      {'Appointment ' + (index + 1)}
+                      {'Appointment -' + (index + 1)}
                     </Text>
                   </TouchableOpacity>
                 );

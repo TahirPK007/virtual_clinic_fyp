@@ -150,186 +150,216 @@ const Patientdetails = ({route}) => {
   return (
     <ScrollView>
       <View style={{flex: 1}}>
-        <View style={{width: '80%', marginLeft: 20}}>
-          <Text style={{color: 'black', fontSize: 20, fontWeight: 'bold'}}>
-            Patient Details:
-          </Text>
-          <Text style={{color: 'red'}}>Patient Name</Text>
-          <Text style={{marginLeft: 20, color: 'black', fontWeight: '600'}}>
-            {route.params.paramkey.p.full_name}
-          </Text>
-          <Text style={{color: 'red'}}>Date Of Birth</Text>
-          <Text style={{marginLeft: 20, color: 'black', fontWeight: '600'}}>
-            {route.params.paramkey.p.dob}
-          </Text>
-          <Text style={{color: 'red'}}>Gender</Text>
-          <Text style={{marginLeft: 20, color: 'black', fontWeight: '600'}}>
-            {route.params.paramkey.p.gender}
+        <View
+          style={{
+            width: '100%',
+            backgroundColor: 'white',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Text style={{color: 'black', fontSize: 25, fontWeight: '600'}}>
+            Patient Details
           </Text>
         </View>
-        <View style={{width: '80%', marginLeft: 20}}>
-          <Text style={{color: 'black', fontSize: 20, fontWeight: 'bold'}}>
-            Vitals
-          </Text>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={{color: 'red'}}>Blood Pressure</Text>
-            <Text style={{marginLeft: 38, textDecorationLine: 'underline'}}>
-              {`${route.params.paramkey.v.systolic}"|"${route.params.paramkey.v.diastolic}`}
-            </Text>
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={{color: 'red'}}> Sugar</Text>
-            <Text style={{marginLeft: 90, textDecorationLine: 'underline'}}>
-              {route.params.paramkey.v.sugar}
-            </Text>
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={{color: 'red'}}>Temperature</Text>
-            <Text style={{marginLeft: 50, textDecorationLine: 'underline'}}>
-              {route.params.paramkey.v.temperature} F
-            </Text>
-          </View>
-        </View>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{width: '100%', marginLeft: 20, marginTop: 10}}>
           <View
-            style={{
-              marginTop: 10,
-              width: '40%',
-              marginLeft: 20,
-            }}>
-            <Text style={{color: 'black', fontSize: 20, fontWeight: 'bold'}}>
-              Symptoms
+            style={{flexDirection: 'row', width: '100%', alignItems: 'center'}}>
+            <Text style={{color: 'purple', fontWeight: '600', fontSize: 18}}>
+              Patient Name:
             </Text>
-            <Text style={{marginLeft: 20, color: 'red', fontWeight: '600'}}>
-              {route.params.paramkey.v.symptoms}
+            <Text style={{marginLeft: 10, color: 'black', fontWeight: '600'}}>
+              {route.params.paramkey.p.full_name}
             </Text>
           </View>
-          {route.params.paramkey.v.image == null ? null : (
-            <View style={{width: '40%', marginTop: 0, marginLeft: 20}}>
+
+          <View
+            style={{flexDirection: 'row', width: '100%', alignItems: 'center'}}>
+            <Text style={{color: 'purple', fontWeight: '600', fontSize: 18}}>
+              Date Of Birth:
+            </Text>
+            <Text style={{marginLeft: 10, color: 'black', fontWeight: '600'}}>
+              {route.params.paramkey.p.dob}
+            </Text>
+          </View>
+
+          <View
+            style={{flexDirection: 'row', width: '100%', alignItems: 'center'}}>
+            <Text style={{color: 'purple', fontWeight: '600', fontSize: 18}}>
+              Gender:
+            </Text>
+            <Text style={{marginLeft: 10, color: 'black', fontWeight: '600'}}>
+              {route.params.paramkey.p.gender}
+            </Text>
+          </View>
+          <Text style={{color: 'purple', fontWeight: '600', fontSize: 18}}>
+            Vitals:
+          </Text>
+          <View style={{width: '100%', marginLeft: 30}}>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={{color: 'green'}}>Blood Pressure:</Text>
+              <Text style={{textDecorationLine: 'underline', marginLeft: 10}}>
+                {`${route.params.paramkey.v.systolic} | ${route.params.paramkey.v.diastolic}`}
+              </Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={{color: 'green'}}> Sugar:</Text>
+              <Text style={{marginLeft: 10, textDecorationLine: 'underline'}}>
+                {route.params.paramkey.v.sugar}
+              </Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={{color: 'green'}}>Temperature:</Text>
+              <Text style={{marginLeft: 10, textDecorationLine: 'underline'}}>
+                {route.params.paramkey.v.temperature} F
+              </Text>
+            </View>
+          </View>
+          <Text style={{color: 'purple', fontWeight: '600', fontSize: 18}}>
+            Symptoms:
+          </Text>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={{marginLeft: 20, color: 'red', fontWeight: '600'}}>
+              {route.params.paramkey.v.symptoms.replace(/,/g, '\n')}
+            </Text>
+            {route.params.paramkey.v.image == null ? null : (
               <Image
                 source={{
                   uri: route.params.paramkey.v.image,
                 }}
-                style={{width: 200, height: 150, resizeMode: 'contain'}}
-              />
-            </View>
-          )}
-        </View>
-        <View
-          style={{
-            widht: '100%',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginLeft: 30,
-            marginTop: 30,
-          }}>
-          <Text style={{color: 'black', fontSize: 20, fontWeight: 'bold'}}>
-            Prescription
-          </Text>
-
-          {/* this is the modal for medicines */}
-
-          <Modal visible={visible}>
-            <View
-              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Text>Choose Medicine</Text>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <CheckBox
-                  disabled={disable}
-                  value={panadol}
-                  onValueChange={value => {
-                    setpanadol(value);
-                    setdisable(true);
-                  }}
-                />
-                <Text>Panadol</Text>
-              </View>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <CheckBox
-                  disabled={disable}
-                  value={Paracetamol}
-                  onValueChange={value => {
-                    setParacetamol(value);
-                    setdisable(true);
-                  }}
-                />
-                <Text>Paracetamol</Text>
-              </View>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <CheckBox
-                  disabled={disable}
-                  value={Ibuprofen}
-                  onValueChange={value => {
-                    setIbuprofen(value);
-                    setdisable(true);
-                  }}
-                />
-                <Text>Ibuprofen</Text>
-              </View>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <CheckBox
-                  disabled={disable}
-                  value={flaygyl}
-                  onValueChange={value => {
-                    setflaygyl(value);
-                    setdisable(true);
-                  }}
-                />
-                <Text>Flaygyl</Text>
-              </View>
-              <View
                 style={{
-                  flexDirection: 'row',
-                  width: '100%',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
+                  width: 170,
+                  height: 150,
+                  resizeMode: 'contain',
                   position: 'absolute',
-                  bottom: 0,
-                  height: 70,
-                  alignSelf: 'center',
-                  paddingLeft: 90,
-                  paddingRight: 90,
-                }}>
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: 'white',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    height: 30,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    width: '30%',
-                  }}
-                  onPress={() => {
-                    setvisible(false);
-                  }}>
-                  <Text style={{color: 'black'}}>Cancel</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: 'white',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    height: 30,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    width: '30%',
-                  }}
-                  onPress={() => {
-                    settingmeds();
-                    setvisible(false);
-                  }}>
-                  <Text style={{color: 'black'}}>OK</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Modal>
+                  top: -40,
+                  left: 150,
+                }}
+              />
+            )}
+          </View>
+        </View>
+        <Text
+          style={{
+            color: 'black',
+            fontSize: 20,
+            fontWeight: 'bold',
+            alignSelf: 'center',
+            marginTop: 50,
+          }}>
+          Prescription
+        </Text>
 
-          {/* this is the modal for duration */}
-          <Modal visible={visible1}>
-            <View
-              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Text>Choose Duration</Text>
+        {/* this is the modal for medicines */}
+        <Modal visible={visible}>
+          <Text
+            style={{
+              color: 'black',
+              alignSelf: 'center',
+              fontSize: 20,
+              marginTop: 10,
+            }}>
+            Choose Medicine
+          </Text>
+          <View style={{width: '100%', flexDirection: 'row', marginLeft: 20}}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <CheckBox
+                disabled={disable}
+                value={panadol}
+                onValueChange={value => {
+                  setpanadol(value);
+                  setdisable(true);
+                }}
+              />
+              <Text>Panadol</Text>
+            </View>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <CheckBox
+                disabled={disable}
+                value={Paracetamol}
+                onValueChange={value => {
+                  setParacetamol(value);
+                  setdisable(true);
+                }}
+              />
+              <Text>Paracetamol</Text>
+            </View>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <CheckBox
+                disabled={disable}
+                value={Ibuprofen}
+                onValueChange={value => {
+                  setIbuprofen(value);
+                  setdisable(true);
+                }}
+              />
+              <Text>Ibuprofen</Text>
+            </View>
+          </View>
+          <View style={{width: '100%', flexDirection: 'row', marginLeft: 20}}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <CheckBox
+                disabled={disable}
+                value={flaygyl}
+                onValueChange={value => {
+                  setflaygyl(value);
+                  setdisable(true);
+                }}
+              />
+              <Text>Flaygyl</Text>
+            </View>
+          </View>
+
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 10,
+              width: '100%',
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
+            }}>
+            <TouchableOpacity
+              style={{
+                borderWidth: 1,
+                height: 30,
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: 100,
+              }}
+              onPress={() => {
+                setvisible(false);
+              }}>
+              <Text style={{color: 'black'}}>Cancel</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                borderWidth: 1,
+                height: 30,
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: 100,
+              }}
+              onPress={() => {
+                settingmeds();
+                setvisible(false);
+              }}>
+              <Text style={{color: 'black'}}>OK</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
+
+        {/* this is the modal for duration */}
+        <Modal visible={visible1}>
+          <Text
+            style={{
+              color: 'black',
+              alignSelf: 'center',
+              fontSize: 20,
+              marginTop: 10,
+            }}>
+            Choose Duration
+          </Text>
+          <View style={{marginLeft: 20}}>
+            <View style={{width: '100%', flexDirection: 'row'}}>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <CheckBox
                   disabled={disable1}
@@ -363,6 +393,8 @@ const Patientdetails = ({route}) => {
                 />
                 <Text>15-Days</Text>
               </View>
+            </View>
+            <View style={{width: '100%', flexDirection: 'row'}}>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <CheckBox
                   disabled={disable1}
@@ -374,247 +406,239 @@ const Patientdetails = ({route}) => {
                 />
                 <Text>30-Days</Text>
               </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  width: '100%',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  position: 'absolute',
-                  bottom: 0,
-                  height: 70,
-                  alignSelf: 'center',
-                  paddingLeft: 90,
-                  paddingRight: 90,
-                }}>
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: 'white',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    height: 30,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    width: '30%',
-                  }}
-                  onPress={() => {
-                    setvisible1(false);
-                  }}>
-                  <Text style={{color: 'black'}}>Cancel</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: 'white',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    height: 30,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    width: '30%',
-                  }}
-                  onPress={() => {
-                    settingduration();
-                    setvisible1(false);
-                  }}>
-                  <Text style={{color: 'black'}}>OK</Text>
-                </TouchableOpacity>
-              </View>
             </View>
-          </Modal>
+          </View>
 
-          {/* this is the modal for timings */}
-
-          <Modal visible={visible2}>
-            <View
-              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Text>Choose the Timings</Text>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <CheckBox
-                  disabled={disable2}
-                  value={morevenig}
-                  onValueChange={value => {
-                    setmorevenig(value);
-                    setdisable2(true);
-                  }}
-                />
-                <Text>Morning+Evening+Night</Text>
-              </View>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <CheckBox
-                  disabled={disable2}
-                  value={morning}
-                  onValueChange={value => {
-                    setmorning(value);
-                    setdisable2(true);
-                  }}
-                />
-                <Text>Morning Only</Text>
-              </View>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <CheckBox
-                  disabled={disable2}
-                  value={evening}
-                  onValueChange={value => {
-                    setevening(value);
-                    setdisable2(true);
-                  }}
-                />
-                <Text>Evening Only</Text>
-              </View>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <CheckBox
-                  disabled={disable2}
-                  value={night}
-                  onValueChange={value => {
-                    setnight(value);
-                    setdisable2(true);
-                  }}
-                />
-                <Text>Night Only</Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  width: '100%',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  position: 'absolute',
-                  bottom: 0,
-                  height: 70,
-                  alignSelf: 'center',
-                  paddingLeft: 90,
-                  paddingRight: 90,
-                }}>
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: 'white',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    height: 30,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    width: '30%',
-                  }}
-                  onPress={() => {
-                    setvisible2(false);
-                  }}>
-                  <Text style={{color: 'black'}}>Cancel</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: 'white',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    height: 30,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    width: '30%',
-                  }}
-                  onPress={() => {
-                    settingstimings();
-                    setvisible2(false);
-                  }}>
-                  <Text style={{color: 'black'}}>OK</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Modal>
           <View
             style={{
+              position: 'absolute',
+              bottom: 10,
+              width: '100%',
               flexDirection: 'row',
-              widht: '100%',
-              height: 90,
-              alignItems: 'center',
+              justifyContent: 'space-evenly',
             }}>
             <TouchableOpacity
               style={{
-                backgroundColor: 'white',
                 borderWidth: 1,
-                height: 40,
-                width: '30%',
-                borderRadius: 10,
+                height: 30,
                 justifyContent: 'center',
                 alignItems: 'center',
+                width: 100,
               }}
               onPress={() => {
-                setvisible(true);
+                setvisible1(false);
               }}>
-              <Text style={{color: 'black'}}>Medicine</Text>
+              <Text style={{color: 'black'}}>Cancel</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={{
-                backgroundColor: 'white',
                 borderWidth: 1,
-                height: 40,
-                width: '30%',
-                borderRadius: 10,
+                height: 30,
                 justifyContent: 'center',
                 alignItems: 'center',
+                width: 100,
               }}
               onPress={() => {
-                setvisible1(true);
+                settingduration();
+                setvisible1(false);
               }}>
-              <Text style={{color: 'black'}}>Duration</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                backgroundColor: 'white',
-                borderWidth: 1,
-                height: 40,
-                width: '30%',
-                borderRadius: 10,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-              onPress={() => {
-                setvisible2(true);
-              }}>
-              <Text style={{color: 'black'}}>Timings</Text>
+              <Text style={{color: 'black'}}>OK</Text>
             </TouchableOpacity>
           </View>
+        </Modal>
+
+        {/* this is the modal for timings */}
+        <Modal visible={visible2}>
+          <View
+            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Text>Choose the Timings</Text>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <CheckBox
+                disabled={disable2}
+                value={morevenig}
+                onValueChange={value => {
+                  setmorevenig(value);
+                  setdisable2(true);
+                }}
+              />
+              <Text>Morning+Evening+Night</Text>
+            </View>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <CheckBox
+                disabled={disable2}
+                value={morning}
+                onValueChange={value => {
+                  setmorning(value);
+                  setdisable2(true);
+                }}
+              />
+              <Text>Morning Only</Text>
+            </View>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <CheckBox
+                disabled={disable2}
+                value={evening}
+                onValueChange={value => {
+                  setevening(value);
+                  setdisable2(true);
+                }}
+              />
+              <Text>Evening Only</Text>
+            </View>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <CheckBox
+                disabled={disable2}
+                value={night}
+                onValueChange={value => {
+                  setnight(value);
+                  setdisable2(true);
+                }}
+              />
+              <Text>Night Only</Text>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                width: '100%',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                position: 'absolute',
+                bottom: 0,
+                height: 70,
+                alignSelf: 'center',
+                paddingLeft: 90,
+                paddingRight: 90,
+              }}>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: 'white',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  height: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '30%',
+                }}
+                onPress={() => {
+                  setvisible2(false);
+                }}>
+                <Text style={{color: 'black'}}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: 'white',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  height: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '30%',
+                }}
+                onPress={() => {
+                  settingstimings();
+                  setvisible2(false);
+                }}>
+                <Text style={{color: 'black'}}>OK</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+
+        <View
+          style={{
+            flexDirection: 'row',
+            widht: '100%',
+            justifyContent: 'space-evenly',
+            marginTop: 10,
+          }}>
           <TouchableOpacity
             style={{
+              borderWidth: 1,
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: 'mediumseagreen',
-              height: 35,
-              width: 200,
               borderRadius: 10,
+              height: 35,
+              width: 80,
             }}
             onPress={() => {
-              setprescription([
-                ...prescription,
-                {
-                  appointment_id: appointmentid,
-                  medicine_name: medicine,
-                  duration: duartion,
-                  timings: timings,
-                },
-              ]);
-              setmedicine('');
-              setduartion('');
-              settimings('');
-              setdisable(false);
-              setdisable1(false);
-              setdisable2(false);
-              setmorevenig(false);
-              setmorning(false);
-              setevening(false);
-              setnight(false);
-              setdays5(false);
-              setdays10(false);
-              setdays15(false);
-              setdays30(false);
-              setpanadol(false);
-              setParacetamol(false);
-              setIbuprofen(false);
-              setflaygyl(false);
+              setvisible(true);
             }}>
-            <Text style={{color: 'black', fontSize: 20, fontWeight: 'bold'}}>
-              Add
-            </Text>
+            <Text style={{color: 'black'}}>Medicine</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              borderWidth: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 10,
+              height: 35,
+              width: 80,
+            }}
+            onPress={() => {
+              setvisible1(true);
+            }}>
+            <Text style={{color: 'black'}}>Duration</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              borderWidth: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 10,
+              height: 35,
+              width: 80,
+            }}
+            onPress={() => {
+              setvisible2(true);
+            }}>
+            <Text style={{color: 'black'}}>Timings</Text>
           </TouchableOpacity>
         </View>
+        <TouchableOpacity
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 35,
+            borderWidth: 1,
+            width: 150,
+            alignSelf: 'center',
+            marginTop: 10,
+            borderRadius: 10,
+          }}
+          onPress={() => {
+            setprescription([
+              ...prescription,
+              {
+                appointment_id: appointmentid,
+                medicine_name: medicine,
+                duration: duartion,
+                timings: timings,
+              },
+            ]);
+            setmedicine('');
+            setduartion('');
+            settimings('');
+            setdisable(false);
+            setdisable1(false);
+            setdisable2(false);
+            setmorevenig(false);
+            setmorning(false);
+            setevening(false);
+            setnight(false);
+            setdays5(false);
+            setdays10(false);
+            setdays15(false);
+            setdays30(false);
+            setpanadol(false);
+            setParacetamol(false);
+            setIbuprofen(false);
+            setflaygyl(false);
+          }}>
+          <Text style={{color: 'black', fontSize: 20, fontWeight: 'bold'}}>
+            Add
+          </Text>
+        </TouchableOpacity>
+
         <View
           style={{
             marginTop: 5,
@@ -628,24 +652,21 @@ const Patientdetails = ({route}) => {
                 <View
                   style={{
                     flexDirection: 'row',
-                    width: '90%',
-                    height: 40,
-                    borderWidth: 2,
-                    backgroundColor: 'white',
+                    width: '100%',
+                    height: 30,
+                    borderWidth: 1,
+
                     justifyContent: 'space-evenly',
                     alignItems: 'center',
-                    alignSelf: 'center',
+                    marginTop: 2,
                   }}>
-                  <Text
-                    style={{color: 'black', fontWeight: '500', fontSize: 18}}>
+                  <Text style={{color: 'black', fontSize: 15}}>
                     {item.medicine_name}
                   </Text>
-                  <Text
-                    style={{color: 'black', fontWeight: '500', fontSize: 18}}>
+                  <Text style={{color: 'black', fontSize: 15}}>
                     {item.duration}
                   </Text>
-                  <Text
-                    style={{color: 'black', fontWeight: '500', fontSize: 18}}>
+                  <Text style={{color: 'black', fontSize: 15}}>
                     {item.timings}
                   </Text>
                   <TouchableOpacity
@@ -662,26 +683,29 @@ const Patientdetails = ({route}) => {
               );
             }}
           />
-          <TouchableOpacity
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: 'mediumseagreen',
-              height: 35,
-              width: 200,
-              borderRadius: 10,
-              marginTop: 5,
-              marginLeft: 30,
-            }}
-            onPress={() => {
-              patprescription();
-              updatingvitalstatus();
-              navigation.goBack();
-            }}>
-            <Text style={{color: 'black', fontSize: 20, fontWeight: 'bold'}}>
-              Done
-            </Text>
-          </TouchableOpacity>
+          {prescription.length == 0 ? null : (
+            <TouchableOpacity
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: 35,
+                borderWidth: 1,
+                width: 150,
+                alignSelf: 'center',
+                marginTop: 5,
+                borderRadius: 10,
+                marginBottom: 5,
+              }}
+              onPress={() => {
+                patprescription();
+                updatingvitalstatus();
+                navigation.goBack();
+              }}>
+              <Text style={{color: 'black', fontSize: 20, fontWeight: 'bold'}}>
+                Done
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </ScrollView>

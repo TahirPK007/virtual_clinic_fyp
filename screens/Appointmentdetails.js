@@ -92,9 +92,9 @@ const Appointmentdetails = ({route}) => {
                   <Text
                     style={{
                       color: 'black',
-                      fontSize: 27,
-                      marginLeft: 20,
-                      fontWeight: 'bold',
+                      fontSize: 20,
+                      alignSelf: 'center',
+                      fontWeight: '700',
                       marginTop: 10,
                     }}>
                     {'Jr Doc: ' + item.jr.full_name}
@@ -106,15 +106,25 @@ const Appointmentdetails = ({route}) => {
                       alignSelf: 'center',
                       marginTop: 5,
                     }}></View>
-                  <Text style={{color: 'green', marginLeft: 10, marginTop: 5}}>
-                    Patient Details
+                  <Text
+                    style={{
+                      color: 'black',
+                      fontSize: 20,
+                      fontWeight: '700',
+                      marginLeft: 15,
+                    }}>
+                    Patient Details:
                   </Text>
-                  <Text style={{marginTop: 5, color: 'red', marginLeft: 30}}>
-                    Patient Name
-                  </Text>
-                  <Text style={{marginLeft: 40, marginTop: 5, color: 'black'}}>
-                    {item.p.full_name}
-                  </Text>
+                  <View style={{flexDirection: 'row'}}>
+                    <Text style={{marginTop: 5, color: 'red', marginLeft: 30}}>
+                      Patient Name
+                    </Text>
+                    <Text
+                      style={{marginLeft: 40, marginTop: 5, color: 'black'}}>
+                      {item.p.full_name}
+                    </Text>
+                  </View>
+
                   <Text style={{marginTop: 5, color: 'red', marginLeft: 30}}>
                     D.O.B
                   </Text>
@@ -148,7 +158,7 @@ const Appointmentdetails = ({route}) => {
                         color: 'black',
                         textDecorationLine: 'underline',
                       }}>
-                      {item.v.blood_pressure}
+                      {`${item.v.systolic} | ${item.v.diastolic}`}
                     </Text>
                   </View>
                   <View style={{flexDirection: 'row'}}>
@@ -294,7 +304,15 @@ const Appointmentdetails = ({route}) => {
             }}
           />
         ) : (
-          <Text>Fetching Appointment Details</Text>
+          <Text
+            style={{
+              color: 'black',
+              fontSize: 20,
+              alignSelf: 'center',
+              marginTop: '70%',
+            }}>
+            Fetching Appointment Details...
+          </Text>
         )}
       </View>
     </View>

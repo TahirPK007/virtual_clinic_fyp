@@ -95,6 +95,7 @@ const Addvitals = ({route, navigation}) => {
     } else {
       data.append('systolic', systolic);
       data.append('diastolic', diastolic);
+      data.append('sugar', sugar);
       data.append('temperature', temperature);
       data.append('symptoms', symptoms);
       data.append('image', imageData);

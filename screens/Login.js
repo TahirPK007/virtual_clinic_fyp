@@ -157,6 +157,7 @@ const Login = ({navigation}) => {
                 label="Enter Your Password"
                 value={pass}
                 onChangeText={value => setpass(value)}
+                secureTextEntry={true}
               />
               <View
                 style={{
