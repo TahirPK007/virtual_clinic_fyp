@@ -210,7 +210,7 @@ const Patientdetails = ({route}) => {
             <View style={{flexDirection: 'row'}}>
               <Text style={{color: 'green'}}>Temperature:</Text>
               <Text style={{marginLeft: 10, textDecorationLine: 'underline'}}>
-                {route.params.paramkey.v.temperature} F
+                {route.params.paramkey.v.temperature}
               </Text>
             </View>
           </View>

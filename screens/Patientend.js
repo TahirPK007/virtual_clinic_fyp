@@ -7,10 +7,19 @@ import {
   FlatList,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
+import {Picker} from '@react-native-picker/picker';
 
 const Patientend = () => {
   const [cnic, setcnic] = useState();
   const [data, setdata] = useState([]);
+  const [gettingdate, setgettingdate] = useState([]);
+  const [date, setdate] = useState('');
+  const filterdata = data.filter(item => {
+    return item.p.date == date;
+  });
+
+  console.log(filterdata, 'filtered data array');
+  console.log(gettingdate, 'appointment array with date');
   const getdata = () => {
     fetch(
       `http://${global.MyVar}/fyp/api/User/GetAllPrescriptions?cnic=${cnic}`,
@@ -19,6 +28,19 @@ const Patientend = () => {
       .then(json => {
         console.log(json);
         setdata(json);
+        filterdata(json);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+  //geting appointments date for the patient who enters cnic
+  const getingdate = () => {
+    fetch(`http://${global.MyVar}/fyp/api/User/Gettingdate?cnic=${cnic}`)
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+        setgettingdate(json);
       })
       .catch(error => {
         console.error(error);
@@ -58,12 +80,31 @@ const Patientend = () => {
         <TouchableOpacity
           onPress={() => {
             getdata();
+            getingdate();
           }}>
           <Image
             source={require('../images/search.png')}
             style={{width: 25, height: 25}}
           />
         </TouchableOpacity>
+      </View>
+      <View style={{width: '100%'}}>
+        <Picker
+          style={{
+            backgroundColor: 'white',
+            width: '80%',
+            marginTop: 10,
+            alignSelf: 'center',
+          }}
+          selectedValue={date}
+          onValueChange={value => {
+            setdate(value);
+          }}>
+          <Picker.Item label="Choose Date" />
+          {gettingdate.map(item => {
+            return <Picker.Item label={item.date} value={item.date} />;
+          })}
+        </Picker>
       </View>
       <View
         style={{
@@ -103,7 +144,7 @@ const Patientend = () => {
       </View>
       <View>
         <FlatList
-          data={data}
+          data={filterdata}
           renderItem={({item, index}) => {
             return (
               <View
