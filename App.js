@@ -17,6 +17,7 @@ import Addnurse from './screens/Addnurse';
 import Patientend from './screens/Patientend';
 import Adminpanel from './screens/Adminpanel';
 import Addsrdoc from './screens/Addsrdoc';
+import DoneApptDetails from './screens/DoneApptDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -98,6 +99,11 @@ const App = () => {
             <Stack.Screen
               name="Addsrdoc"
               component={Addsrdoc}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="DoneApptDetails"
+              component={DoneApptDetails}
               options={{headerShown: false}}
             />
           </Stack.Navigator>

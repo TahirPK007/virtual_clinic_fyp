@@ -19,6 +19,7 @@ import {
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
 import CheckBox from '@react-native-community/checkbox';
+import Bottomnavigator from './Bottomnavigator';
 
 const Addvitals = ({route, navigation}) => {
   const {patient_id} = route.params;
@@ -65,7 +66,7 @@ const Addvitals = ({route, navigation}) => {
     addvits();
     visit(patient_id);
     alert('Vitals And New Visit Added');
-    navigation.navigate('Addpatient');
+    navigation.navigate('Bottomnavigator');
   };
 
   const visit = async () => {

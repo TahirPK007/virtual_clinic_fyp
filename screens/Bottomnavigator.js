@@ -7,6 +7,7 @@ import Icon3 from 'react-native-vector-icons/FontAwesome5';
 import Addpatient from './Addpatient';
 import Ongoingcases from './Ongoingcases';
 import Reports from './Reports';
+import DoneApptDetails from './DoneApptDetails';
 
 const Tab = createBottomTabNavigator();
 
@@ -23,14 +24,6 @@ const Bottomnavigator = ({route, navigation}) => {
           headerShown: false,
         }}
       />
-      {/* <Tab.Screen
-        name="Ongoing Cases"
-        component={Ongoingcases}
-        options={{
-          tabBarIcon: ({}) => <Icon3 name="walking" size={30} color="black" />,
-          headerShown: false,
-        }}
-      /> */}
       <Tab.Screen
         name="Reports"
         component={Reports}

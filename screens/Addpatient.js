@@ -17,8 +17,8 @@ import {RadioButton} from 'react-native-paper';
 import {Picker} from '@react-native-picker/picker';
 
 const Addpatient = ({route, navigation}) => {
-  const [cnic, setcnic] = useState();
-  const [newcnic, setnewcnic] = useState();
+  const [cnic, setcnic] = useState('');
+  const [newcnic, setnewcnic] = useState('');
   const [fullname, setfullname] = useState('');
   const [relation, setrelation] = useState('self');
   const [relativename, setrelativename] = useState('');
@@ -52,27 +52,26 @@ const Addpatient = ({route, navigation}) => {
   };
 
   //this method will check the cnic of the patient in database if its exist or not if cnic exist it will populate the fields
-  const checkcnic = () => {
-    fetch(`http://${global.MyVar}/fyp/api/Patient/Checkcnic?cnic=${cnic}`, {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
-    })
+  const checkcnic = val => {
+    fetch(`http://${global.MyVar}/fyp/api/Patient/Checkingcnic?cnic=${val}`)
       .then(response => response.json())
       .then(json => {
+        console.log(json);
         setfullname(json.full_name);
         setrelation(json.relation);
-        setrelativename(json.relative_name);
         setdob(json.dob);
+        setrelativename(json.relative_name);
         setgender(json.gender);
         setpatid(json.patient_id);
+      })
+      .catch(error => {
+        console.error(error);
       });
   };
 
   //it will add the patient personal details to db after saving it will return the id and store it to patid state
   const addpat = async () => {
-    if (cnic === undefined) {
+    if (cnic == '') {
       alert('pls provide all the information');
     } else {
       fetch(`http://${global.MyVar}/fyp/api/Patient/Addpat`, {
@@ -138,7 +137,7 @@ const Addpatient = ({route, navigation}) => {
             value={cnic}
             onChangeText={val => {
               setcnic(val);
-              checkcnic();
+              checkcnic(val);
             }}
             maxLength={14}
             keyboardType="number-pad"
