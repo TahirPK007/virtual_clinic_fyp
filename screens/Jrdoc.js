@@ -21,10 +21,12 @@ const Jrdoc = ({route, navigation}) => {
   const [data, setdata] = useState(null);
   const [patid, setpatid] = useState();
   const [visitid, setvisitid] = useState();
+  const [nurseid, setnurseid] = useState();
   const [loading, setloading] = useState(false);
 
   console.log(patid, 'patid to send');
   console.log(visitid, 'visit id to send');
+  console.log(nurseid, 'nurseeee id to send');
 
   //logic for refreshing
   const reloading = () => {
@@ -45,7 +47,7 @@ const Jrdoc = ({route, navigation}) => {
       setpatid(mydata[0].p.patient_id);
       //gettting visitid to send it to api function that will be using in acceptedcase
       setvisitid(mydata[0].x.visit_id);
-
+      setnurseid(mydata[0].x.nurseID);
       console.log(mydata, 'this is api response');
     } catch (error) {
       console.log(error);
@@ -87,7 +89,7 @@ const Jrdoc = ({route, navigation}) => {
   //populating data to appointment table
   const addingappointment = () => {
     fetch(
-      `http://${global.MyVar}/fyp/api/Jrdoc/Appointment?jrdocid=${jrdocid}&patid=${patid}&visitid=${visitid}`,
+      `http://${global.MyVar}/fyp/api/Jrdoc/Appointment?jrdocid=${jrdocid}&patid=${patid}&visitid=${visitid}&nurseid=${nurseid}`,
       {
         method: 'POST',
         headers: {

@@ -98,6 +98,17 @@ const Patientdetails = ({route}) => {
     }
   };
 
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth() + 1; // Months are zero-indexed, so add 1
+  const day = today.getDate();
+
+  // Format the date as desired (e.g., YYYY-MM-DD)
+  const formattedDate = `${month.toString().padStart(2, '0')}/${day
+    .toString()
+    .padStart(2, '0')}/${year}`;
+  console.log(formattedDate, 'this is date');
+
   useEffect(() => {
     gettingappointmentid();
   }, []);
@@ -613,6 +624,7 @@ const Patientdetails = ({route}) => {
                 medicine_name: medicine,
                 duration: duartion,
                 timings: timings,
+                date: formattedDate,
               },
             ]);
             setmedicine('');

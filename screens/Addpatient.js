@@ -15,6 +15,7 @@ import {
 import React, {useState, useEffect} from 'react';
 import {RadioButton} from 'react-native-paper';
 import {Picker} from '@react-native-picker/picker';
+import {useSelector} from 'react-redux';
 
 const Addpatient = ({route, navigation}) => {
   const [cnic, setcnic] = useState('');

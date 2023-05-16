@@ -18,6 +18,8 @@ import Patientend from './screens/Patientend';
 import Adminpanel from './screens/Adminpanel';
 import Addsrdoc from './screens/Addsrdoc';
 import DoneApptDetails from './screens/DoneApptDetails';
+import {Provider} from 'react-redux';
+import {store} from './screens/redux toolkit/store';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,7 +32,7 @@ const App = () => {
   }, []);
 
   return (
-    <>
+    <Provider store={store}>
       {loading !== false ? (
         <Splash />
       ) : (
@@ -109,7 +111,7 @@ const App = () => {
           </Stack.Navigator>
         </NavigationContainer>
       )}
-    </>
+    </Provider>
   );
 };
 

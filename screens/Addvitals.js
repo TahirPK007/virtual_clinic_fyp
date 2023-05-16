@@ -20,8 +20,11 @@ import {
 } from 'react-native-responsive-dimensions';
 import CheckBox from '@react-native-community/checkbox';
 import Bottomnavigator from './Bottomnavigator';
+import {useSelector} from 'react-redux';
 
 const Addvitals = ({route, navigation}) => {
+  const nursedata = useSelector(state => state.nurse);
+  const {nurseID} = nursedata.data[0];
   const {patient_id} = route.params;
   console.log(patient_id, 'on the addvitals page');
 
@@ -71,7 +74,7 @@ const Addvitals = ({route, navigation}) => {
 
   const visit = async () => {
     fetch(
-      `http://${global.MyVar}/fyp/api/Patient/Visits?patient_id=${patient_id}&status=${status}`,
+      `http://${global.MyVar}/fyp/api/Patient/Visits?patient_id=${patient_id}&status=${status}&nurseid=${nurseID}`,
       {
         method: 'POST',
         headers: {

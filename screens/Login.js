@@ -17,8 +17,11 @@ import {TextInput, Button} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useDispatch} from 'react-redux';
+import {getNurseData} from './redux toolkit/nurseSlice';
 
 const Login = ({navigation}) => {
+  const dispatch = useDispatch();
   const [email, setemail] = useState();
   const [password, setpassword] = useState();
   const [user, setuser] = useState('admin');
@@ -74,8 +77,10 @@ const Login = ({navigation}) => {
     )
       .then(response => response.json())
       .then(json => {
-        if (json.role == 'nurse') navigation.navigate('Bottomnavigator');
-        else {
+        if (json.role == 'nurse') {
+          dispatch(getNurseData(json));
+          navigation.navigate('Bottomnavigator');
+        } else {
           fetch(
             `http://${global.MyVar}/fyp/api/Jrdoc/Jrlogin?email=${email}&password=${password}`,
             {

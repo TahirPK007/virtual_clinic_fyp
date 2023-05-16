@@ -1,11 +1,17 @@
 import {View, Text, Button, FlatList, TouchableOpacity} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 
 const Reports = ({route, navigation}) => {
+  const nursedata = useSelector(state => state.nurse);
+  const {nurseID} = nursedata.data[0];
+  console.log(nurseID, 'this is logged in nurse id');
   const [reports, setreports] = useState([]);
-  const getreports = () => {
-    fetch(`http://${global.MyVar}/fyp/api/Nursel/Gettingappointments`)
+  const getreports = nurseID => {
+    fetch(
+      `http://${global.MyVar}/fyp/api/Nursel/Gettingappointments?nurseid=${nurseID}`,
+    )
       .then(response => response.json())
       .then(json => {
         console.log(json);
@@ -17,12 +23,17 @@ const Reports = ({route, navigation}) => {
   };
 
   useEffect(() => {
-    getreports();
+    getreports(nurseID);
   }, []);
 
   return (
     <View style={{flex: 1}}>
-      <Button title="Refresh" onPress={getreports} />
+      <Button
+        title="Refresh"
+        onPress={() => {
+          getreports(nurseID);
+        }}
+      />
       <View>
         <FlatList
           data={reports}
