@@ -103,10 +103,13 @@ const Patientdetails = ({route}) => {
   const month = today.getMonth() + 1; // Months are zero-indexed, so add 1
   const day = today.getDate();
 
-  // Format the date as desired (e.g., YYYY-MM-DD)
-  const formattedDate = `${month.toString().padStart(2, '0')}/${day
-    .toString()
-    .padStart(2, '0')}/${year}`;
+  // Format the date as desired (e.g., M/D/YYYY)
+  let formattedDay = day.toString();
+  if (formattedDay.length === 2 && formattedDay.startsWith('0')) {
+    formattedDay = formattedDay.slice(1);
+  }
+
+  const formattedDate = `${month.toString()}/${formattedDay}/${year}`;
   console.log(formattedDate, 'this is date');
 
   useEffect(() => {

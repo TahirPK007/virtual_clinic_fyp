@@ -21,6 +21,20 @@ import {useDispatch} from 'react-redux';
 import {getNurseData} from './redux toolkit/nurseSlice';
 
 const Login = ({navigation}) => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth() + 1; // Months are zero-indexed, so add 1
+  const day = today.getDate();
+
+  // Format the date as desired (e.g., M/D/YYYY)
+  let formattedDay = day.toString();
+  if (formattedDay.length === 2 && formattedDay.startsWith('0')) {
+    formattedDay = formattedDay.slice(1);
+  }
+
+  const formattedDate = `${month.toString()}/${formattedDay}/${year}`;
+  console.log(formattedDate, 'this is date');
+
   const dispatch = useDispatch();
   const [email, setemail] = useState();
   const [password, setpassword] = useState();
