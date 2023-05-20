@@ -20,6 +20,12 @@ const Patientdetails = ({route}) => {
   const [vital_id, setvital_id] = useState(route.params.paramkey.v.vital_id);
   const [jrdocid, setjrdocid] = useState();
   const [appointmentid, setappointmentid] = useState();
+  //other meds status
+  const [othermed, setothermed] = useState(false);
+  //other duration
+  const [otherdur, setotherdur] = useState(false);
+  //other timings
+  const [othertime, setothertime] = useState(false);
 
   //main prescription array
   const [prescription, setprescription] = useState([]);
@@ -322,6 +328,35 @@ const Patientdetails = ({route}) => {
               <Text>Flaygyl</Text>
             </View>
           </View>
+          <TouchableOpacity
+            style={{
+              width: '80%',
+              height: 40,
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderWidth: 1,
+              alignSelf: 'center',
+              marginTop: 10,
+            }}
+            onPress={() => {
+              setothermed(true);
+            }}>
+            <Text>Other?</Text>
+          </TouchableOpacity>
+          {othermed === true ? (
+            <TextInput
+              style={{
+                width: '80%',
+                borderWidth: 1,
+                alignSelf: 'center',
+                marginTop: 10,
+                paddingLeft: 10,
+              }}
+              placeholder="Enter Other Medicine Name"
+              value={medicine}
+              onChangeText={txt => setmedicine(txt)}
+            />
+          ) : null}
 
           <View
             style={{
@@ -422,6 +457,35 @@ const Patientdetails = ({route}) => {
               </View>
             </View>
           </View>
+          <TouchableOpacity
+            style={{
+              width: '80%',
+              height: 40,
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderWidth: 1,
+              alignSelf: 'center',
+              marginTop: 10,
+            }}
+            onPress={() => {
+              setotherdur(true);
+            }}>
+            <Text>Other?</Text>
+          </TouchableOpacity>
+          {otherdur === true ? (
+            <TextInput
+              style={{
+                width: '80%',
+                borderWidth: 1,
+                alignSelf: 'center',
+                marginTop: 10,
+                paddingLeft: 10,
+              }}
+              placeholder="Enter Other Medicine Name"
+              value={duartion}
+              onChangeText={txt => setduartion(txt)}
+            />
+          ) : null}
 
           <View
             style={{
@@ -510,6 +574,35 @@ const Patientdetails = ({route}) => {
               />
               <Text>Night Only</Text>
             </View>
+            <TouchableOpacity
+              style={{
+                width: '80%',
+                height: 40,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderWidth: 1,
+                alignSelf: 'center',
+                marginTop: 10,
+              }}
+              onPress={() => {
+                setothertime(true);
+              }}>
+              <Text>Other?</Text>
+            </TouchableOpacity>
+            {othermed === true ? (
+              <TextInput
+                style={{
+                  width: '80%',
+                  borderWidth: 1,
+                  alignSelf: 'center',
+                  marginTop: 10,
+                  paddingLeft: 10,
+                }}
+                placeholder="Enter Other timings"
+                value={timings}
+                onChangeText={txt => settimings(txt)}
+              />
+            ) : null}
             <View
               style={{
                 flexDirection: 'row',
