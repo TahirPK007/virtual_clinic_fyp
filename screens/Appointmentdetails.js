@@ -125,12 +125,15 @@ const Appointmentdetails = ({route}) => {
                     </Text>
                   </View>
 
-                  <Text style={{marginTop: 5, color: 'red', marginLeft: 30}}>
-                    D.O.B
-                  </Text>
-                  <Text style={{marginLeft: 40, marginTop: 5, color: 'black'}}>
-                    {item.p.dob}
-                  </Text>
+                  <View style={{flexDirection: 'row'}}>
+                    <Text style={{marginTop: 5, color: 'red', marginLeft: 30}}>
+                      D.O.B
+                    </Text>
+                    <Text
+                      style={{marginLeft: 40, marginTop: 5, color: 'black'}}>
+                      {item.p.dob}
+                    </Text>
+                  </View>
                   <Text style={{marginTop: 5, color: 'red', marginLeft: 30}}>
                     Gender
                   </Text>
@@ -158,7 +161,7 @@ const Appointmentdetails = ({route}) => {
                         color: 'black',
                         textDecorationLine: 'underline',
                       }}>
-                      {`${item.v.systolic} | ${item.v.diastolic}`}
+                      {`Systolic: ${item.v.systolic} | Diastolic: ${item.v.diastolic}`}
                     </Text>
                   </View>
                   <View style={{flexDirection: 'row'}}>

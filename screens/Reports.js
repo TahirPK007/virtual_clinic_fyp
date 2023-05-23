@@ -1,9 +1,10 @@
 import {View, Text, Button, FlatList, TouchableOpacity} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 
 const Reports = ({route, navigation}) => {
+  const isFoucsed = useIsFocused();
   const nursedata = useSelector(state => state.nurse);
   const {nurseID} = nursedata.data[0];
   console.log(nurseID, 'this is logged in nurse id');
@@ -24,6 +25,16 @@ const Reports = ({route, navigation}) => {
 
   useEffect(() => {
     getreports(nurseID);
+  }, []);
+
+  useEffect(() => {
+    // Start the interval timer
+    const intervalId = setInterval(() => {
+      getreports(nurseID);
+    }, 10000); // 1000 milliseconds = 1 second
+
+    // Clean up the interval timer when the component is unmounted
+    return () => clearInterval(intervalId);
   }, []);
 
   return (

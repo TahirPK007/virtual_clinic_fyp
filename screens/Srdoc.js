@@ -35,6 +35,16 @@ const Srdoc = ({route}) => {
     appointments();
   }, [isFocused]);
 
+  useEffect(() => {
+    // Start the interval timer
+    const intervalId = setInterval(() => {
+      appointments();
+    }, 10000); // 1000 milliseconds = 1 second
+
+    // Clean up the interval timer when the component is unmounted
+    return () => clearInterval(intervalId);
+  }, []);
+
   const reloading = () => {
     setloading(true);
     appointments();

@@ -132,7 +132,7 @@ const Jrdoc = ({route, navigation}) => {
     const intervalId = setInterval(() => {
       assigningrating();
       showingpat();
-    }, 13000); // 1000 milliseconds = 1 second
+    }, 12000); // 1000 milliseconds = 1 second
 
     // Clean up the interval timer when the component is unmounted
     return () => clearInterval(intervalId);

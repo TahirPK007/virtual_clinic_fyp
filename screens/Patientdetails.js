@@ -238,7 +238,7 @@ const Patientdetails = ({route}) => {
             Symptoms:
           </Text>
           <View style={{flexDirection: 'row'}}>
-            <Text style={{marginLeft: 20, color: 'red', fontWeight: '600'}}>
+            <Text style={{marginLeft: 20, color: 'black', fontWeight: '600'}}>
               {route.params.paramkey.v.symptoms.replace(/,/g, '\n')}
             </Text>
             {route.params.paramkey.v.image == null ? null : (
