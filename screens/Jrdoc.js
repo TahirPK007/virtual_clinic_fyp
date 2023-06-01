@@ -18,7 +18,9 @@ const Jrdoc = ({route, navigation}) => {
   var jrdocid = route.params.paramkey.jrdoc_id;
   console.log(jrdocid, 'jrdoc id to send');
 
-  const [data, setdata] = useState(null);
+  const [data, setdata] = useState([]);
+
+  console.log(data, 'this is pateint data array');
   const [patid, setpatid] = useState();
   const [visitid, setvisitid] = useState();
   const [nurseid, setnurseid] = useState();
@@ -41,7 +43,6 @@ const Jrdoc = ({route, navigation}) => {
         `http://${global.MyVar}/fyp/api/Jrdoc/MyNewCases?id=${jrdocid}`,
       );
       const mydata = await response.json();
-
       setdata(mydata);
       //gettting patid to send it to api function that will be using in acceptedcase
       setpatid(mydata[0].p.patient_id);
@@ -121,78 +122,72 @@ const Jrdoc = ({route, navigation}) => {
     showingpat();
   }, [isFoucsed]);
 
-  // useEffect(() => {
-  //   assigningrating();
-  //   showingpat();
-  // }, [isFoucsed]);
-
-  //if u wnat to run the function after every minute pass the time to it
   useEffect(() => {
     // Start the interval timer
     const intervalId = setInterval(() => {
-      assigningrating();
       showingpat();
     }, 12000); // 1000 milliseconds = 1 second
 
     // Clean up the interval timer when the component is unmounted
     return () => clearInterval(intervalId);
-  }, [isFoucsed]);
+  }, []);
 
   return (
     <View style={{flex: 1}}>
+      <View
+        style={{
+          width: '100%',
+
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          borderBottomWidth: 1,
+          borderBottomColor: 'green',
+          backgroundColor: 'white',
+          height: 50,
+        }}>
+        <Text
+          style={{
+            marginLeft: 10,
+            fontSize: 20,
+            fontWeight: '600',
+            color: 'black',
+          }}>
+          JrDoc: {route.params.paramkey.full_name}
+        </Text>
+
+        <TouchableOpacity
+          style={{
+            backgroundColor: 'green',
+            marginRight: 10,
+            width: 70,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 15,
+            height: 30,
+          }}
+          onPress={logout}>
+          <Text style={{color: 'white'}}>Logout</Text>
+        </TouchableOpacity>
+      </View>
       <RefreshControl
         style={{flex: 1}}
         refreshing={loading}
         onRefresh={() => {
           reloading();
         }}>
-        <View
-          style={{
-            width: '100%',
-            height: 90,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            borderBottomWidth: 3,
-            borderBottomColor: 'green',
-          }}>
-          <Text
-            style={{
-              marginLeft: 10,
-              fontSize: 20,
-              fontWeight: '600',
-              color: 'black',
-            }}>
-            Junior Doctor: {route.params.paramkey.full_name}
-          </Text>
-
-          <TouchableOpacity
-            style={{
-              backgroundColor: 'green',
-              marginRight: 10,
-              height: 35,
-              width: 70,
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 15,
-            }}
-            onPress={logout}>
-            <Text style={{color: 'white'}}>Logout</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={{marginTop: 10}}>
+        <View style={{marginTop: 10, width: '100%'}}>
           <Text
             style={{
               fontSize: 40,
               color: 'red',
               marginLeft: 20,
               fontWeight: '600',
-              textDecorationLine: 'underline',
+              alignSelf: 'center',
             }}>
             Cases
           </Text>
-          {data ? (
+          {data != 'no new cases' ? (
             <View>
               <FlatList
                 data={data}
@@ -230,7 +225,16 @@ const Jrdoc = ({route, navigation}) => {
               />
             </View>
           ) : (
-            <Text>No New Cases</Text>
+            <Text
+              style={{
+                color: 'black',
+                alignSelf: 'center',
+                marginTop: 300,
+                fontSize: 20,
+                fontWeight: 'bold',
+              }}>
+              No New Cases
+            </Text>
           )}
         </View>
       </RefreshControl>
@@ -239,11 +243,3 @@ const Jrdoc = ({route, navigation}) => {
 };
 
 export default Jrdoc;
-
-const styles = StyleSheet.create({
-  txt: {
-    fontWeight: 'bold',
-    fontSize: 25,
-    marginTop: 20,
-  },
-});

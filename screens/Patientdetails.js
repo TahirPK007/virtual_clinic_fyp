@@ -22,7 +22,7 @@ const Patientdetails = ({route}) => {
   const [jrdocid, setjrdocid] = useState(route.params.paramkey.x.jrdoc_id);
   console.log(
     jrdocid,
-    'this is JRDOCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC id',
+    'this is JRDOCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC id',
   );
   const [appointmentid, setappointmentid] = useState();
   //other meds status

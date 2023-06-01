@@ -53,35 +53,37 @@ const Srdoc = ({route}) => {
 
   return (
     <View style={{flex: 1}}>
+      <View
+        style={{
+          width: '100%',
+          flexDirection: 'row',
+          backgroundColor: 'white',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: 50,
+          borderBottomColor: 'green',
+          borderBottomWidth: 2,
+        }}>
+        <Text style={{color: 'black', fontSize: 18, fontWeight: '700'}}>
+          Senior Doctor:
+        </Text>
+        <Text
+          style={{
+            color: 'black',
+            fontSize: 18,
+            fontWeight: '700',
+            marginLeft: 10,
+          }}>
+          {route.params.paramkey.full_name}
+        </Text>
+      </View>
       <RefreshControl
         style={{flex: 1}}
         refreshing={loading}
         onRefresh={() => {
           reloading();
         }}>
-        <View
-          style={{
-            width: '100%',
-            flexDirection: 'row',
-            backgroundColor: 'white',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: 50,
-          }}>
-          <Text style={{color: 'black', fontSize: 18, fontWeight: '700'}}>
-            Senior Doctor:
-          </Text>
-          <Text
-            style={{
-              color: 'black',
-              fontSize: 18,
-              fontWeight: '700',
-              marginLeft: 10,
-            }}>
-            {route.params.paramkey.full_name}
-          </Text>
-        </View>
-        {data ? (
+        {data.length > 0 ? (
           <View style={{marginTop: 10}}>
             <FlatList
               data={data}
@@ -111,7 +113,16 @@ const Srdoc = ({route}) => {
             />
           </View>
         ) : (
-          <Text>No New Appointments</Text>
+          <Text
+            style={{
+              color: 'black',
+              fontSize: 30,
+              alignSelf: 'center',
+              marginTop: 300,
+              fontWeight: '600',
+            }}>
+            No Appointments To Rate
+          </Text>
         )}
       </RefreshControl>
     </View>
