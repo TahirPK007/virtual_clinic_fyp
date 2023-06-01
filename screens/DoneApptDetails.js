@@ -23,9 +23,7 @@ const DoneApptDetails = ({route, navigation}) => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      getdoneaptdetails(aptid);
-    }, 1000);
+    getdoneaptdetails(aptid);
   }, [isFoucsed]);
 
   //this function will finish the appointment
@@ -131,6 +129,36 @@ const DoneApptDetails = ({route, navigation}) => {
           }}
         />
       </View>
+
+      <View style={{marginTop: 5}}>
+        <Text
+          style={{
+            color: 'black',
+            fontSize: 20,
+            fontWeight: '600',
+            marginLeft: 20,
+          }}>
+          Comments/Tests:
+        </Text>
+        <FlatList
+          data={data}
+          renderItem={({item, index}) => {
+            return (
+              <View
+                style={{
+                  width: '90%',
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  padding: 5,
+                  borderRadius: 10,
+                }}>
+                <Text style={{color: 'black'}}>{item.t.comments}</Text>
+              </View>
+            );
+          }}
+        />
+      </View>
+
       <TouchableOpacity
         style={{
           width: '80%',

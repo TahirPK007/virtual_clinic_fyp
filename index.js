@@ -14,7 +14,7 @@ import Splash from './screens/Splash';
 import Testing from './screens/Testing';
 import RefreshControl from './screens/Refreshcontrol';
 global.MyVar = '10.0.2.2';
-// global.MyVar = '192.168.28.120'; //uemr id
+// global.MyVar = '169.254.186.140'; //uemr id
 // global.MyVar = '192.168.0.106'; //home ip
 // global.MyVar = '192.168.2.192';
 // global.MyVar = '192.168.85.120';

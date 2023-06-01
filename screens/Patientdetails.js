@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Alert,
   Modal,
+  Button,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import CheckBox from '@react-native-community/checkbox';
@@ -18,7 +19,11 @@ const Patientdetails = ({route}) => {
   const navigation = useNavigation();
   const [patid, setpatid] = useState(route.params.paramkey.p.patient_id);
   const [vital_id, setvital_id] = useState(route.params.paramkey.v.vital_id);
-  const [jrdocid, setjrdocid] = useState();
+  const [jrdocid, setjrdocid] = useState(route.params.paramkey.x.jrdoc_id);
+  console.log(
+    jrdocid,
+    'this is JRDOCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC id',
+  );
   const [appointmentid, setappointmentid] = useState();
   //other meds status
   const [othermed, setothermed] = useState(false);
@@ -167,12 +172,62 @@ const Patientdetails = ({route}) => {
       });
   };
 
+  //jrdoc recommending test and giving comments
+  const [commentstest, setcommentstest] = useState(null);
+  const givingcommentstest = async () => {
+    await fetch(
+      `http://${global.MyVar}/fyp/api/Jrdoc/CommentsTest?aptid=${appointmentid}&comments=${commentstest}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      },
+    )
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+      });
+  };
+
+  //jrdoc adding patient to follow up
+  const addingfollowup = async () => {
+    await fetch(
+      `http://${global.MyVar}/fyp/api/Jrdoc/AddFollowUp?patid=${patid}&jrdocid=${jrdocid}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      },
+    )
+      .then(response => response.json())
+      .then(json => {
+        alert(json);
+      });
+  };
+  //removing patient from follow up
+  const removefollowup = async () => {
+    await fetch(
+      `http://${global.MyVar}/fyp/api/Jrdoc/RemoveFollowUp?patid=${patid}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      },
+    )
+      .then(response => response.json())
+      .then(json => {
+        alert(json);
+      });
+  };
+
   return (
     <ScrollView>
       <View style={{flex: 1}}>
         <View
           style={{
-            width: '100%',
             backgroundColor: 'white',
             justifyContent: 'center',
             alignItems: 'center',
@@ -181,6 +236,54 @@ const Patientdetails = ({route}) => {
             Patient Details
           </Text>
         </View>
+        <View
+          style={{
+            width: 200,
+            marginLeft: 300,
+            marginTop: 10,
+          }}>
+          {route.params.paramkey.p.jrdoc_id === null ? (
+            <View>
+              <Text style={{color: 'black'}}>Add Patient To Follow Up</Text>
+              <TouchableOpacity
+                style={{
+                  borderWidth: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: 10,
+                  height: 30,
+                  width: 80,
+                  backgroundColor: 'orange',
+                }}
+                onPress={() => {
+                  addingfollowup();
+                }}>
+                <Text style={{color: 'black'}}>Follow Up</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <View>
+              <Text style={{color: 'black'}}>This is Followed Up Patient</Text>
+              <TouchableOpacity
+                style={{
+                  borderWidth: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: 10,
+                  height: 30,
+                  width: 80,
+                  marginTop: 5,
+                  backgroundColor: 'orange',
+                }}
+                onPress={() => {
+                  removefollowup();
+                }}>
+                <Text style={{color: 'black'}}>UnFollow</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        </View>
+
         <View style={{width: '100%', marginLeft: 20, marginTop: 10}}>
           <View
             style={{flexDirection: 'row', width: '100%', alignItems: 'center'}}>
@@ -218,7 +321,7 @@ const Patientdetails = ({route}) => {
             <View style={{flexDirection: 'row'}}>
               <Text style={{color: 'green'}}>Blood Pressure:</Text>
               <Text style={{textDecorationLine: 'underline', marginLeft: 10}}>
-                {`${route.params.paramkey.v.systolic} | ${route.params.paramkey.v.diastolic}`}
+                {`Systolic ${route.params.paramkey.v.systolic} | Diastolic ${route.params.paramkey.v.diastolic}`}
               </Text>
             </View>
             <View style={{flexDirection: 'row'}}>
@@ -257,6 +360,57 @@ const Patientdetails = ({route}) => {
               />
             )}
           </View>
+          {route.params.paramkey.v.testimage == null ? null : (
+            <View style={{marginTop: 50, width: '100%'}}>
+              <Text
+                style={{
+                  color: 'purple',
+                  fontWeight: '600',
+                  fontSize: 18,
+                }}>
+                Test Image:
+              </Text>
+
+              <Image
+                source={{
+                  uri: route.params.paramkey.v.testimage,
+                }}
+                style={{
+                  width: 170,
+                  height: 150,
+                  resizeMode: 'contain',
+                  position: 'absolute',
+                  top: -40,
+                  left: 150,
+                }}
+              />
+            </View>
+          )}
+
+          <View style={{width: '100%', marginTop: 20}}>
+            <Text
+              style={{
+                color: 'black',
+                marginTop: 35,
+                fontSize: 20,
+                fontWeight: '600',
+              }}>
+              Comments/Test Recommendation:
+            </Text>
+            <TextInput
+              style={{
+                width: 400,
+                borderWidth: 1,
+                borderRadius: 15,
+                height: 70,
+                marginLeft: 10,
+                paddingLeft: 10,
+              }}
+              value={commentstest}
+              onChangeText={txt => setcommentstest(txt)}
+              multiline={true}
+            />
+          </View>
         </View>
         <Text
           style={{
@@ -264,7 +418,7 @@ const Patientdetails = ({route}) => {
             fontSize: 20,
             fontWeight: 'bold',
             alignSelf: 'center',
-            marginTop: 50,
+            marginTop: 10,
           }}>
           Prescription
         </Text>
@@ -806,6 +960,7 @@ const Patientdetails = ({route}) => {
               }}
               onPress={() => {
                 patprescription();
+                givingcommentstest();
                 updatingvitalstatus();
                 navigation.goBack();
               }}>
@@ -819,5 +974,4 @@ const Patientdetails = ({route}) => {
     </ScrollView>
   );
 };
-
 export default Patientdetails;

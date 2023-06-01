@@ -32,9 +32,13 @@ const Addvitals = ({route, navigation}) => {
   const [diastolic, setDiastolic] = useState('');
   const [sugar, setsugar] = useState('');
   const [temperature, settemperature] = useState('');
-  const [imageData, setImageData] = useState();
+  const [imageData, setImageData] = useState(null);
   const [filePath, setFilePath] = useState({});
+  const [imageData2, setimageData2] = useState(null);
+  const [filePath2, setfilePath2] = useState({});
   const [status, setstatus] = useState(0);
+
+  console.log(imageData, 'this is image data');
 
   let symptoms = [];
 
@@ -66,10 +70,20 @@ const Addvitals = ({route, navigation}) => {
 
   //this function is populating vitals and visits table
   const vits = patient_id => {
+    // if (
+    //   systolic.length < 1 ||
+    //   diastolic.length < 1 ||
+    //   sugar.length < 1 ||
+    //   temperature.length < 1 ||
+    //   symptoms.length < 1
+    // ) {
+    //   alert('enter all the info');
+    // } else {
     addvits();
     visit(patient_id);
     alert('Vitals And New Visit Added');
     navigation.navigate('Bottomnavigator');
+    // }
   };
 
   const visit = async () => {
@@ -88,23 +102,15 @@ const Addvitals = ({route, navigation}) => {
 
   const addvits = async () => {
     let data = new FormData();
-    if (filePath === '') {
-      data.append('systolic', systolic);
-      data.append('diastolic', diastolic);
-      data.append('sugar', sugar);
-      data.append('temperature', temperature);
-      data.append('symptoms', symptoms);
-      data.append('image', null);
-      data.append('patient_id', patient_id);
-    } else {
-      data.append('systolic', systolic);
-      data.append('diastolic', diastolic);
-      data.append('sugar', sugar);
-      data.append('temperature', temperature);
-      data.append('symptoms', symptoms);
-      data.append('image', imageData);
-      data.append('patient_id', patient_id);
-    }
+
+    data.append('systolic', systolic);
+    data.append('diastolic', diastolic);
+    data.append('sugar', sugar);
+    data.append('temperature', temperature);
+    data.append('symptoms', symptoms);
+    data.append('image', imageData);
+    data.append('testimage', imageData2);
+    data.append('patient_id', patient_id);
 
     let response = await fetch(
       `http://${global.MyVar}/fyp/api/Nursel/Addvitals`,
@@ -162,7 +168,7 @@ const Addvitals = ({route, navigation}) => {
     }
   };
 
-  const captureImage = async type => {
+  const captureImage = async (type, imageIndex) => {
     console.log('Capture Image ');
     let options = {
       mediaType: type,
@@ -191,17 +197,26 @@ const Addvitals = ({route, navigation}) => {
           alert(response.errorMessage);
           return;
         }
-        setImageData({
-          uri: response.assets[0].uri,
-          name: response.assets[0].fileName,
-          type: response.assets[0].type,
-        });
-        setFilePath(response.assets[0]);
+        if (imageIndex === 1) {
+          setImageData({
+            uri: response.assets[0].uri,
+            name: response.assets[0].fileName,
+            type: response.assets[0].type,
+          });
+          setFilePath(response.assets[0]);
+        } else if (imageIndex === 2) {
+          setimageData2({
+            uri: response.assets[0].uri,
+            name: response.assets[0].fileName,
+            type: response.assets[0].type,
+          });
+          setfilePath2(response.assets[0]);
+        }
       });
     }
   };
 
-  const chooseFile = type => {
+  const chooseFile = (type, imageIndex) => {
     let options = {
       mediaType: type,
       maxWidth: 300,
@@ -223,12 +238,21 @@ const Addvitals = ({route, navigation}) => {
         alert(response.errorMessage);
         return;
       }
-      setImageData({
-        uri: response.assets[0].uri,
-        name: response.assets[0].fileName,
-        type: response.assets[0].type,
-      });
-      setFilePath(response.assets[0]);
+      if (imageIndex === 1) {
+        setImageData({
+          uri: response.assets[0].uri,
+          name: response.assets[0].fileName,
+          type: response.assets[0].type,
+        });
+        setFilePath(response.assets[0]);
+      } else if (imageIndex === 2) {
+        setimageData2({
+          uri: response.assets[0].uri,
+          name: response.assets[0].fileName,
+          type: response.assets[0].type,
+        });
+        setfilePath2(response.assets[0]);
+      }
     });
   };
   console.log(filePath.uri, 'uri');
@@ -464,6 +488,33 @@ const Addvitals = ({route, navigation}) => {
             source={{uri: filePath.uri}}
           />
         )}
+        <View>
+          <Text>Test Image</Text>
+
+          {filePath2.uri === undefined ? (
+            <Image
+              source={require('../images/image.png')}
+              style={{
+                width: 200,
+                height: 100,
+                alignSelf: 'center',
+                marginTop: 10,
+                resizeMode: 'stretch',
+              }}
+            />
+          ) : (
+            <Image
+              style={{
+                height: 100,
+                width: 200,
+                alignSelf: 'center',
+                marginTop: 10,
+                resizeMode: 'stretch',
+              }}
+              source={{uri: filePath2.uri}}
+            />
+          )}
+        </View>
 
         <View
           style={{
@@ -495,7 +546,7 @@ const Addvitals = ({route, navigation}) => {
               borderWidth: 1,
               marginTop: 10,
             }}
-            onPress={() => chooseFile('photo')}>
+            onPress={() => chooseFile('photo', 1)}>
             <Text style={{color: 'black'}}>Choose Image</Text>
           </TouchableOpacity>
 
@@ -509,8 +560,35 @@ const Addvitals = ({route, navigation}) => {
               borderWidth: 1,
               marginTop: 10,
             }}
-            onPress={() => captureImage('photo')}>
+            onPress={() => captureImage('photo', 1)}>
             <Text style={{color: 'black'}}>Capture Image</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 15,
+              height: 35,
+              width: '70%',
+              borderWidth: 1,
+              marginTop: 10,
+            }}
+            onPress={() => chooseFile('photo', 2)}>
+            <Text style={{color: 'black'}}>Choose Test Image</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 15,
+              height: 35,
+              width: '70%',
+              borderWidth: 1,
+              marginTop: 10,
+            }}
+            onPress={() => captureImage('photo', 2)}>
+            <Text style={{color: 'black'}}>Capture Test Image</Text>
           </TouchableOpacity>
         </View>
       </View>

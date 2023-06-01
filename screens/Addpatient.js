@@ -57,7 +57,7 @@ const Addpatient = ({route, navigation}) => {
     fetch(`http://${global.MyVar}/fyp/api/Patient/Checkingcnic?cnic=${val}`)
       .then(response => response.json())
       .then(json => {
-        console.log(json);
+        console.log(json, 'this is searched cnic data');
         setfullname(json.full_name);
         setrelation(json.relation);
         setdob(json.dob);
@@ -72,29 +72,34 @@ const Addpatient = ({route, navigation}) => {
 
   //it will add the patient personal details to db after saving it will return the id and store it to patid state
   const addpat = async () => {
-    if (cnic == '') {
-      alert('pls provide all the information');
-    } else {
-      fetch(`http://${global.MyVar}/fyp/api/Patient/Addpat`, {
-        method: 'POST',
-        body: JSON.stringify({
-          cnic: cnic,
-          full_name: fullname,
-          relation: relation,
-          relative_name: relativename,
-          dob: dob,
-          gender: gender,
-        }),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
-      })
-        .then(response => response.json())
-        .then(json => {
-          setpatid(json);
-          Alert.alert('New Patient Added Successfully');
-        });
-    }
+    // if (
+    //   cnic.length !== 13 ||
+    //   fullname == undefined ||
+    //   dob == undefined ||
+    //   gender == undefined
+    // ) {
+    //   alert('Enter All The Information');
+    // } else {
+    fetch(`http://${global.MyVar}/fyp/api/Patient/Addpat`, {
+      method: 'POST',
+      body: JSON.stringify({
+        cnic: cnic,
+        full_name: fullname,
+        relation: relation,
+        relative_name: relativename,
+        dob: dob,
+        gender: gender,
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    })
+      .then(response => response.json())
+      .then(json => {
+        setpatid(json);
+        Alert.alert('New Patient Added Successfully');
+      });
+    // }
   };
 
   console.log(patid, 'Patient Id');
@@ -140,7 +145,7 @@ const Addpatient = ({route, navigation}) => {
               setcnic(val);
               checkcnic(val);
             }}
-            maxLength={14}
+            maxLength={13}
             keyboardType="number-pad"
           />
           <TouchableOpacity

@@ -26,28 +26,42 @@ const Signup = () => {
   const navigation = useNavigation();
 
   const newuser = () => {
-    fetch(`http://${global.MyVar}/fyp/api/Jrdoc/Jrsignup`, {
-      method: 'POST',
-      body: JSON.stringify({
-        full_name: `${fullname}`,
-        father_name: `${fathername}`,
-        email: `${email}`,
-        password: `${password}`,
-        dob: `${dob}`,
-        contact: `${contact}`,
-        gender: `${gender}`,
-        role: `${role}`,
-        status: `${status}`,
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
-    })
-      .then(response => response.json())
-      .then(json => {
-        if (json === 'true') alert('Successfully Signed Up');
-        else alert('Error Occured While Signing Up');
-      });
+    if (
+      fullname.length < 1 ||
+      fathername.length < 1 ||
+      email.length < 1 ||
+      password.length < 1 ||
+      dob.length < 1 ||
+      gender.length < 1 ||
+      contact.length < 1
+    ) {
+      alert('Enter all the fields');
+    } else {
+      fetch(`http://${global.MyVar}/fyp/api/Jrdoc/Jrsignup`, {
+        method: 'POST',
+        body: JSON.stringify({
+          full_name: `${fullname}`,
+          father_name: `${fathername}`,
+          email: `${email}`,
+          password: `${password}`,
+          dob: `${dob}`,
+          contact: `${contact}`,
+          gender: `${gender}`,
+          role: `${role}`,
+          status: `${status}`,
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      })
+        .then(response => response.json())
+        .then(json => {
+          if (json === 'true') {
+            alert('Successfully Signed Up');
+            navigation.navigate('Login');
+          } else alert('Error Occured While Signing Up');
+        });
+    }
   };
   return (
     <ScrollView>
@@ -190,7 +204,6 @@ const Signup = () => {
           }}
           onPress={() => {
             newuser();
-            navigation.navigate('Login');
           }}>
           <Text style={{color: 'black', fontWeight: '600'}}>Continue</Text>
         </TouchableOpacity>
