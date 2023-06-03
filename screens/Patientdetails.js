@@ -158,7 +158,7 @@ const Patientdetails = ({route}) => {
   //upadting current patients's vitals status to prevent it from refetching
   const updatingvitalstatus = async () => {
     await fetch(
-      `http://${global.MyVar}/fyp/api/Jrdoc/Updatingvitalstatus?vitalid=${vital_id}`,
+      `http://${global.MyVar}/fyp/api/Jrdoc/Updatingvitalstatus?vitalid=${vital_id}&aptid=${appointmentid}`,
       {
         method: 'POST',
         headers: {

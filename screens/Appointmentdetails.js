@@ -56,14 +56,6 @@ const Appointmentdetails = ({route}) => {
       `http://${global.MyVar}/fyp/api/Srdoc/DoneAppointment?aptid=${aptid}&rating=${rating}&patid=${patid}`,
       {
         method: 'POST',
-        // body: JSON.stringify({
-        //   patient_id: `${data.apt.patient_id}`,
-        //   jrdoc_id: `${data.apt.jrdoc_id}`,
-        //   date: `${data.apt.date}`,
-        //   time: `${data.apt.time}`,
-        //   srdoc_id: `${data.apt.srdoc_id}`,
-        //   visit_id: `${data.apt.visit_id}`,
-        // }),
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
         },
@@ -82,7 +74,211 @@ const Appointmentdetails = ({route}) => {
 
   return (
     <View style={{flex: 1}}>
-      <View>
+      {data && presdetails && (
+        <View style={{width: '100%'}}>
+          <Text
+            style={{
+              color: 'black',
+              fontSize: 20,
+              alignSelf: 'center',
+              fontWeight: '700',
+              marginTop: 10,
+            }}>
+            {'Jr Doc: ' + data.jr.full_name}
+          </Text>
+          <View
+            style={{
+              borderBottomWidth: 1,
+              width: '90%',
+              alignSelf: 'center',
+              marginTop: 5,
+            }}></View>
+          <Text
+            style={{
+              color: 'black',
+              fontSize: 20,
+              fontWeight: '700',
+              marginLeft: 15,
+            }}>
+            Patient Details:
+          </Text>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={{marginTop: 5, color: 'red', marginLeft: 30}}>
+              Patient Name
+            </Text>
+            <Text style={{marginLeft: 40, marginTop: 5, color: 'black'}}>
+              {data.p.full_name}
+            </Text>
+          </View>
+
+          <View style={{flexDirection: 'row'}}>
+            <Text style={{marginTop: 5, color: 'red', marginLeft: 30}}>
+              D.O.B
+            </Text>
+            <Text style={{marginLeft: 40, marginTop: 5, color: 'black'}}>
+              {data.p.dob}
+            </Text>
+          </View>
+          <Text style={{marginTop: 5, color: 'red', marginLeft: 30}}>
+            Gender
+          </Text>
+          <Text style={{marginLeft: 40, marginTop: 5, color: 'black'}}>
+            {data.p.gender}
+          </Text>
+          <View
+            style={{
+              width: '90%',
+              borderBottomWidth: 1,
+              alignSelf: 'center',
+              marginTop: 5,
+            }}></View>
+          <Text style={{color: 'green', marginLeft: 10, marginTop: 5}}>
+            Vitals
+          </Text>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={{marginTop: 5, color: 'red', marginLeft: 30}}>
+              Blood Pressure
+            </Text>
+            <Text
+              style={{
+                marginLeft: 40,
+                marginTop: 5,
+                color: 'black',
+                textDecorationLine: 'underline',
+              }}>
+              {`Systolic: ${data.v.systolic} | Diastolic: ${data.v.diastolic}`}
+            </Text>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={{marginTop: 5, color: 'red', marginLeft: 30}}>
+              Sugar
+            </Text>
+            <Text
+              style={{
+                marginLeft: 40,
+                marginTop: 5,
+                color: 'black',
+                textDecorationLine: 'underline',
+                paddingLeft: 60,
+              }}>
+              {data.v.sugar}
+            </Text>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={{marginTop: 5, color: 'red', marginLeft: 30}}>
+              Temperature
+            </Text>
+            <Text
+              style={{
+                marginLeft: 40,
+                marginTop: 5,
+                color: 'black',
+                textDecorationLine: 'underline',
+                paddingLeft: 18,
+              }}>
+              {data.v.temperature}
+            </Text>
+          </View>
+          <View
+            style={{
+              borderBottomWidth: 1,
+              width: '90%',
+              alignSelf: 'center',
+              marginTop: 5,
+            }}></View>
+          <Text style={{color: 'green', marginLeft: 10, marginTop: 5}}>
+            Symptoms
+          </Text>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={{marginLeft: 70, color: 'black'}}>
+              {data.v.symptoms.replace(/,/g, '\n')}
+            </Text>
+            <Image
+              source={{uri: data.v.image}}
+              style={{height: 90, width: 100, marginLeft: 100}}
+            />
+          </View>
+
+          <View
+            style={{
+              borderBottomWidth: 1,
+              width: '90%',
+              alignSelf: 'center',
+              marginTop: 5,
+            }}></View>
+          <Text style={{color: 'green', marginLeft: 10, marginTop: 5}}>
+            Prescription
+          </Text>
+          <View>
+            {presdetails.map(item => {
+              return (
+                <View style={{flexDirection: 'row', marginLeft: 60}}>
+                  <Text style={{color: 'black', marginLeft: 10}}>
+                    {item.medicine_name}
+                  </Text>
+                  <Text style={{color: 'black', marginLeft: 40}}>
+                    {item.duration}
+                  </Text>
+                  <Text style={{color: 'black', marginLeft: 50}}>
+                    {item.timings}
+                  </Text>
+                </View>
+              );
+            })}
+          </View>
+          <Text style={{color: 'green', marginLeft: 10, marginTop: 5}}>
+            Time
+          </Text>
+          <Text style={{color: 'black', marginLeft: 70}}>{data.ac.time}</Text>
+          <View
+            style={{
+              borderBottomWidth: 1,
+              width: '90%',
+              alignSelf: 'center',
+              marginTop: 5,
+            }}></View>
+          <Text
+            style={{
+              color: 'green',
+              marginTop: 5,
+              alignSelf: 'center',
+              fontWeight: '600',
+              fontSize: 20,
+            }}>
+            Give Rating
+          </Text>
+
+          <View>
+            <Rating
+              showRating
+              startingValue={0}
+              onFinishRating={value => {
+                setrating(value);
+              }}
+              style={{paddingVertical: 1}}
+            />
+          </View>
+          <TouchableOpacity
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'white',
+              width: '80%',
+              alignSelf: 'center',
+              marginTop: 10,
+              height: 40,
+              borderRadius: 10,
+              borderWidth: 1,
+            }}
+            onPress={() => {
+              donecurrentappointment(aptid, rating);
+              navigation.goBack();
+            }}>
+            <Text style={{color: 'black', fontSize: 15}}>Done</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+      {/* <View>
         {data && presdetails ? (
           <FlatList
             data={data}
@@ -241,13 +437,6 @@ const Appointmentdetails = ({route}) => {
                       );
                     })}
                   </View>
-                  <View
-                    style={{
-                      borderBottomWidth: 1,
-                      width: '90%',
-                      alignSelf: 'center',
-                      marginTop: 5,
-                    }}></View>
                   <Text style={{color: 'green', marginLeft: 10, marginTop: 5}}>
                     Time
                   </Text>
@@ -276,8 +465,6 @@ const Appointmentdetails = ({route}) => {
                     <Rating
                       showRating
                       startingValue={0}
-                      // tintColor="green"
-                      // fractions={1}
                       onFinishRating={value => {
                         setrating(value);
                       }}
@@ -317,7 +504,7 @@ const Appointmentdetails = ({route}) => {
             Fetching Appointment Details...
           </Text>
         )}
-      </View>
+      </View> */}
     </View>
   );
 };

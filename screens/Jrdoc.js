@@ -137,14 +137,14 @@ const Jrdoc = ({route, navigation}) => {
       <View
         style={{
           width: '100%',
-
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
           borderBottomWidth: 1,
           borderBottomColor: 'green',
           backgroundColor: 'white',
-          height: 50,
+          height: 60,
+          padding: 10,
         }}>
         <Text
           style={{

@@ -301,7 +301,7 @@ const Login = ({navigation}) => {
           style={{
             width: '90%',
           }}>
-          {/* <TouchableOpacity
+          <TouchableOpacity
             style={{
               backgroundColor: 'green',
               width: '88%',
@@ -318,7 +318,7 @@ const Login = ({navigation}) => {
             <Text style={{color: 'white', fontSize: 17, fontWeight: '600'}}>
               Patient
             </Text>
-          </TouchableOpacity> */}
+          </TouchableOpacity>
           <TouchableOpacity
             style={{
               backgroundColor: 'green',

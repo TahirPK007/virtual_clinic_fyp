@@ -83,7 +83,7 @@ const Srdoc = ({route}) => {
         onRefresh={() => {
           reloading();
         }}>
-        {data.length > 0 ? (
+        {data !== null ? (
           <View style={{marginTop: 10}}>
             <FlatList
               data={data}
