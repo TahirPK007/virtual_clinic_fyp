@@ -488,8 +488,16 @@ const Addvitals = ({route, navigation}) => {
             source={{uri: filePath.uri}}
           />
         )}
-        <View>
-          <Text>Test Image</Text>
+        <View style={{width: '100%'}}>
+          <Text
+            style={{
+              color: 'purple',
+              alignSelf: 'center',
+              fontWeight: '700',
+              fontSize: 20,
+            }}>
+            Test Image
+          </Text>
 
           {filePath2.uri === undefined ? (
             <Image

@@ -33,7 +33,7 @@ const Login = ({navigation}) => {
   }
 
   const formattedDate = `${month.toString()}/${formattedDay}/${year}`;
-  console.log(formattedDate, 'this is date');
+  // console.log(formattedDate, 'this is date');
 
   const dispatch = useDispatch();
   const [email, setemail] = useState();
@@ -41,12 +41,8 @@ const Login = ({navigation}) => {
   const [user, setuser] = useState('admin');
   const [pass, setpass] = useState('admin');
   const [visible, setvisible] = useState(false);
-  console.log(email, 'email');
-  console.log(password, 'password');
-
-  useEffect(() => {
-    getUser();
-  }, []);
+  // console.log(email, 'email');
+  // console.log(password, 'password');
 
   //created this funciton to call other 2 functions
   const loginandstoring = () => {
@@ -60,7 +56,7 @@ const Login = ({navigation}) => {
       await AsyncStorage.setItem('emaill', email);
       await AsyncStorage.setItem('passwordd', password);
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   };
 
@@ -70,7 +66,7 @@ const Login = ({navigation}) => {
       setemail(await AsyncStorage.getItem('emaill'));
       setpassword(await AsyncStorage.getItem('passwordd'));
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   };
 
@@ -130,7 +126,9 @@ const Login = ({navigation}) => {
                   .then(json => {
                     if (json.role == 'srdoc') {
                       navigation.navigate('Srdoc', {paramkey: json});
-                    } else alert('wrong email or password');
+                    } else {
+                      alert('wrong email or password');
+                    }
                   });
               }
             });
@@ -146,6 +144,9 @@ const Login = ({navigation}) => {
       alert('Wrong Credentials');
     }
   };
+  useEffect(() => {
+    getUser();
+  }, []);
 
   return (
     <ScrollView>
@@ -157,8 +158,6 @@ const Login = ({navigation}) => {
                 height: 300,
                 width: '90%',
                 backgroundColor: 'black',
-                // justifyContent: 'center',
-                // alignItems: 'center',
                 marginTop: 300,
                 alignSelf: 'center',
                 borderRadius: 15,
@@ -230,7 +229,7 @@ const Login = ({navigation}) => {
             style={{
               height: responsiveWidth(35),
               width: responsiveWidth(35),
-              resizeMode: 'contain',
+              resizeMode: 'center',
               borderWidth: responsiveWidth(0.6),
               borderColor: 'green',
               borderRadius: responsiveWidth(100),
@@ -277,7 +276,9 @@ const Login = ({navigation}) => {
               }}
               name="login"
               backgroundColor="green"
-              onPress={loginandstoring}>
+              onPress={() => {
+                loginandstoring();
+              }}>
               Login
             </Icon.Button>
           </View>

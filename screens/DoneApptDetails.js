@@ -6,7 +6,7 @@ const DoneApptDetails = ({route, navigation}) => {
   const isFoucsed = useIsFocused();
   const [data, setdata] = useState([]);
   let aptid = route.params.paramkey.a.appointment_id;
-  console.log(aptid, 'appointment id to get prescription');
+  // console.log(aptid, 'appointment id to get prescription');
 
   const getdoneaptdetails = aptid => {
     fetch(
@@ -14,7 +14,7 @@ const DoneApptDetails = ({route, navigation}) => {
     )
       .then(response => response.json())
       .then(json => {
-        console.log(json, 'done appointment details');
+        // console.log(json, 'done appointment details');
         setdata(json);
       })
       .catch(error => {
@@ -39,7 +39,7 @@ const DoneApptDetails = ({route, navigation}) => {
     )
       .then(response => response.json())
       .then(json => {
-        console.log(json);
+        // console.log(json);
       })
       .catch(error => {
         console.error(error);

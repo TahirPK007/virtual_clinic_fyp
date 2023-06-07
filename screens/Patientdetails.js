@@ -20,10 +20,7 @@ const Patientdetails = ({route}) => {
   const [patid, setpatid] = useState(route.params.paramkey.p.patient_id);
   const [vital_id, setvital_id] = useState(route.params.paramkey.v.vital_id);
   const [jrdocid, setjrdocid] = useState(route.params.paramkey.x.jrdoc_id);
-  console.log(
-    jrdocid,
-    'this is JRDOCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC id',
-  );
+  // console.log(jrdocid, 'this is JRDOCCCCCCCCCCCCCCCCCCCC id');
   const [appointmentid, setappointmentid] = useState();
   //other meds status
   const [othermed, setothermed] = useState(false);
@@ -34,7 +31,7 @@ const Patientdetails = ({route}) => {
 
   //main prescription array
   const [prescription, setprescription] = useState([]);
-  console.log(prescription, 'array to send');
+  // console.log(prescription, 'array to send');
 
   //modal visibilty
   const [visible, setvisible] = useState(false);
@@ -121,7 +118,7 @@ const Patientdetails = ({route}) => {
   }
 
   const formattedDate = `${month.toString()}/${formattedDay}/${year}`;
-  console.log(formattedDate, 'this is date');
+  // console.log(formattedDate, 'this is date');
 
   useEffect(() => {
     gettingappointmentid();
@@ -137,7 +134,7 @@ const Patientdetails = ({route}) => {
       setappointmentid(mydata);
       console.log(mydata, 'this is api response for appointment id');
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
   //sending data to prescription table
@@ -151,7 +148,7 @@ const Patientdetails = ({route}) => {
     })
       .then(response => response.json())
       .then(json => {
-        console.log(json);
+        // console.log(json);
       });
   };
 
@@ -168,7 +165,7 @@ const Patientdetails = ({route}) => {
     )
       .then(response => response.json())
       .then(json => {
-        console.log(json);
+        // console.log(json);
       });
   };
 
@@ -186,7 +183,7 @@ const Patientdetails = ({route}) => {
     )
       .then(response => response.json())
       .then(json => {
-        console.log(json);
+        // console.log(json);
       });
   };
 
@@ -743,7 +740,7 @@ const Patientdetails = ({route}) => {
               }}>
               <Text>Other?</Text>
             </TouchableOpacity>
-            {othermed === true ? (
+            {othertime === true ? (
               <TextInput
                 style={{
                   width: '80%',
@@ -867,16 +864,12 @@ const Patientdetails = ({route}) => {
             borderRadius: 10,
           }}
           onPress={() => {
-            setprescription([
-              ...prescription,
-              {
-                appointment_id: appointmentid,
-                medicine_name: medicine,
-                duration: duartion,
-                timings: timings,
-                date: formattedDate,
-              },
-            ]);
+            if (medicine === 'Panadol') {
+              // Paracetamol should not be taken at night
+              console.log(
+                'Contradiction: Paracetamol should not be taken at night',
+              );
+            }
             setmedicine('');
             setduartion('');
             settimings('');

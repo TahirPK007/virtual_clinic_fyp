@@ -16,19 +16,19 @@ const Jrdoc = ({route, navigation}) => {
   const isFoucsed = useIsFocused();
   //getting logged in jr doc id here
   var jrdocid = route.params.paramkey.jrdoc_id;
-  console.log(jrdocid, 'jrdoc id to send');
+  // console.log(jrdocid, 'jrdoc id to send');
 
   const [data, setdata] = useState([]);
 
-  console.log(data, 'this is pateint data array');
+  // console.log(data, 'this is pateint data array');
   const [patid, setpatid] = useState();
   const [visitid, setvisitid] = useState();
   const [nurseid, setnurseid] = useState();
   const [loading, setloading] = useState(false);
 
-  console.log(patid, 'patid to send');
-  console.log(visitid, 'visit id to send');
-  console.log(nurseid, 'nurseeee id to send');
+  // console.log(patid, 'patid to send');
+  // console.log(visitid, 'visit id to send');
+  // console.log(nurseid, 'nurseeee id to send');
 
   //logic for refreshing
   const reloading = () => {
@@ -49,9 +49,9 @@ const Jrdoc = ({route, navigation}) => {
       //gettting visitid to send it to api function that will be using in acceptedcase
       setvisitid(mydata[0].x.visit_id);
       setnurseid(mydata[0].x.nurseID);
-      console.log(mydata, 'this is api response');
+      // console.log(mydata, 'this is api response');
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -83,9 +83,8 @@ const Jrdoc = ({route, navigation}) => {
           'Content-type': 'application/json; charset=UTF-8',
         },
       },
-    )
-      .then(response => response.json())
-      .then(json => console.log(json));
+    ).then(response => response.json());
+    // .then(json => console.log(json));
   };
   //populating data to appointment table
   const addingappointment = () => {
@@ -97,9 +96,8 @@ const Jrdoc = ({route, navigation}) => {
           'Content-type': 'application/json; charset=UTF-8',
         },
       },
-    )
-      .then(response => response.json())
-      .then(json => console.log(json));
+    ).then(response => response.json());
+    // .then(json => console.log(json));
   };
 
   //this function is getting the average rating from appointment table and assigning it to the logged in junior doctor
@@ -112,9 +110,10 @@ const Jrdoc = ({route, navigation}) => {
           'Content-type': 'application/json; charset=UTF-8',
         },
       },
-    )
-      .then(response => response.json())
-      .then(json => console.log(json));
+    ).then(response => response.json());
+    // .then(json =>
+    //    console.log(json)
+    //    );
   };
 
   useEffect(() => {
@@ -184,6 +183,13 @@ const Jrdoc = ({route, navigation}) => {
               marginLeft: 20,
               fontWeight: '600',
               alignSelf: 'center',
+              borderWidth: 1,
+              width: 400,
+              textAlign: 'center',
+              borderRadius: 10,
+              backgroundColor: 'white',
+              padding: 5,
+              marginBottom: 10,
             }}>
             Cases
           </Text>

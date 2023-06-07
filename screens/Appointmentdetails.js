@@ -10,14 +10,14 @@ const Appointmentdetails = ({route}) => {
   const [presdetails, setpresdetails] = useState(null);
 
   const [rating, setrating] = useState();
-  console.log(rating, 'rating given');
+  // console.log(rating, 'rating given');
 
   let visitid = route.params.paramkey.visit_id;
   let aptid = route.params.paramkey.appointment_id;
   let patid = route.params.paramkey.patient_id;
-  console.log(aptid, 'apointment id to feth prescriptions');
-  console.log(visitid, 'its visit id');
-  console.log(patid, 'pat id to update vitals rated');
+  // console.log(aptid, 'apointment id to feth prescriptions');
+  // console.log(visitid, 'its visit id');
+  // console.log(patid, 'pat id to update vitals rated');
 
   //getting appointment details
   const gettingappointmentdetails = async visitid => {
@@ -27,9 +27,9 @@ const Appointmentdetails = ({route}) => {
       );
       const mydata = await response.json();
       setdata(mydata);
-      console.log(mydata, 'this is api response for appointment details');
+      // console.log(mydata, 'this is api response for appointment details');
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -41,12 +41,12 @@ const Appointmentdetails = ({route}) => {
       );
       const mydata = await response.json();
       setpresdetails(mydata);
-      console.log(
-        mydata,
-        'this is api response for prescription details details',
-      );
+      // console.log(
+      //   mydata,
+      //   'this is api response for prescription details details',
+      // );
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -95,7 +95,7 @@ const Appointmentdetails = ({route}) => {
             }}></View>
           <Text
             style={{
-              color: 'black',
+              color: 'purple',
               fontSize: 20,
               fontWeight: '700',
               marginLeft: 15,
@@ -104,27 +104,30 @@ const Appointmentdetails = ({route}) => {
           </Text>
           <View style={{flexDirection: 'row'}}>
             <Text style={{marginTop: 5, color: 'red', marginLeft: 30}}>
-              Patient Name
+              Patient Name :
             </Text>
-            <Text style={{marginLeft: 40, marginTop: 5, color: 'black'}}>
+            <Text style={{marginLeft: 20, marginTop: 5, color: 'black'}}>
               {data.p.full_name}
             </Text>
           </View>
 
           <View style={{flexDirection: 'row'}}>
             <Text style={{marginTop: 5, color: 'red', marginLeft: 30}}>
-              D.O.B
+              D.O.B :
             </Text>
-            <Text style={{marginLeft: 40, marginTop: 5, color: 'black'}}>
+            <Text style={{marginLeft: 20, marginTop: 5, color: 'black'}}>
               {data.p.dob}
             </Text>
           </View>
-          <Text style={{marginTop: 5, color: 'red', marginLeft: 30}}>
-            Gender
-          </Text>
-          <Text style={{marginLeft: 40, marginTop: 5, color: 'black'}}>
-            {data.p.gender}
-          </Text>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={{marginTop: 5, color: 'red', marginLeft: 30}}>
+              Gender :
+            </Text>
+            <Text style={{marginLeft: 20, marginTop: 5, color: 'black'}}>
+              {data.p.gender}
+            </Text>
+          </View>
+
           <View
             style={{
               width: '90%',
@@ -132,7 +135,13 @@ const Appointmentdetails = ({route}) => {
               alignSelf: 'center',
               marginTop: 5,
             }}></View>
-          <Text style={{color: 'green', marginLeft: 10, marginTop: 5}}>
+          <Text
+            style={{
+              color: 'purple',
+              fontSize: 20,
+              fontWeight: '700',
+              marginLeft: 15,
+            }}>
             Vitals
           </Text>
           <View style={{flexDirection: 'row'}}>
@@ -186,7 +195,13 @@ const Appointmentdetails = ({route}) => {
               alignSelf: 'center',
               marginTop: 5,
             }}></View>
-          <Text style={{color: 'green', marginLeft: 10, marginTop: 5}}>
+          <Text
+            style={{
+              color: 'purple',
+              fontSize: 20,
+              fontWeight: '700',
+              marginLeft: 15,
+            }}>
             Symptoms
           </Text>
           <View style={{flexDirection: 'row'}}>
@@ -206,7 +221,13 @@ const Appointmentdetails = ({route}) => {
               alignSelf: 'center',
               marginTop: 5,
             }}></View>
-          <Text style={{color: 'green', marginLeft: 10, marginTop: 5}}>
+          <Text
+            style={{
+              color: 'purple',
+              fontSize: 20,
+              fontWeight: '700',
+              marginLeft: 15,
+            }}>
             Prescription
           </Text>
           <View>
@@ -226,10 +247,10 @@ const Appointmentdetails = ({route}) => {
               );
             })}
           </View>
-          <Text style={{color: 'green', marginLeft: 10, marginTop: 5}}>
+          {/* <Text style={{color: 'green', marginLeft: 10, marginTop: 5}}>
             Time
-          </Text>
-          <Text style={{color: 'black', marginLeft: 70}}>{data.ac.time}</Text>
+          </Text> */}
+          {/* <Text style={{color: 'black', marginLeft: 70}}>{data.ac.time}</Text> */}
           <View
             style={{
               borderBottomWidth: 1,
@@ -239,11 +260,12 @@ const Appointmentdetails = ({route}) => {
             }}></View>
           <Text
             style={{
-              color: 'green',
               marginTop: 5,
               alignSelf: 'center',
-              fontWeight: '600',
+
+              color: 'purple',
               fontSize: 20,
+              fontWeight: '700',
             }}>
             Give Rating
           </Text>

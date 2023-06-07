@@ -7,7 +7,7 @@ const Reports = ({route, navigation}) => {
   const isFoucsed = useIsFocused();
   const nursedata = useSelector(state => state.nurse);
   const {nurseID} = nursedata.data[0];
-  console.log(nurseID, 'this is logged in nurse id');
+  // console.log(nurseID, 'this is logged in nurse id');
   const [reports, setreports] = useState([]);
   const getreports = nurseID => {
     fetch(
@@ -15,7 +15,7 @@ const Reports = ({route, navigation}) => {
     )
       .then(response => response.json())
       .then(json => {
-        console.log(json);
+        // console.log(json);
         setreports(json);
       })
       .catch(error => {

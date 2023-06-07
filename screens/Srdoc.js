@@ -13,7 +13,7 @@ const Srdoc = ({route}) => {
   const ref = useRef();
   const isFocused = useIsFocused();
   let srdocid = route.params.paramkey.srdoc_id;
-  console.log(srdocid, 'logged in srdoc id');
+  // console.log(srdocid, 'logged in srdoc id');
   const [data, setdata] = useState(null);
   const [loading, setloading] = useState(false);
 
@@ -25,9 +25,9 @@ const Srdoc = ({route}) => {
       );
       const mydata = await response.json();
       setdata(mydata);
-      console.log(mydata, 'this is api response');
+      // console.log(mydata, 'this is api response');
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -57,26 +57,55 @@ const Srdoc = ({route}) => {
         style={{
           width: '100%',
           flexDirection: 'row',
-          backgroundColor: 'white',
-          justifyContent: 'center',
+          justifyContent: 'space-between',
           alignItems: 'center',
-          height: 50,
+          borderBottomWidth: 1,
           borderBottomColor: 'green',
-          borderBottomWidth: 2,
+          backgroundColor: 'white',
+          height: 60,
+          padding: 10,
         }}>
-        <Text style={{color: 'black', fontSize: 18, fontWeight: '700'}}>
-          Senior Doctor:
-        </Text>
         <Text
           style={{
-            color: 'black',
-            fontSize: 18,
-            fontWeight: '700',
             marginLeft: 10,
+            fontSize: 20,
+            fontWeight: '600',
+            color: 'black',
           }}>
-          {route.params.paramkey.full_name}
+          SrDoc: {route.params.paramkey.full_name}
         </Text>
+        <TouchableOpacity
+          style={{
+            backgroundColor: 'green',
+            marginRight: 10,
+            width: 70,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 15,
+            height: 30,
+          }}
+          onPress={() => {}}>
+          <Text style={{color: 'white'}}>Logout</Text>
+        </TouchableOpacity>
       </View>
+      <Text
+        style={{
+          fontSize: 30,
+          color: 'red',
+          marginLeft: 20,
+          fontWeight: '500',
+          alignSelf: 'center',
+          borderWidth: 1,
+          width: 400,
+          textAlign: 'center',
+          borderRadius: 10,
+          backgroundColor: 'white',
+          padding: 5,
+          marginTop: 10,
+          marginBottom: 10,
+        }}>
+        Appointments To Rate
+      </Text>
       <RefreshControl
         style={{flex: 1}}
         refreshing={loading}
