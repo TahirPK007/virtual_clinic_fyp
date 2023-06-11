@@ -1,4 +1,4 @@
-import {View, Text, FlatList, Image} from 'react-native';
+import {View, Text, FlatList, Image, TouchableOpacity} from 'react-native';
 import React, {useState, useEffect} from 'react';
 
 const Testing = () => {

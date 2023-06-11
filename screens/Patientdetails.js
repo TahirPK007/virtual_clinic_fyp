@@ -16,6 +16,39 @@ import CheckBox from '@react-native-community/checkbox';
 import {useNavigation} from '@react-navigation/native';
 
 const Patientdetails = ({route}) => {
+  //main prescription array
+  const [prescription, setprescription] = useState([]);
+  console.log(prescription, 'array to send');
+  let patientConditions = ['sugar', 'diabetes']; // Example patient conditions
+
+  // Function to check for contradictions
+  function checkContradictions(prescription, patientConditions) {
+    prescription.forEach(prescribedMedication => {
+      const {medicine_name} = prescribedMedication;
+
+      // Check for contradictions based on each patient condition
+      patientConditions.forEach(condition => {
+        if (isContradictoryForCondition(medicine_name, condition)) {
+          alert(
+            `Contradiction: Medication '${medicine_name}' is contradictory for a patient with '${condition}'.`,
+          );
+        }
+      });
+    });
+  }
+
+  function isContradictoryForCondition(medicine_name, condition) {
+    // Define the medications that are contradictory for each patient condition
+    const contradictions = {
+      sugar: ['hello', 'hi', 'Medication3'],
+      'high blood pressure': ['Medication4', 'Medication5'],
+      diabetes: ['hey', 'Medication7'],
+    };
+
+    // Check if the medication is in the list of contradictory medications for the given condition
+    return contradictions[condition]?.includes(medicine_name);
+  }
+
   const navigation = useNavigation();
   const [patid, setpatid] = useState(route.params.paramkey.p.patient_id);
   const [vital_id, setvital_id] = useState(route.params.paramkey.v.vital_id);
@@ -28,10 +61,6 @@ const Patientdetails = ({route}) => {
   const [otherdur, setotherdur] = useState(false);
   //other timings
   const [othertime, setothertime] = useState(false);
-
-  //main prescription array
-  const [prescription, setprescription] = useState([]);
-  // console.log(prescription, 'array to send');
 
   //modal visibilty
   const [visible, setvisible] = useState(false);
@@ -864,30 +893,45 @@ const Patientdetails = ({route}) => {
             borderRadius: 10,
           }}
           onPress={() => {
-            if (medicine === 'Panadol') {
+            if (
+              patientConditions.includes('sugar', 'diabetes') &&
+              medicine === 'Panadol' &&
+              timings === 'Morning Only'
+            ) {
               // Paracetamol should not be taken at night
               console.log(
                 'Contradiction: Paracetamol should not be taken at night',
               );
+            } else {
+              setprescription([
+                ...prescription,
+                {
+                  appointment_id: appointmentid,
+                  medicine_name: medicine,
+                  duration: duartion,
+                  timings: timings,
+                  date: formattedDate,
+                },
+              ]);
+              setmedicine('');
+              setduartion('');
+              settimings('');
+              setdisable(false);
+              setdisable1(false);
+              setdisable2(false);
+              setmorevenig(false);
+              setmorning(false);
+              setevening(false);
+              setnight(false);
+              setdays5(false);
+              setdays10(false);
+              setdays15(false);
+              setdays30(false);
+              setpanadol(false);
+              setParacetamol(false);
+              setIbuprofen(false);
+              setflaygyl(false);
             }
-            setmedicine('');
-            setduartion('');
-            settimings('');
-            setdisable(false);
-            setdisable1(false);
-            setdisable2(false);
-            setmorevenig(false);
-            setmorning(false);
-            setevening(false);
-            setnight(false);
-            setdays5(false);
-            setdays10(false);
-            setdays15(false);
-            setdays30(false);
-            setpanadol(false);
-            setParacetamol(false);
-            setIbuprofen(false);
-            setflaygyl(false);
           }}>
           <Text style={{color: 'black', fontSize: 20, fontWeight: 'bold'}}>
             Add
@@ -952,10 +996,17 @@ const Patientdetails = ({route}) => {
                 marginBottom: 5,
               }}
               onPress={() => {
-                patprescription();
-                givingcommentstest();
-                updatingvitalstatus();
-                navigation.goBack();
+                if (checkContradictions(prescription, patientConditions)) {
+                  Alert.alert(
+                    'Contradiction',
+                    'There are contradictions in the prescription. Please review the medications.',
+                  );
+                } else {
+                  // patprescription();
+                  // givingcommentstest();
+                  // updatingvitalstatus();
+                  // navigation.goBack();
+                }
               }}>
               <Text style={{color: 'black', fontSize: 20, fontWeight: 'bold'}}>
                 Done
