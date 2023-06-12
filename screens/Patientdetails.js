@@ -36,6 +36,7 @@ const Patientdetails = ({route}) => {
       });
     });
   }
+  let money = 50;
 
   function isContradictoryForCondition(medicine_name, condition) {
     // Define the medications that are contradictory for each patient condition
@@ -246,6 +247,23 @@ const Patientdetails = ({route}) => {
       .then(response => response.json())
       .then(json => {
         alert(json);
+      });
+  };
+
+  //adding money to junior doctor table on each case
+  const addingmoney = async () => {
+    await fetch(
+      `http://${global.MyVar}/fyp/api/Jrdoc/AddingMoney?jrdocid=${jrdocid}&money=${money}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      },
+    )
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
       });
   };
 
@@ -996,17 +1014,17 @@ const Patientdetails = ({route}) => {
                 marginBottom: 5,
               }}
               onPress={() => {
-                if (checkContradictions(prescription, patientConditions)) {
-                  Alert.alert(
-                    'Contradiction',
-                    'There are contradictions in the prescription. Please review the medications.',
-                  );
-                } else {
-                  // patprescription();
-                  // givingcommentstest();
-                  // updatingvitalstatus();
-                  // navigation.goBack();
-                }
+                // if (checkContradictions(prescription, patientConditions)) {
+                //   Alert.alert(
+                //     'Contradiction',
+                //     'There are contradictions in the prescription. Please review the medications.',
+                //   );
+                // } else {
+                patprescription();
+                givingcommentstest();
+                updatingvitalstatus();
+                addingmoney();
+                navigation.goBack();
               }}>
               <Text style={{color: 'black', fontSize: 20, fontWeight: 'bold'}}>
                 Done
