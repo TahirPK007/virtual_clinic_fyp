@@ -10,14 +10,14 @@ const Appointmentdetails = ({route}) => {
   const [presdetails, setpresdetails] = useState(null);
 
   const [rating, setrating] = useState();
-  // console.log(rating, 'rating given');
+  console.log(rating, 'rating given');
 
   let visitid = route.params.paramkey.visit_id;
   let aptid = route.params.paramkey.appointment_id;
   let patid = route.params.paramkey.patient_id;
-  // console.log(aptid, 'apointment id to feth prescriptions');
-  // console.log(visitid, 'its visit id');
-  // console.log(patid, 'pat id to update vitals rated');
+  console.log(aptid, 'apointment id to feth prescriptions');
+  console.log(visitid, 'its visit id');
+  console.log(patid, 'pat id to update vitals rated');
 
   //getting appointment details
   const gettingappointmentdetails = async visitid => {
@@ -27,9 +27,9 @@ const Appointmentdetails = ({route}) => {
       );
       const mydata = await response.json();
       setdata(mydata);
-      // console.log(mydata, 'this is api response for appointment details');
+      console.log(mydata, 'this is api response for appointment details');
     } catch (error) {
-      // console.log(error);
+      console.log(error);
     }
   };
 
@@ -41,12 +41,12 @@ const Appointmentdetails = ({route}) => {
       );
       const mydata = await response.json();
       setpresdetails(mydata);
-      // console.log(
-      //   mydata,
-      //   'this is api response for prescription details details',
-      // );
+      console.log(
+        mydata,
+        'this is api response for prescription details details',
+      );
     } catch (error) {
-      // console.log(error);
+      console.log(error);
     }
   };
 

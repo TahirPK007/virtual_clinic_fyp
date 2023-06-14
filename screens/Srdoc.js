@@ -13,7 +13,7 @@ const Srdoc = ({route}) => {
   const ref = useRef();
   const isFocused = useIsFocused();
   let srdocid = route.params.paramkey.srdoc_id;
-  // console.log(srdocid, 'logged in srdoc id');
+  console.log(srdocid, 'logged in srdoc id');
   const [data, setdata] = useState(null);
   const [loading, setloading] = useState(false);
 
@@ -25,9 +25,9 @@ const Srdoc = ({route}) => {
       );
       const mydata = await response.json();
       setdata(mydata);
-      // console.log(mydata, 'this is api response');
+      console.log(mydata, 'this is api response');
     } catch (error) {
-      // console.log(error);
+      console.log(error);
     }
   };
 

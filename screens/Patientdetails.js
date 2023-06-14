@@ -266,6 +266,23 @@ const Patientdetails = ({route}) => {
         console.log(json);
       });
   };
+  //updating jrdocs count
+  //adding money to junior doctor table on each case
+  const Updatingjrdoccount = async () => {
+    await fetch(
+      `http://${global.MyVar}/fyp/api/Jobs/Updatingjrdoccount?jrdocid=${jrdocid}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      },
+    )
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+      });
+  };
 
   return (
     <ScrollView>
@@ -431,7 +448,7 @@ const Patientdetails = ({route}) => {
             </View>
           )}
 
-          <View style={{width: '100%', marginTop: 20}}>
+          {/* <View style={{width: '100%', marginTop: 20}}>
             <Text
               style={{
                 color: 'black',
@@ -454,7 +471,7 @@ const Patientdetails = ({route}) => {
               onChangeText={txt => setcommentstest(txt)}
               multiline={true}
             />
-          </View>
+          </View> */}
         </View>
         <Text
           style={{
@@ -911,45 +928,34 @@ const Patientdetails = ({route}) => {
             borderRadius: 10,
           }}
           onPress={() => {
-            if (
-              patientConditions.includes('sugar', 'diabetes') &&
-              medicine === 'Panadol' &&
-              timings === 'Morning Only'
-            ) {
-              // Paracetamol should not be taken at night
-              console.log(
-                'Contradiction: Paracetamol should not be taken at night',
-              );
-            } else {
-              setprescription([
-                ...prescription,
-                {
-                  appointment_id: appointmentid,
-                  medicine_name: medicine,
-                  duration: duartion,
-                  timings: timings,
-                  date: formattedDate,
-                },
-              ]);
-              setmedicine('');
-              setduartion('');
-              settimings('');
-              setdisable(false);
-              setdisable1(false);
-              setdisable2(false);
-              setmorevenig(false);
-              setmorning(false);
-              setevening(false);
-              setnight(false);
-              setdays5(false);
-              setdays10(false);
-              setdays15(false);
-              setdays30(false);
-              setpanadol(false);
-              setParacetamol(false);
-              setIbuprofen(false);
-              setflaygyl(false);
-            }
+            setprescription([
+              ...prescription,
+              {
+                appointment_id: appointmentid,
+                medicine_name: medicine,
+                duration: duartion,
+                timings: timings,
+                date: formattedDate,
+              },
+            ]);
+            setmedicine('');
+            setduartion('');
+            settimings('');
+            setdisable(false);
+            setdisable1(false);
+            setdisable2(false);
+            setmorevenig(false);
+            setmorning(false);
+            setevening(false);
+            setnight(false);
+            setdays5(false);
+            setdays10(false);
+            setdays15(false);
+            setdays30(false);
+            setpanadol(false);
+            setParacetamol(false);
+            setIbuprofen(false);
+            setflaygyl(false);
           }}>
           <Text style={{color: 'black', fontSize: 20, fontWeight: 'bold'}}>
             Add
@@ -1014,16 +1020,9 @@ const Patientdetails = ({route}) => {
                 marginBottom: 5,
               }}
               onPress={() => {
-                // if (checkContradictions(prescription, patientConditions)) {
-                //   Alert.alert(
-                //     'Contradiction',
-                //     'There are contradictions in the prescription. Please review the medications.',
-                //   );
-                // } else {
                 patprescription();
-                givingcommentstest();
                 updatingvitalstatus();
-                addingmoney();
+                Updatingjrdoccount();
                 navigation.goBack();
               }}>
               <Text style={{color: 'black', fontSize: 20, fontWeight: 'bold'}}>
